@@ -31,13 +31,18 @@ library(savvySh)
 
 `savvySh` provides several shrinkage estimators designed to improve regression accuracy by reducing MSE:
 
-- **Multiplicative Shrinkage:** Applies shrinkage by multiplying the OLS estimates with data-driven factors:  
+- **Multiplicative Shrinkage:** Applies shrinkage by multiplying the OLS estimates with data-driven factors: 
+
   - **Stein (St):** Applies a single global shrinkage factor to all coefficients.  
-  - **Diagonal Shrinkage (DSh):** Applies a separate factor to each coefficient.  
+  
+  - **Diagonal Shrinkage (DSh):** Applies a separate factor to each coefficient. 
+  
   - **Shrinkage (Sh):** Uses a full matrix shrinkage operator estimated by solving a *Sylvester equation*.
 
 - **Slab Regression:** Adds structured shrinkage based on penalty terms:  
+
   - **Slab Regression (SR):** Shrinks toward a fixed target direction (e.g., a vector of ones).  
+  
   - **Generalized Slab Regression (GSR):** Shrinks toward multiple directions (e.g., eigenvectors).
   
 - **Linear Shrinkage (LSh):** Takes a weighted average of the OLS estimator and a target estimator and is useful for standardized data.

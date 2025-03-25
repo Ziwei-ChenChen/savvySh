@@ -68,37 +68,25 @@
 <div class="section level2">
 <h2 id="features">Features<a class="anchor" aria-label="anchor" href="#features"></a>
 </h2>
-<p><code>savvySh</code> provides several shrinkage estimators designed to improve regression accuracy by reducing estimation variance:</p>
+<p><code>savvySh</code> provides several shrinkage estimators designed to improve regression accuracy by reducing MSE:</p>
 <ul>
 <li>
-<strong>Multiplicative Shrinkage:</strong><br>
-Applies shrinkage by multiplying the OLS estimates with data-driven factors:
+<p><strong>Multiplicative Shrinkage:</strong> Applies shrinkage by multiplying the OLS estimates with data-driven factors:</p>
 <ul>
-<li>
-<strong>Stein (St):</strong> Applies a single global shrinkage factor to all coefficients.<br>
-</li>
-<li>
-<strong>Diagonal Shrinkage (DSh):</strong> Applies a separate factor to each coefficient.<br>
-</li>
-<li>
-<strong>Shrinkage (Sh):</strong> Uses a full matrix shrinkage operator estimated by solving a <em>Sylvester equation</em>.</li>
+<li><p><strong>Stein (St):</strong> Applies a single global shrinkage factor to all coefficients.</p></li>
+<li><p><strong>Diagonal Shrinkage (DSh):</strong> Applies a separate factor to each coefficient.</p></li>
+<li><p><strong>Shrinkage (Sh):</strong> Uses a full matrix shrinkage operator estimated by solving a <em>Sylvester equation</em>.</p></li>
 </ul>
 </li>
 <li>
-<strong>Slab Regression:</strong><br>
-Adds structured shrinkage based on penalty terms:
+<p><strong>Slab Regression:</strong> Adds structured shrinkage based on penalty terms:</p>
 <ul>
-<li>
-<strong>Slab Regression (SR):</strong> Shrinks toward a fixed target direction (e.g., a vector of ones).<br>
-</li>
-<li>
-<strong>Generalized Slab Regression (GSR):</strong> Shrinks toward multiple directions (e.g., eigenvectors).</li>
+<li><p><strong>Slab Regression (SR):</strong> Shrinks toward a fixed target direction (e.g., a vector of ones).</p></li>
+<li><p><strong>Generalized Slab Regression (GSR):</strong> Shrinks toward multiple directions (e.g., eigenvectors).</p></li>
 </ul>
 </li>
-<li>
-<strong>Linear Shrinkage (LSh):</strong> Takes a weighted average of the OLS estimator and a target estimator and is useful for standardized data.</li>
-<li>
-<strong>Shrinkage Ridge Regression (SRR):</strong> Modifies <em>Ridge Regression (RR)</em> by shrinking the sample covariance matrix toward a multiple of the identity matrix.</li>
+<li><p><strong>Linear Shrinkage (LSh):</strong> Takes a weighted average of the OLS estimator and a target estimator and is useful for standardized data.</p></li>
+<li><p><strong>Shrinkage Ridge Regression (SRR):</strong> Modifies <em>Ridge Regression (RR)</em> by shrinking the sample covariance matrix toward a multiple of the identity matrix.</p></li>
 </ul>
 <p>All shrinkage factors are computed in closed form (except SRR, which optimizes shrinkage intensity numerically).</p>
 </div>

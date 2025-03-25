@@ -171,30 +171,33 @@ The matrix
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐃</mi><annotation encoding="application/x-tex">\mathbf{D}</annotation></semantics></math>
 is chosen to minimize the MSE. Three common forms are:</p>
 <ol style="list-style-type: decimal">
-<li><strong>Stein Estimator (St):</strong></li>
+<li>
+<strong>Stein Estimator (St):</strong> The St estimator shrinks all
+coefficients uniformly by a single factor
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mover><msup><mi>a</mi><mo>*</mo></msup><mo accent="true">̂</mo></mover><annotation encoding="application/x-tex">\widehat{a^*}</annotation></semantics></math>:</li>
 </ol>
-<p>The St estimator shrinks all coefficients uniformly by a single
-factor
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mover><msup><mi>a</mi><mo>*</mo></msup><mo accent="true">̂</mo></mover><annotation encoding="application/x-tex">\widehat{a^*}</annotation></semantics></math>:
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mover><mi>𝛃</mi><mo accent="true">̂</mo></mover><mtext mathvariant="normal">St</mtext></msup><mo>=</mo><mover><msup><mi>a</mi><mo>*</mo></msup><mo accent="true">̂</mo></mover><msup><mover><mi>𝛃</mi><mo accent="true">̂</mo></mover><mtext mathvariant="normal">OLS</mtext></msup><mo>,</mo><mspace width="1.0em"></mspace><mtext mathvariant="normal">where</mtext><mspace width="1.0em"></mspace><mover><msup><mi>a</mi><mo>*</mo></msup><mo accent="true">̂</mo></mover><mo>=</mo><mfrac><mrow><msup><mrow><mo stretchy="true" form="prefix">(</mo><msup><mover><mi>𝛃</mi><mo accent="true">̂</mo></mover><mrow><mi>O</mi><mi>L</mi><mi>S</mi></mrow></msup><mo stretchy="true" form="postfix">)</mo></mrow><mi>T</mi></msup><msup><mover><mi>𝛃</mi><mo accent="true">̂</mo></mover><mrow><mi>O</mi><mi>L</mi><mi>S</mi></mrow></msup></mrow><mrow><msup><mrow><mo stretchy="true" form="prefix">(</mo><msup><mover><mi>𝛃</mi><mo accent="true">̂</mo></mover><mrow><mi>O</mi><mi>L</mi><mi>S</mi></mrow></msup><mo stretchy="true" form="postfix">)</mo></mrow><mi>T</mi></msup><msup><mover><mi>𝛃</mi><mo accent="true">̂</mo></mover><mrow><mi>O</mi><mi>L</mi><mi>S</mi></mrow></msup><mo>+</mo><mover><mrow><mtext mathvariant="normal">MSE</mtext><mrow><mo stretchy="true" form="prefix">(</mo><msup><mover><mi>𝛃</mi><mo accent="true">̂</mo></mover><mtext mathvariant="normal">OLS</mtext></msup><mo stretchy="true" form="postfix">)</mo></mrow></mrow><mo accent="true">̂</mo></mover></mrow></mfrac><mi>.</mi></mrow><annotation encoding="application/x-tex">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mover><mi>𝛃</mi><mo accent="true">̂</mo></mover><mtext mathvariant="normal">St</mtext></msup><mo>=</mo><mover><msup><mi>a</mi><mo>*</mo></msup><mo accent="true">̂</mo></mover><msup><mover><mi>𝛃</mi><mo accent="true">̂</mo></mover><mtext mathvariant="normal">OLS</mtext></msup><mo>,</mo><mspace width="1.0em"></mspace><mtext mathvariant="normal">where</mtext><mspace width="1.0em"></mspace><mover><msup><mi>a</mi><mo>*</mo></msup><mo accent="true">̂</mo></mover><mo>=</mo><mfrac><mrow><msup><mrow><mo stretchy="true" form="prefix">(</mo><msup><mover><mi>𝛃</mi><mo accent="true">̂</mo></mover><mrow><mi>O</mi><mi>L</mi><mi>S</mi></mrow></msup><mo stretchy="true" form="postfix">)</mo></mrow><mi>T</mi></msup><msup><mover><mi>𝛃</mi><mo accent="true">̂</mo></mover><mrow><mi>O</mi><mi>L</mi><mi>S</mi></mrow></msup></mrow><mrow><msup><mrow><mo stretchy="true" form="prefix">(</mo><msup><mover><mi>𝛃</mi><mo accent="true">̂</mo></mover><mrow><mi>O</mi><mi>L</mi><mi>S</mi></mrow></msup><mo stretchy="true" form="postfix">)</mo></mrow><mi>T</mi></msup><msup><mover><mi>𝛃</mi><mo accent="true">̂</mo></mover><mrow><mi>O</mi><mi>L</mi><mi>S</mi></mrow></msup><mo>+</mo><mover><mrow><mtext mathvariant="normal">MSE</mtext><mrow><mo stretchy="true" form="prefix">(</mo><msup><mover><mi>𝛃</mi><mo accent="true">̂</mo></mover><mtext mathvariant="normal">OLS</mtext></msup><mo stretchy="true" form="postfix">)</mo></mrow></mrow><mo accent="true">̂</mo></mover></mrow></mfrac><mi>.</mi></mrow><annotation encoding="application/x-tex">
 \widehat{\boldsymbol{\beta}}^{\text{St}} = \widehat{a^*} \widehat{\boldsymbol{\beta}}^{\text{OLS}}, \quad \text{where} \quad
 \widehat{a^*} = \frac{\left(\widehat{\boldsymbol\beta}^{OLS}\right)^T\widehat{\boldsymbol\beta}^{OLS}}{\left(\widehat{\boldsymbol\beta}^{OLS}\right)^T\widehat{\boldsymbol\beta}^{OLS} + \widehat{\text{MSE}\left(\widehat{\boldsymbol{\beta}}^{\text{OLS}}\right)}}.
-</annotation></semantics></math> This corresponds to
+</annotation></semantics></math></p>
+<p>This corresponds to
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐃</mi><mo>=</mo><mi>a</mi><msub><mi>𝐈</mi><mrow><mi>p</mi><mo>+</mo><mn>1</mn></mrow></msub></mrow><annotation encoding="application/x-tex">\mathbf{D} = a \mathbf{I}_{p+1}</annotation></semantics></math>
 with a data-driven scalar
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi><mo>=</mo><mover><msup><mi>a</mi><mo>*</mo></msup><mo accent="true">̂</mo></mover></mrow><annotation encoding="application/x-tex">a = \widehat{a^*}</annotation></semantics></math>.
 It reduces variance by scaling all coefficients equally.</p>
 <ol start="2" style="list-style-type: decimal">
-<li><strong>Diagonal Shrinkage Estimator (DSh):</strong></li>
-</ol>
-<p>Extending the St estimator, DSh applies a separate shrinkage factor
+<li>
+<strong>Diagonal Shrinkage Estimator (DSh):</strong> Extending the
+St estimator, DSh applies a separate shrinkage factor
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mover><msubsup><mi>b</mi><mi>k</mi><mo>*</mo></msubsup><mo accent="true">̂</mo></mover><annotation encoding="application/x-tex">\widehat{b_k^*}</annotation></semantics></math>
-to each coefficient:
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mover><mi>𝛃</mi><mo accent="true">̂</mo></mover><mtext mathvariant="normal">DSh</mtext></msup><mo>=</mo><mtext mathvariant="normal">diag</mtext><mrow><mo stretchy="true" form="prefix">(</mo><mover><msup><mi>𝐛</mi><mo mathvariant="bold">*</mo></msup><mo accent="true">̂</mo></mover><mo stretchy="true" form="postfix">)</mo></mrow><mo>,</mo><mspace width="1.0em"></mspace><mtext mathvariant="normal">where</mtext><mspace width="1.0em"></mspace><mover><msubsup><mi>b</mi><mi>k</mi><mo>*</mo></msubsup><mo accent="true">̂</mo></mover><mo>=</mo><mfrac><msup><mrow><mo stretchy="true" form="prefix">(</mo><msubsup><mover><mi>β</mi><mo accent="true">̂</mo></mover><mi>k</mi><mtext mathvariant="normal">OLS</mtext></msubsup><mo stretchy="true" form="postfix">)</mo></mrow><mn>2</mn></msup><mrow><msup><mrow><mo stretchy="true" form="prefix">(</mo><msubsup><mover><mi>β</mi><mo accent="true">̂</mo></mover><mi>k</mi><mtext mathvariant="normal">OLS</mtext></msubsup><mo stretchy="true" form="postfix">)</mo></mrow><mn>2</mn></msup><mo>+</mo><mover><msup><mi>σ</mi><mn>2</mn></msup><mo accent="true">̂</mo></mover><msub><mi>σ</mi><mi>k</mi></msub></mrow></mfrac><mi>.</mi></mrow><annotation encoding="application/x-tex">
+to each coefficient:</li>
+</ol>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mover><mi>𝛃</mi><mo accent="true">̂</mo></mover><mtext mathvariant="normal">DSh</mtext></msup><mo>=</mo><mtext mathvariant="normal">diag</mtext><mrow><mo stretchy="true" form="prefix">(</mo><mover><msup><mi>𝐛</mi><mo mathvariant="bold">*</mo></msup><mo accent="true">̂</mo></mover><mo stretchy="true" form="postfix">)</mo></mrow><mo>,</mo><mspace width="1.0em"></mspace><mtext mathvariant="normal">where</mtext><mspace width="1.0em"></mspace><mover><msubsup><mi>b</mi><mi>k</mi><mo>*</mo></msubsup><mo accent="true">̂</mo></mover><mo>=</mo><mfrac><msup><mrow><mo stretchy="true" form="prefix">(</mo><msubsup><mover><mi>β</mi><mo accent="true">̂</mo></mover><mi>k</mi><mtext mathvariant="normal">OLS</mtext></msubsup><mo stretchy="true" form="postfix">)</mo></mrow><mn>2</mn></msup><mrow><msup><mrow><mo stretchy="true" form="prefix">(</mo><msubsup><mover><mi>β</mi><mo accent="true">̂</mo></mover><mi>k</mi><mtext mathvariant="normal">OLS</mtext></msubsup><mo stretchy="true" form="postfix">)</mo></mrow><mn>2</mn></msup><mo>+</mo><mover><msup><mi>σ</mi><mn>2</mn></msup><mo accent="true">̂</mo></mover><msub><mi>σ</mi><mi>k</mi></msub></mrow></mfrac><mi>.</mi></mrow><annotation encoding="application/x-tex">
 \widehat{\boldsymbol{\beta}}^{\text{DSh}} = \text{diag}\left(\widehat{\mathbf{b^*}}\right), \quad 
 \text{where} \quad
 \widehat{b_k^*} = \frac{\left(\widehat{\beta}_k^{\text{OLS}}\right)^2}{\left(\widehat{\beta}_k^{\text{OLS}}\right)^2 + \widehat{\sigma^2} \sigma_k}.
-</annotation></semantics></math> This corresponds to
+</annotation></semantics></math></p>
+<p>This corresponds to
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐃</mi><mo>=</mo><mtext mathvariant="normal">diag</mtext><mrow><mo stretchy="true" form="prefix">(</mo><mi>𝐛</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\mathbf{D} = \text{diag}\left(\mathbf{b}\right)</annotation></semantics></math>
 and
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>σ</mi><mi>k</mi></msub><annotation encoding="application/x-tex">\sigma_k</annotation></semantics></math>
@@ -206,15 +209,18 @@ and
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mover><msup><mi>σ</mi><mn>2</mn></msup><mo accent="true">̂</mo></mover><annotation encoding="application/x-tex">\widehat{\sigma^2}</annotation></semantics></math>
 is the estimated residual variance.</p>
 <ol start="3" style="list-style-type: decimal">
-<li><strong>Shrinkage Estimator (Sh):</strong></li>
-</ol>
-<p>The Sh estimator is the most general form in the multiplicative
-shrinkage family. It applies a full (non-diagonal) matrix
+<li>
+<strong>Shrinkage Estimator (Sh):</strong> The Sh estimator is the
+most general form in the multiplicative shrinkage family. It applies a
+full (non-diagonal) matrix
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mover><msup><mi>𝐂</mi><mo>*</mo></msup><mo accent="true">̂</mo></mover><annotation encoding="application/x-tex">\widehat{\mathbf{C}^*}</annotation></semantics></math>
-to the OLS estimate and requires solving a <em>Sylvester equation</em>:
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mover><mi>𝛃</mi><mo accent="true">̂</mo></mover><mtext mathvariant="normal">Sh</mtext></msup><mo>=</mo><mover><msup><mi>𝐂</mi><mo>*</mo></msup><mo accent="true">̂</mo></mover><msup><mover><mi>𝛃</mi><mo accent="true">̂</mo></mover><mtext mathvariant="normal">OLS</mtext></msup><mo>,</mo><mspace width="1.0em"></mspace><mrow><mtext mathvariant="normal">where </mtext><mspace width="0.333em"></mspace></mrow><mover><msup><mi>𝐂</mi><mo>*</mo></msup><mo accent="true">̂</mo></mover><mrow><mspace width="0.333em"></mspace><mtext mathvariant="normal"> solves the Sylvester equation:</mtext></mrow><mspace width="0.222em"></mspace><msup><mi>Σ</mi><mrow><mi>−</mi><mn>1</mn></mrow></msup><mi>𝐂</mi><mo>+</mo><mi>𝐂</mi><msup><mover><mi>𝛃</mi><mo accent="true">̂</mo></mover><mtext mathvariant="normal">OLS</mtext></msup><msup><mrow><mo stretchy="true" form="prefix">(</mo><msup><mover><mi>𝛃</mi><mo accent="true">̂</mo></mover><mtext mathvariant="normal">OLS</mtext></msup><mo stretchy="true" form="postfix">)</mo></mrow><mi>T</mi></msup><mo>=</mo><msup><mover><mi>𝛃</mi><mo accent="true">̂</mo></mover><mtext mathvariant="normal">OLS</mtext></msup><msup><mrow><mo stretchy="true" form="prefix">(</mo><msup><mover><mi>𝛃</mi><mo accent="true">̂</mo></mover><mtext mathvariant="normal">OLS</mtext></msup><mo stretchy="true" form="postfix">)</mo></mrow><mi>T</mi></msup><mi>.</mi></mrow><annotation encoding="application/x-tex">
+to the OLS estimate and requires solving a <em>Sylvester
+equation</em>:</li>
+</ol>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mover><mi>𝛃</mi><mo accent="true">̂</mo></mover><mtext mathvariant="normal">Sh</mtext></msup><mo>=</mo><mover><msup><mi>𝐂</mi><mo>*</mo></msup><mo accent="true">̂</mo></mover><msup><mover><mi>𝛃</mi><mo accent="true">̂</mo></mover><mtext mathvariant="normal">OLS</mtext></msup><mo>,</mo><mspace width="1.0em"></mspace><mrow><mtext mathvariant="normal">where </mtext><mspace width="0.333em"></mspace></mrow><mover><msup><mi>𝐂</mi><mo>*</mo></msup><mo accent="true">̂</mo></mover><mrow><mspace width="0.333em"></mspace><mtext mathvariant="normal"> solves the Sylvester equation:</mtext></mrow><mspace width="0.222em"></mspace><msup><mi>Σ</mi><mrow><mi>−</mi><mn>1</mn></mrow></msup><mi>𝐂</mi><mo>+</mo><mi>𝐂</mi><msup><mover><mi>𝛃</mi><mo accent="true">̂</mo></mover><mtext mathvariant="normal">OLS</mtext></msup><msup><mrow><mo stretchy="true" form="prefix">(</mo><msup><mover><mi>𝛃</mi><mo accent="true">̂</mo></mover><mtext mathvariant="normal">OLS</mtext></msup><mo stretchy="true" form="postfix">)</mo></mrow><mi>T</mi></msup><mo>=</mo><msup><mover><mi>𝛃</mi><mo accent="true">̂</mo></mover><mtext mathvariant="normal">OLS</mtext></msup><msup><mrow><mo stretchy="true" form="prefix">(</mo><msup><mover><mi>𝛃</mi><mo accent="true">̂</mo></mover><mtext mathvariant="normal">OLS</mtext></msup><mo stretchy="true" form="postfix">)</mo></mrow><mi>T</mi></msup><mi>.</mi></mrow><annotation encoding="application/x-tex">
 \widehat{\boldsymbol{\beta}}^{\text{Sh}} = \widehat{\mathbf{C}^*} \widehat{\boldsymbol{\beta}}^{\text{OLS}}, \quad \text{where } \widehat{\mathbf{C}^*} \text{ solves the Sylvester equation:} \ \Sigma^{-1} \mathbf{C} + \mathbf{C} \widehat{\boldsymbol{\beta}}^{\text{OLS}} \left(\widehat{\boldsymbol{\beta}}^{\text{OLS}}\right)^T = \widehat{\boldsymbol{\beta}}^{\text{OLS}} \left(\widehat{\boldsymbol{\beta}}^{\text{OLS}}\right)^T.
-</annotation></semantics></math> This corresponds to
+</annotation></semantics></math></p>
+<p>This corresponds to
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐃</mi><mo>=</mo><mtext mathvariant="normal">diag</mtext><mrow><mo stretchy="true" form="prefix">(</mo><mi>𝐂</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\mathbf{D} = \text{diag}\left(\mathbf{C}\right)</annotation></semantics></math>.
 Unlike St and DSh, the Sh estimator allows interactions across
 coefficients through off-diagonal entries in <span class="math inline">$\mathbf{C}^$</span>, capturing richer shrinkage
@@ -232,29 +238,32 @@ applied in each direction. These directions can be fixed (e.g., equal
 or determined by the structure of the data (e.g., eigenvectors of the
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Σ</mi><annotation encoding="application/x-tex">\Sigma</annotation></semantics></math>).</p>
 <ol style="list-style-type: decimal">
-<li><strong>(Simple) Slab Regression (SR):</strong></li>
-</ol>
-<p>The SR estimator adds a penalty based on a single direction vector
+<li>
+<strong>(Simple) Slab Regression (SR):</strong> The SR estimator
+adds a penalty based on a single direction vector
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐮</mi><mo>∈</mo><msup><mi>ℝ</mi><mrow><mi>p</mi><mo>+</mo><mn>1</mn></mrow></msup></mrow><annotation encoding="application/x-tex">\mathbf{u} \in \mathbb{R}^{p+1}</annotation></semantics></math>,
 often chosen as the constant vector
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>𝟏</mn><annotation encoding="application/x-tex">\mathbf{1}</annotation></semantics></math>.
-The estimator is defined as:
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mover><mi>𝛃</mi><mo accent="true">̂</mo></mover><mrow><mi>S</mi><mi>R</mi></mrow></msup><mrow><mo stretchy="true" form="prefix">(</mo><mi>μ</mi><mo>;</mo><mtext mathvariant="bold">𝐮</mtext><mo stretchy="true" form="postfix">)</mo></mrow><mo>:=</mo><mo>arg</mo><munder><mo>min</mo><mrow><mi>𝛃</mi><mo>∈</mo><msup><mi>ℜ</mi><mrow><mi>p</mi><mo>+</mo><mn>1</mn></mrow></msup></mrow></munder><mrow><mo stretchy="true" form="prefix">(</mo><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></munderover><mo minsize="1.2" maxsize="1.2" stretchy="false" form="prefix">(</mo><msub><mi>y</mi><mi>i</mi></msub><mo>−</mo><msubsup><mi>𝐱</mi><mi>i</mi><mi>⊤</mi></msubsup><mi>𝛃</mi><msup><mo minsize="1.2" maxsize="1.2" stretchy="false" form="postfix">)</mo><mn>2</mn></msup><mo>+</mo><mi>μ</mi><mo minsize="1.2" maxsize="1.2" stretchy="false" form="prefix">(</mo><msup><mi>𝐮</mi><mi>⊤</mi></msup><mi>𝛃</mi><msup><mo minsize="1.2" maxsize="1.2" stretchy="false" form="postfix">)</mo><mn>2</mn></msup><mo stretchy="true" form="postfix">)</mo></mrow><mo>,</mo></mrow><annotation encoding="application/x-tex">
+The estimator is defined as:</li>
+</ol>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mover><mi>𝛃</mi><mo accent="true">̂</mo></mover><mrow><mi>S</mi><mi>R</mi></mrow></msup><mrow><mo stretchy="true" form="prefix">(</mo><mi>μ</mi><mo>;</mo><mtext mathvariant="bold">𝐮</mtext><mo stretchy="true" form="postfix">)</mo></mrow><mo>:=</mo><mo>arg</mo><munder><mo>min</mo><mrow><mi>𝛃</mi><mo>∈</mo><msup><mi>ℜ</mi><mrow><mi>p</mi><mo>+</mo><mn>1</mn></mrow></msup></mrow></munder><mrow><mo stretchy="true" form="prefix">(</mo><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></munderover><mo minsize="1.2" maxsize="1.2" stretchy="false" form="prefix">(</mo><msub><mi>y</mi><mi>i</mi></msub><mo>−</mo><msubsup><mi>𝐱</mi><mi>i</mi><mi>⊤</mi></msubsup><mi>𝛃</mi><msup><mo minsize="1.2" maxsize="1.2" stretchy="false" form="postfix">)</mo><mn>2</mn></msup><mo>+</mo><mi>μ</mi><mo minsize="1.2" maxsize="1.2" stretchy="false" form="prefix">(</mo><msup><mi>𝐮</mi><mi>⊤</mi></msup><mi>𝛃</mi><msup><mo minsize="1.2" maxsize="1.2" stretchy="false" form="postfix">)</mo><mn>2</mn></msup><mo stretchy="true" form="postfix">)</mo></mrow><mo>,</mo></mrow><annotation encoding="application/x-tex">
 \widehat{\boldsymbol{\beta}}^{SR}\left(\mu;\textbf{u}\right) := \arg\min_{\boldsymbol{\beta}\in\Re^{p+1}} \left( \sum_{i=1}^n \big(y_i - \mathbf{x}_i^\top \boldsymbol{\beta}\big)^2 + \mu \big(\mathbf{u}^\top \boldsymbol{\beta}\big)^2 \right),
-</annotation></semantics></math> where
+</annotation></semantics></math></p>
+<p>where
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>μ</mi><mo>≥</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\mu \geq 0</annotation></semantics></math>
 controls the amount of shrinkage along
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐮</mi><annotation encoding="application/x-tex">\mathbf{u}</annotation></semantics></math>
 and has a closed-form.</p>
 <ol start="2" style="list-style-type: decimal">
-<li><strong>Generalized Slab Regression (GSR):</strong></li>
+<li>
+<strong>Generalized Slab Regression (GSR):</strong> The GSR
+estimator extends SR by allowing shrinkage in multiple directions:</li>
 </ol>
-<p>The GSR estimator extends SR by allowing shrinkage in multiple
-directions:
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mover><mi>𝛃</mi><mo accent="true">̂</mo></mover><mrow><mi>G</mi><mi>S</mi><mi>R</mi></mrow></msup><mrow><mo stretchy="true" form="prefix">(</mo><mi>𝛍</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>:=</mo><mo>arg</mo><munder><mo>min</mo><mrow><mi>𝛃</mi><mo>∈</mo><msup><mi>ℜ</mi><mrow><mi>p</mi><mo>+</mo><mn>1</mn></mrow></msup></mrow></munder><mrow><mo stretchy="true" form="prefix">(</mo><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></munderover><mo minsize="1.2" maxsize="1.2" stretchy="false" form="prefix">(</mo><msub><mi>y</mi><mi>i</mi></msub><mo>−</mo><msubsup><mi>𝐱</mi><mi>i</mi><mi>⊤</mi></msubsup><mi>𝛃</mi><msup><mo minsize="1.2" maxsize="1.2" stretchy="false" form="postfix">)</mo><mn>2</mn></msup><mo>+</mo><munder><mo>∑</mo><mrow><mi>l</mi><mo>∈</mo><mi>L</mi></mrow></munder><msub><mi>μ</mi><mi>l</mi></msub><mo minsize="1.2" maxsize="1.2" stretchy="false" form="prefix">(</mo><msubsup><mi>𝐮</mi><mi>l</mi><mi>⊤</mi></msubsup><mi>𝛃</mi><msup><mo minsize="1.2" maxsize="1.2" stretchy="false" form="postfix">)</mo><mn>2</mn></msup><mo stretchy="true" form="postfix">)</mo></mrow><mo>,</mo></mrow><annotation encoding="application/x-tex">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mover><mi>𝛃</mi><mo accent="true">̂</mo></mover><mrow><mi>G</mi><mi>S</mi><mi>R</mi></mrow></msup><mrow><mo stretchy="true" form="prefix">(</mo><mi>𝛍</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>:=</mo><mo>arg</mo><munder><mo>min</mo><mrow><mi>𝛃</mi><mo>∈</mo><msup><mi>ℜ</mi><mrow><mi>p</mi><mo>+</mo><mn>1</mn></mrow></msup></mrow></munder><mrow><mo stretchy="true" form="prefix">(</mo><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></munderover><mo minsize="1.2" maxsize="1.2" stretchy="false" form="prefix">(</mo><msub><mi>y</mi><mi>i</mi></msub><mo>−</mo><msubsup><mi>𝐱</mi><mi>i</mi><mi>⊤</mi></msubsup><mi>𝛃</mi><msup><mo minsize="1.2" maxsize="1.2" stretchy="false" form="postfix">)</mo><mn>2</mn></msup><mo>+</mo><munder><mo>∑</mo><mrow><mi>l</mi><mo>∈</mo><mi>L</mi></mrow></munder><msub><mi>μ</mi><mi>l</mi></msub><mo minsize="1.2" maxsize="1.2" stretchy="false" form="prefix">(</mo><msubsup><mi>𝐮</mi><mi>l</mi><mi>⊤</mi></msubsup><mi>𝛃</mi><msup><mo minsize="1.2" maxsize="1.2" stretchy="false" form="postfix">)</mo><mn>2</mn></msup><mo stretchy="true" form="postfix">)</mo></mrow><mo>,</mo></mrow><annotation encoding="application/x-tex">
 \widehat{\boldsymbol{\beta}}^{GSR}(\boldsymbol{\mu}) := \arg\min_{\boldsymbol{\beta} \in \Re^{p+1}} 
 \left(\sum_{i=1}^n \big(y_i - \mathbf{x}_i^\top \boldsymbol{\beta}\big)^2 + \sum_{l \in L} \mu_l \big(\mathbf{u}_l^\top \boldsymbol{\beta}\big)^2 \right),
-</annotation></semantics></math> where
+</annotation></semantics></math></p>
+<p>where
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>μ</mi><mi>l</mi></msub><mo>≥</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\mu_l \geq 0</annotation></semantics></math>
 controls the shrinkage along the direction specified by
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>𝐮</mi><mi>l</mi></msub><annotation encoding="application/x-tex">\mathbf{u}_l</annotation></semantics></math>,
@@ -277,10 +286,11 @@ This target estimator is given by
 where
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mi>Σ</mi><mo accent="true">̃</mo></mover><mo>=</mo><mrow><mi mathvariant="normal">d</mi><mi mathvariant="normal">i</mi><mi mathvariant="normal">a</mi><mi mathvariant="normal">g</mi></mrow><mrow><mo stretchy="true" form="prefix">(</mo><mi>Σ</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\widetilde{\Sigma} = \mathrm{diag}(\Sigma)</annotation></semantics></math>.
 The method assumes that the data are standardized so that the intercept
-is not needed. The LSh estimator is defined as:
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mover><mi>𝛃</mi><mo accent="true">̂</mo></mover><mrow><mi>i</mi><mi>n</mi><mi>d</mi></mrow></msup><mrow><mo stretchy="true" form="prefix">(</mo><mi>ρ</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>:=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>−</mo><mi>ρ</mi><mo stretchy="true" form="postfix">)</mo></mrow><msup><mover><mover><mrow><mi>𝛃</mi><mspace width="0.167em"></mspace></mrow><mo accent="true">̂</mo></mover><mo accent="true">̂</mo></mover><mrow><mi>O</mi><mi>L</mi><mi>S</mi></mrow></msup><mo>+</mo><mi>ρ</mi><msup><mover><mi>𝛃</mi><mo accent="true">̂</mo></mover><mrow><mi>i</mi><mi>n</mi><mi>d</mi></mrow></msup><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mi>ρ</mi><msup><mover><mi>Σ</mi><mo accent="true">̃</mo></mover><mrow><mi>−</mi><mn>1</mn></mrow></msup><mi>Σ</mi><mo>+</mo><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>−</mo><mi>ρ</mi><mo stretchy="true" form="postfix">)</mo></mrow><msub><mtext mathvariant="bold">𝐈</mtext><mi>p</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow><msup><mover><mover><mrow><mi>𝛃</mi><mspace width="0.167em"></mspace></mrow><mo accent="true">̂</mo></mover><mo accent="true">̂</mo></mover><mrow><mi>O</mi><mi>L</mi><mi>S</mi></mrow></msup><mo>:=</mo><mi>Σ</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>ρ</mi><mo stretchy="true" form="postfix">)</mo></mrow><msup><mover><mover><mrow><mi>𝛃</mi><mspace width="0.167em"></mspace></mrow><mo accent="true">̂</mo></mover><mo accent="true">̂</mo></mover><mrow><mi>O</mi><mi>L</mi><mi>S</mi></mrow></msup><mo>,</mo></mrow><annotation encoding="application/x-tex">
+is not needed. The LSh estimator is defined as:</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mover><mi>𝛃</mi><mo accent="true">̂</mo></mover><mrow><mi>i</mi><mi>n</mi><mi>d</mi></mrow></msup><mrow><mo stretchy="true" form="prefix">(</mo><mi>ρ</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>:=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>−</mo><mi>ρ</mi><mo stretchy="true" form="postfix">)</mo></mrow><msup><mover><mover><mrow><mi>𝛃</mi><mspace width="0.167em"></mspace></mrow><mo accent="true">̂</mo></mover><mo accent="true">̂</mo></mover><mrow><mi>O</mi><mi>L</mi><mi>S</mi></mrow></msup><mo>+</mo><mi>ρ</mi><msup><mover><mi>𝛃</mi><mo accent="true">̂</mo></mover><mrow><mi>i</mi><mi>n</mi><mi>d</mi></mrow></msup><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mi>ρ</mi><msup><mover><mi>Σ</mi><mo accent="true">̃</mo></mover><mrow><mi>−</mi><mn>1</mn></mrow></msup><mi>Σ</mi><mo>+</mo><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>−</mo><mi>ρ</mi><mo stretchy="true" form="postfix">)</mo></mrow><msub><mtext mathvariant="bold">𝐈</mtext><mi>p</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow><msup><mover><mover><mrow><mi>𝛃</mi><mspace width="0.167em"></mspace></mrow><mo accent="true">̂</mo></mover><mo accent="true">̂</mo></mover><mrow><mi>O</mi><mi>L</mi><mi>S</mi></mrow></msup><mo>:=</mo><mi>Σ</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>ρ</mi><mo stretchy="true" form="postfix">)</mo></mrow><msup><mover><mover><mrow><mi>𝛃</mi><mspace width="0.167em"></mspace></mrow><mo accent="true">̂</mo></mover><mo accent="true">̂</mo></mover><mrow><mi>O</mi><mi>L</mi><mi>S</mi></mrow></msup><mo>,</mo></mrow><annotation encoding="application/x-tex">
 \widehat{\boldsymbol{\beta}}^{ind}(\rho):=(1-\rho)\widehat{\widehat{\boldsymbol{\beta}\,}}^{OLS}+\rho \widehat{\boldsymbol{\beta}}^{ind}=\left(\rho\widetilde{\Sigma}^{-1}\Sigma + (1-\rho)\textbf{I}_p\right)\widehat{\widehat{\boldsymbol{\beta}\,}}^{OLS}:=\Sigma(\rho)\widehat{\widehat{\boldsymbol{\beta}\,}}^{OLS}, 
-</annotation></semantics></math> where
+</annotation></semantics></math></p>
+<p>where
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mover><mover><mi>𝛃</mi><mo accent="true">̂</mo></mover><mo accent="true">̂</mo></mover><mrow><mi>O</mi><mi>L</mi><mi>S</mi></mrow></msup><annotation encoding="application/x-tex">\widehat{\widehat{\boldsymbol{\beta}}}^{OLS}</annotation></semantics></math>
 is the OLS estimator without intercept, and
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>ρ</mi><annotation encoding="application/x-tex">\rho</annotation></semantics></math>
@@ -300,10 +310,11 @@ This idea follows the approach of <a href="https://www.sciencedirect.com/science
 and Wolf(2004)</a>, but SRR selects the shrinkage level
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>ρ</mi><annotation encoding="application/x-tex">\rho</annotation></semantics></math>
 by directly minimizing the MSE of the regression coefficients, not the
-covariance. The SRR estimator is given by:
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mover><mi>𝛃</mi><mo accent="true">̂</mo></mover><mrow><mi>S</mi><mi>R</mi><mi>R</mi></mrow></msup><mrow><mo stretchy="true" form="prefix">(</mo><mi>ρ</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mo minsize="1.2" maxsize="1.2" stretchy="false" form="prefix">(</mo><msup><mi>Σ</mi><mo>*</mo></msup><mrow><mo stretchy="true" form="prefix">(</mo><mi>ρ</mi><mo stretchy="true" form="postfix">)</mo></mrow><msup><mo minsize="1.2" maxsize="1.2" stretchy="false" form="postfix">)</mo><mrow><mi>−</mi><mn>1</mn></mrow></msup><msup><mtext mathvariant="bold">𝐗</mtext><mi>T</mi></msup><mtext mathvariant="bold">𝐲</mtext><mspace width="1.0em"></mspace><mtext mathvariant="normal">with</mtext><mspace width="1.0em"></mspace><msup><mi>Σ</mi><mo>*</mo></msup><mrow><mo stretchy="true" form="prefix">(</mo><mi>ρ</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>−</mo><mi>ρ</mi><mo stretchy="true" form="postfix">)</mo></mrow><mi>Σ</mi><mo>+</mo><mi>ρ</mi><mi>v</mi><msub><mtext mathvariant="bold">𝐈</mtext><mrow><mi>p</mi><mo>+</mo><mn>1</mn></mrow></msub><mi>.</mi></mrow><annotation encoding="application/x-tex">
+covariance. The SRR estimator is given by:</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mover><mi>𝛃</mi><mo accent="true">̂</mo></mover><mrow><mi>S</mi><mi>R</mi><mi>R</mi></mrow></msup><mrow><mo stretchy="true" form="prefix">(</mo><mi>ρ</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mo minsize="1.2" maxsize="1.2" stretchy="false" form="prefix">(</mo><msup><mi>Σ</mi><mo>*</mo></msup><mrow><mo stretchy="true" form="prefix">(</mo><mi>ρ</mi><mo stretchy="true" form="postfix">)</mo></mrow><msup><mo minsize="1.2" maxsize="1.2" stretchy="false" form="postfix">)</mo><mrow><mi>−</mi><mn>1</mn></mrow></msup><msup><mtext mathvariant="bold">𝐗</mtext><mi>T</mi></msup><mtext mathvariant="bold">𝐲</mtext><mspace width="1.0em"></mspace><mtext mathvariant="normal">with</mtext><mspace width="1.0em"></mspace><msup><mi>Σ</mi><mo>*</mo></msup><mrow><mo stretchy="true" form="prefix">(</mo><mi>ρ</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>−</mo><mi>ρ</mi><mo stretchy="true" form="postfix">)</mo></mrow><mi>Σ</mi><mo>+</mo><mi>ρ</mi><mi>v</mi><msub><mtext mathvariant="bold">𝐈</mtext><mrow><mi>p</mi><mo>+</mo><mn>1</mn></mrow></msub><mi>.</mi></mrow><annotation encoding="application/x-tex">
 \widehat{\boldsymbol{\beta}}^{SRR}(\rho)=\big(\Sigma^*(\rho)\big)^{-1}\textbf{X}^T\textbf{y} \quad \text{with} \quad \Sigma^*(\rho)=(1-\rho)\Sigma+\rho v \textbf{I}_{p+1}.
-</annotation></semantics></math> The optimal shrinkage parameter
+</annotation></semantics></math></p>
+<p>The optimal shrinkage parameter
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>ρ</mi><mo>*</mo></msup><annotation encoding="application/x-tex">\rho^*</annotation></semantics></math>
 is chosen to minimize
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>M</mi><mi>S</mi><mi>E</mi><mo minsize="1.2" maxsize="1.2" stretchy="false" form="prefix">(</mo><msup><mover><mi>𝛃</mi><mo accent="true">̂</mo></mover><mrow><mi>S</mi><mi>R</mi><mi>R</mi></mrow></msup><mrow><mo stretchy="true" form="prefix">(</mo><mi>ρ</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo minsize="1.2" maxsize="1.2" stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">MSE\big(\widehat{\boldsymbol{\beta}}^{SRR}(\rho)\big)</annotation></semantics></math>.</p>
@@ -311,14 +322,14 @@ is chosen to minimize
 <div class="section level3">
 <h3 id="summary-of-shrinkage-estimators">Summary of Shrinkage Estimators<a class="anchor" aria-label="anchor" href="#summary-of-shrinkage-estimators"></a>
 </h3>
-<table class="table">
+<table style="width:100%;" class="table">
 <colgroup>
-<col width="14%">
-<col width="19%">
-<col width="19%">
-<col width="14%">
-<col width="15%">
-<col width="14%">
+<col width="16%">
+<col width="16%">
+<col width="16%">
+<col width="16%">
+<col width="16%">
+<col width="16%">
 </colgroup>
 <thead><tr class="header">
 <th>Method</th>
@@ -430,9 +441,8 @@ distances and estimated coefficients.</p>
 <p>The following <em>data-generating processes (DGPs)</em> are
 considered:</p>
 <ul>
-<li>
-<a href="#multivariate-gaussian-distribution">Multivariate Gaussian
-distributed covariates with Toeplitz covariance matrix</a> -
+<li><p><a href="#multivariate-gaussian-distribution">Multivariate
+Gaussian distributed covariates with Toeplitz covariance matrix</a> -
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>𝛍</mi><mo>,</mo><mi>𝚿</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>ρ</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">N(\pmb{\mu}, \pmb{\Psi}(\rho))</annotation></semantics></math>
 where
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>𝚿</mi><mrow><mi>s</mi><mi>t</mi></mrow></msub><mrow><mo stretchy="true" form="prefix">(</mo><mi>ρ</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><msup><mi>ρ</mi><mrow><mo stretchy="true" form="prefix">|</mo><mi>s</mi><mo>−</mo><mi>t</mi><mo stretchy="true" form="postfix">|</mo></mrow></msup></mrow><annotation encoding="application/x-tex">\pmb{\Psi}_{st}(\rho) = \rho^{|s-t|}</annotation></semantics></math>
@@ -445,9 +455,9 @@ is the mean vector,
 is the covariance matrix, and
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>ρ</mi><annotation encoding="application/x-tex">\rho</annotation></semantics></math>
 represents the correlation coefficient that controls the dependence
-between covariates. The response is generated using normal noise.</li>
-<li>
-<a href="#students-t-distribution">Student’s
+between covariates. The response is generated using normal
+noise.</p></li>
+<li><p><a href="#students-t-distribution">Student’s
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math>
 distributed Multivariate Gaussian distributed covariates with Toeplitz
 covariance matrix</a> -
@@ -463,9 +473,9 @@ is the mean vector,
 is the covariance matrix, and
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>ρ</mi><annotation encoding="application/x-tex">\rho</annotation></semantics></math>
 represents the correlation coefficient that controls the dependence
-between covariates. The response includes heavier-tailed variation.</li>
-<li>
-<a href="#gaussian-copula-with-binomial-margins">Multivariate
+between covariates. The response includes heavier-tailed
+variation.</p></li>
+<li><p><a href="#gaussian-copula-with-binomial-margins">Multivariate
 Gaussian Copula with Binomial marginal distributed covariates and
 Toeplitz covariance matrix</a> -
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mtext mathvariant="bold">𝐙</mtext><mi>i</mi></msub><mo>∼</mo><mi>N</mi><mrow><mo stretchy="true" form="prefix">(</mo><mtext mathvariant="bold">𝟎</mtext><mo>,</mo><mi>Ψ</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>ρ</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\textbf{Z}_i\sim N(\textbf{0}, \Psi(\rho))</annotation></semantics></math>
@@ -479,9 +489,8 @@ is the <em>cumulative distribution function (CDF)</em> of
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi><mrow><mo stretchy="true" form="prefix">(</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">N(0,1)</annotation></semantics></math>,
 and
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>F</mi><mrow><mi>−</mi><mn>1</mn></mrow></msup><annotation encoding="application/x-tex">F^{-1}</annotation></semantics></math>
-is the inverse CDF of the binomial distribution.</li>
-<li>
-<a href="#latent-space-features">Latent Space Features</a> -
+is the inverse CDF of the binomial distribution.</p></li>
+<li><p><a href="#latent-space-features">Latent Space Features</a> -
 Covariates are generated by combining a low-rank structure with random
 variations, Specifically, we simulate
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐗</mi><mo>=</mo><mi>𝐀</mi><mi>𝐙</mi><mo>+</mo><mi>𝐄</mi></mrow><annotation encoding="application/x-tex">\mathbf{X} = \mathbf{A} \mathbf{Z} + \mathbf{E}</annotation></semantics></math>,
@@ -505,7 +514,7 @@ is an
 matrix of independent Gaussian noise with variance
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mn>10</mn><mrow><mi>−</mi><mn>6</mn></mrow></msup><annotation encoding="application/x-tex">10^{-6}</annotation></semantics></math>,
 i.e.,
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi><mrow><mo stretchy="true" form="prefix">(</mo><mn>0</mn><mo>,</mo><msup><mn>10</mn><mrow><mi>−</mi><mn>6</mn></mrow></msup><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">N(0,10^{-6})</annotation></semantics></math>.</li>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi><mrow><mo stretchy="true" form="prefix">(</mo><mn>0</mn><mo>,</mo><msup><mn>10</mn><mrow><mi>−</mi><mn>6</mn></mrow></msup><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">N(0,10^{-6})</annotation></semantics></math>.</p></li>
 </ul>
 <p>In all three settings, the true regression coefficient vector
 alternates in sign with increasing magnitude, making it possible to
@@ -1809,13 +1818,13 @@ here; instead, we provide clean, reproducible examples for users to
 adapt and explore on their own. The detailed results and preprocessing
 procedures can be found in the <a href="http//....">main paper</a>.</p>
 <ul>
-<li>The <strong>cybersickness dataset</strong> is used for illustrating
-shrinkage GLMs using a Poisson model. The main Shrinkage GLMs function
-is part of the related package <code>ShrinkageGLMs</code>, you can find
-<a href="https://github.com/Ziwei-ChenChen/ShrinkageGLMs" class="external-link">here</a>.</li>
-<li>The <strong>returns_441 dataset</strong> contains portfolio returns
-and is used for demonstrating shrinkage estimation in financial asset
-allocation.</li>
+<li><p>The <strong>cybersickness dataset</strong> is used for
+illustrating shrinkage GLMs using a Poisson model. The main Shrinkage
+GLMs function is part of the related package <code>ShrinkageGLMs</code>,
+you can find <a href="https://github.com/Ziwei-ChenChen/ShrinkageGLMs" class="external-link">here</a>.</p></li>
+<li><p>The <strong>returns_441 dataset</strong> contains portfolio
+returns and is used for demonstrating shrinkage estimation in financial
+asset allocation.</p></li>
 </ul>
 <div class="section level3">
 <h3 id="cybersickness-data">Cybersickness data<a class="anchor" aria-label="anchor" href="#cybersickness-data"></a>
