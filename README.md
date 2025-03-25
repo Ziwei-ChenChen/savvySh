@@ -1,14 +1,14 @@
 
-# savvySh: Shrinkage Estimators for Linear Regression
+# savvySh: Shrinkage Methods for Linear Regression Estimation
 
 The `savvySh` package provides a unified interface for fitting shrinkage estimators in linear regression, 
 particularly useful in the presence of multicollinearity or high-dimensional covariates. 
-It supports four shrinkage classes: Multiplicative Shrinkage, Slab Regression, Linear Shrinkage (LSh), and Shrinkage Ridge Regression (SRR).
-These methods improve on classical OLS by trading a small amount of bias for a significant reduction in variance.
+It supports four shrinkage classes: *Multiplicative Shrinkage*, *Slab Regression*, *Linear Shrinkage*, and *Shrinkage Ridge Regression*.
+These methods improve on the classical *ordinary least squares (OLS)* estimator by trading a small amount of bias for a significant reduction in variance.
 
 This package builds on theoretical work discussed in:
 
-Asimit, V., Cidota, M. A., Chen, Z., & Asimit, J. (2025). *Slab and Shrinkage Linear Regression Estimation*.
+Asimit, V., Cidota, M. A., Chen, Z., & Asimit, J. (2025). [*Slab and Shrinkage Linear Regression Estimation*](http//...).
 
 Website available at: https://Ziwei-ChenChen.github.io/savvySh; besides, if you want to run the real data analysis on this [website](https://Ziwei-ChenChen.github.io/savvySh), please follow dependency from GitHub:
 ```r
@@ -27,26 +27,22 @@ Once installed, load the package:
 ```r
 library(savvySh)
 ```
-
 ## Features
 
-`savvySh` provides four types of shrinkage estimators to improve regression performance by reducing variance:
+`savvySh` provides several shrinkage estimators designed to improve regression accuracy by reducing estimation variance:
 
 - **Multiplicative Shrinkage:**  
-  Shrinks OLS coefficients by multiplying them with estimated factors. Includes:  
-  - **Stein (St):** Uses a single global factor.  
-  - **Diagonal Shrinkage (DSh):** Shrinks each coefficient separately.  
-  - **Shrinkage (Sh):** Uses a (non-diagonal) matrix shrinkage operator, estimated by solving a Sylvester equation.
+  Applies shrinkage by multiplying the OLS estimates with data-driven factors:  
+  - **Stein (St):** Applies a single global shrinkage factor to all coefficients.  
+  - **Diagonal Shrinkage (DSh):** Applies a separate factor to each coefficient.  
+  - **Shrinkage (Sh):** Uses a full matrix shrinkage operator estimated by solving a *Sylvester equation*.
 
 - **Slab Regression:**  
-  Adds a penalty to guide shrinkage:  
-  - **SR:** Shrinks toward a fixed direction (e.g., vector of ones).  
-  - **GSR:** Shrinks toward multiple directions (e.g., eigenvectors)
-
-- **Linear Shrinkage (LSh):**  Combines the OLS estimate with a version that assumes covariates are uncorrelated. Best used when covariates are standardized.
-
-- **Shrinkage Ridge Regression (SRR):** Modifies ridge regression by shrinking the covariance matrix toward a scaled identity matrix.
-  The shrinkage level is chosen to minimize prediction error.
+  Adds structured shrinkage based on penalty terms:  
+  - **Slab Regression (SR):** Shrinks toward a fixed target direction (e.g., a vector of ones).  
+  - **Generalized Slab Regression (GSR):** Shrinks toward multiple directions (e.g., eigenvectors).
+- **Linear Shrinkage (LSh):** Takes a weighted average of the OLS estimator and a target estimator and is useful for standardized data.
+- **Shrinkage Ridge Regression (SRR):** Modifies *Ridge Regression (RR)* by shrinking the sample covariance matrix toward a multiple of the identity matrix.
 
 All shrinkage factors are computed in closed form (except SRR, which optimizes shrinkage intensity numerically).
 
