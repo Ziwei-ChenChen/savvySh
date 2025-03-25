@@ -181,9 +181,7 @@ coefficients uniformly by a single factor
 \widehat{a^*} = \frac{\left(\widehat{\boldsymbol\beta}^{OLS}\right)^T\widehat{\boldsymbol\beta}^{OLS}}{\left(\widehat{\boldsymbol\beta}^{OLS}\right)^T\widehat{\boldsymbol\beta}^{OLS} + \widehat{\text{MSE}\left(\widehat{\boldsymbol{\beta}}^{\text{OLS}}\right)}}.
 </annotation></semantics></math></p>
 <p>This corresponds to
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐃</mi><mo>=</mo><mi>a</mi><msub><mi>𝐈</mi><mrow><mi>p</mi><mo>+</mo><mn>1</mn></mrow></msub></mrow><annotation encoding="application/x-tex">\mathbf{D} = a \mathbf{I}_{p+1}</annotation></semantics></math>
-with a data-driven scalar
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi><mo>=</mo><mover><msup><mi>a</mi><mo>*</mo></msup><mo accent="true">̂</mo></mover></mrow><annotation encoding="application/x-tex">a = \widehat{a^*}</annotation></semantics></math>.
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐃</mi><mo>=</mo><mi>a</mi><msub><mi>𝐈</mi><mrow><mi>p</mi><mo>+</mo><mn>1</mn></mrow></msub></mrow><annotation encoding="application/x-tex">\mathbf{D} = a \mathbf{I}_{p+1}</annotation></semantics></math>.
 It reduces variance by scaling all coefficients equally.</p>
 <ol start="2" style="list-style-type: decimal">
 <li>
@@ -223,8 +221,9 @@ equation</em>:</li>
 <p>This corresponds to
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐃</mi><mo>=</mo><mtext mathvariant="normal">diag</mtext><mrow><mo stretchy="true" form="prefix">(</mo><mi>𝐂</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\mathbf{D} = \text{diag}\left(\mathbf{C}\right)</annotation></semantics></math>.
 Unlike St and DSh, the Sh estimator allows interactions across
-coefficients through off-diagonal entries in <span class="math inline">$\mathbf{C}^$</span>, capturing richer shrinkage
-structures.</p>
+coefficients through off-diagonal entries in
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mover><msup><mi>𝐂</mi><mo>*</mo></msup><mo accent="true">̂</mo></mover><annotation encoding="application/x-tex">\widehat{\mathbf{C}^*}</annotation></semantics></math>,
+capturing richer shrinkage structures.</p>
 </div>
 <div class="section level3">
 <h3 id="slab-regression">Slab Regression<a class="anchor" aria-label="anchor" href="#slab-regression"></a>
@@ -241,7 +240,7 @@ or determined by the structure of the data (e.g., eigenvectors of the
 <li>
 <strong>(Simple) Slab Regression (SR):</strong> The SR estimator
 adds a penalty based on a single direction vector
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐮</mi><mo>∈</mo><msup><mi>ℝ</mi><mrow><mi>p</mi><mo>+</mo><mn>1</mn></mrow></msup></mrow><annotation encoding="application/x-tex">\mathbf{u} \in \mathbb{R}^{p+1}</annotation></semantics></math>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐮</mi><mo>∈</mo><mi>ℜ</mi><msup><mi>R</mi><mrow><mi>p</mi><mo>+</mo><mn>1</mn></mrow></msup></mrow><annotation encoding="application/x-tex">\mathbf{u} \in \Re{R}^{p+1}</annotation></semantics></math>,
 often chosen as the constant vector
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>𝟏</mn><annotation encoding="application/x-tex">\mathbf{1}</annotation></semantics></math>.
 The estimator is defined as:</li>
@@ -351,7 +350,7 @@ is chosen to minimize
 <tr class="even">
 <td><strong>RR</strong></td>
 <td>Toward origin</td>
-<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mrow><mo stretchy="true" form="prefix">(</mo><msup><mi>𝐗</mi><mi>⊤</mi></msup><mi>𝐗</mi><mo>+</mo><mi>λ</mi><mi>I</mi><mo stretchy="true" form="postfix">)</mo></mrow><mrow><mi>−</mi><mn>1</mn></mrow></msup><msup><mi>𝐗</mi><mi>⊤</mi></msup><mi>𝐲</mi></mrow><annotation encoding="application/x-tex">(\mathbf{X}^\top\mathbf{X} + \lambda I)^{-1} \mathbf{X}^\top \mathbf{y}</annotation></semantics></math></td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mrow><mo stretchy="true" form="prefix">(</mo><msup><mi>𝐗</mi><mi>⊤</mi></msup><mi>𝐗</mi><mo>+</mo><mi>λ</mi><mi>I</mi><mo stretchy="true" form="postfix">)</mo></mrow><mrow><mi>−</mi><mn>1</mn></mrow></msup><msup><mi>𝐗</mi><mi>⊤</mi></msup><mi>𝐲</mi></mrow><annotation encoding="application/x-tex">\left(\mathbf{X}^\top\mathbf{X} + \lambda I\right)^{-1} \mathbf{X}^\top \mathbf{y}</annotation></semantics></math></td>
 <td>No</td>
 <td>
 <strong>Yes</strong> (cross-validation)</td>
@@ -368,7 +367,7 @@ is chosen to minimize
 <tr class="even">
 <td><strong>DSh</strong></td>
 <td>Coordinate-wise (diagonal)</td>
-<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐃</mi><mo>⋅</mo><msup><mover><mi>β</mi><mo accent="true">̂</mo></mover><mtext mathvariant="normal">OLS</mtext></msup></mrow><annotation encoding="application/x-tex">\mathbf{D} \cdot \widehat{\beta}^{\text{OLS}}</annotation></semantics></math></td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext mathvariant="normal">diag</mtext><mrow><mo stretchy="true" form="prefix">(</mo><mover><msup><mi>𝐛</mi><mo mathvariant="bold">*</mo></msup><mo accent="true">̂</mo></mover><mo stretchy="true" form="postfix">)</mo></mrow><mo>⋅</mo><msup><mover><mi>β</mi><mo accent="true">̂</mo></mover><mtext mathvariant="normal">OLS</mtext></msup></mrow><annotation encoding="application/x-tex">\text{diag}\left(\widehat{\mathbf{b^*}}\right) \cdot \widehat{\beta}^{\text{OLS}}</annotation></semantics></math></td>
 <td>No</td>
 <td>No</td>
 <td>No</td>
@@ -376,7 +375,7 @@ is chosen to minimize
 <tr class="odd">
 <td><strong>Sh</strong></td>
 <td>Matrix shrinkage (non-diagonal)</td>
-<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐂</mi><mo>⋅</mo><msup><mover><mi>β</mi><mo accent="true">̂</mo></mover><mtext mathvariant="normal">OLS</mtext></msup></mrow><annotation encoding="application/x-tex">\mathbf{C} \cdot \widehat{\beta}^{\text{OLS}}</annotation></semantics></math></td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><msup><mi>𝐂</mi><mo>*</mo></msup><mo accent="true">̂</mo></mover><mo>⋅</mo><msup><mover><mi>β</mi><mo accent="true">̂</mo></mover><mtext mathvariant="normal">OLS</mtext></msup></mrow><annotation encoding="application/x-tex">\widehat{\mathbf{C}^*} \cdot \widehat{\beta}^{\text{OLS}}</annotation></semantics></math></td>
 <td>No</td>
 <td>No</td>
 <td>No</td>
@@ -516,7 +515,7 @@ matrix of independent Gaussian noise with variance
 i.e.,
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi><mrow><mo stretchy="true" form="prefix">(</mo><mn>0</mn><mo>,</mo><msup><mn>10</mn><mrow><mi>−</mi><mn>6</mn></mrow></msup><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">N(0,10^{-6})</annotation></semantics></math>.</p></li>
 </ul>
-<p>In all three settings, the true regression coefficient vector
+<p>In all four settings, the true regression coefficient vector
 alternates in sign with increasing magnitude, making it possible to
 assess the shrinkage effect across varying coefficient scales.</p>
 <div class="section level3">
