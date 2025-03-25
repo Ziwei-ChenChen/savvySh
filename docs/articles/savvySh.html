@@ -64,17 +64,17 @@
 <p><code>savvySh</code> is an R package that implements a suite of
 shrinkage estimators for multivariate linear regression. The motivation
 for shrinkage estimation originates from Stein’s paradox, which shows
-that it is possible to improve on the classical ordinary least squares
-(OLS) estimator when estimating multiple parameters simultaneously. This
-improvement is achieved by introducing structured bias that reduces
-variance, yielding estimators with smaller overall mean squared
-error.</p>
+that it is possible to improve on the classical <em>Ordinary Least
+Squares (OLS)</em> estimator when estimating multiple parameters
+simultaneously. This improvement is achieved by introducing structured
+bias that reduces variance, yielding estimators with smaller overall
+<em>Mean Squared Error (MSE)</em>.</p>
 <p>The <code>savvySh</code> package provides a unified interface to four
 shrinkage strategies, each designed to improve prediction accuracy and
 estimation stability in finite samples. These methods do not require
 cross-validation or tuning parameter selection, with the exception of
-the Shrinkage Ridge Regression (SRR), for which the shrinkage intensity
-is chosen by minimizing an explicit mean squared error criterion.</p>
+the <em>Shrinkage Ridge Regression (SRR)</em>, for which the shrinkage
+intensity is chosen by minimizing an explicit MSE criterion.</p>
 <p>The package is particularly suited for high-dimensional settings or
 cases where the design matrix exhibits near multicollinearity. Empirical
 results in both simulation and real data settings show that at least one
@@ -82,72 +82,59 @@ of the shrinkage estimators consistently performs as well as or better
 than OLS, and in many cases leads to substantial improvements,
 especially when applied to generalized linear models.</p>
 <p>For more details, please see:</p>
-<p>Asimit, V., Cidota, M. A., Chen, Z., &amp; Asimit, J. (2025). <a href="http...">Slab and Shrinkage Linear Regression Estimation</a></p>
-<p><strong>Main features</strong>: <code>savvySh</code> implements four
-classes of shrinkage estimators:</p>
+<p>Asimit, V., Cidota, M. A., Chen, Z., &amp; Asimit, J. (2025). <a href="http//...">Slab and Shrinkage Linear Regression Estimation</a></p>
+<p><strong>Main features</strong>: <code>savvySh</code> provides four
+classes of shrinkage estimators for linear regression:</p>
 <ul>
-<li>
-<a href="#multiplicative-shrinkage">Multiplicative Shrinkage:</a>
-Adjusts OLS estimates by applying theoretically computed multiplicative
-factors. This class includes the <em>Stein estimator (St)</em>,
-<em>Diagonal Shrinkage (DSh)</em>, and, optionally, the <em>shrinkage
-estimator (Sh)</em> that solves a Sylvester equation.</li>
-<li>
-<a href="#slab-regression">Slab Regression:</a> Incorporates an
-adaptive quadratic penalty to selectively shrink coefficients. The
-<em>(Simple) Slab Regression (SR)</em> applies a penalty in a fixed
-direction, while the <em>Generalized Slab Regression (GSR)</em> extends
-this by allowing shrinkage along directions defined by the leading
-principal components of the data.</li>
-<li>
-<a href="#linear-shrinkage">Linear Shrinkage:</a> Constructs a
-convex combination of the OLS estimator (through the origin) and a
-target estimator that assumes uncorrelated covariates, where the data
-are assumed to be standardized and centered.</li>
-<li>
-<a href="#shrinkage-ridge-regression">Shrinkage Ridge
-Regression:</a> Extends <em>ridge regression (RR)</em> by shrinking the
-covariance matrix toward a spherical target matrix with equal diagonal
-entries. This results in a modified linear system for coefficient
-estimation.</li>
+<li><p><a href="#multiplicative-shrinkage">Multiplicative Shrinkage:</a>
+Modifies OLS estimates by applying data-driven multiplicative factors.
+This includes the <em>Stein estimator (St)</em>, <em>Diagonal Shrinkage
+(DSh)</em>, and the more general <em>Shrinkage estimator (Sh)</em> that
+solves a <em>Sylvester equation</em>.</p></li>
+<li><p><a href="#slab-regression">Slab Regression:</a> Adds a quadratic
+penalty to shrink the coefficients in specific directions. The
+<em>Simple Slab Regression (SR)</em> penalizes along a fixed direction,
+and the <em>Generalized Slab Regression (GSR)</em> allows penalties
+along multiple directions, typically aligned with the data
+structure.</p></li>
+<li><p><a href="#linear-shrinkage">Linear Shrinkage:</a> Combines the
+OLS estimator (through the origin) with a target that assumes
+uncorrelated covariates. This method is designed for standardized data
+and avoids estimating the intercept.</p></li>
+<li><p><a href="#shrinkage-ridge-regression">Shrinkage Ridge
+Regression:</a> Improves on <em>Ridge Regression (RR)</em> by shrinking
+the covariance matrix toward a diagonal matrix with equal entries,
+balancing the sample structure with a stable target.</p></li>
 </ul>
 <p><strong>Inputs</strong>: The primary inputs to <code>savvySh</code>
 are similar to those of a regression function:</p>
 <ul>
-<li>
-<code>x</code>: The design matrix (predictor matrix) of dimension
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>×</mo><mi>p</mi></mrow><annotation encoding="application/x-tex">n\times p</annotation></semantics></math>.</li>
-<li>
-<code>y</code>: The response vector of length
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>n</mi><annotation encoding="application/x-tex">n</annotation></semantics></math>.</li>
-<li>
-<code>model_class</code>: The shrinkage method to use (one of
+<li><p><code>x</code>: The design matrix (predictor matrix) of dimension
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>×</mo><mi>p</mi></mrow><annotation encoding="application/x-tex">n\times p</annotation></semantics></math>.</p></li>
+<li><p><code>y</code>: The response vector of length
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>n</mi><annotation encoding="application/x-tex">n</annotation></semantics></math>.</p></li>
+<li><p><code>model_class</code>: The shrinkage method to use (one of
 <code>"Multiplicative"</code>, <code>"Slab"</code>,
-<code>"Linear"</code>, or <code>"ShrinkageRR"</code>)</li>
-<li>Additional method-specific parameters (e.g., include
+<code>"Linear"</code>, or <code>"ShrinkageRR"</code>).</p></li>
+<li><p>Additional method-specific parameters (e.g., include
 <code>Sh</code>or not), with sensible defaults or automatic selection if
-not provided.</li>
+not provided.</p></li>
 </ul>
 <p><strong>Output</strong>: The output of <code>savvySh</code> is a list
 containing several elements:</p>
 <ul>
-<li>
-<code>call</code>: the original function call.</li>
-<li>
-<code>model</code>: The data frame of <code>y</code> and
-<code>x</code> used in the analysis.</li>
-<li>
-<code>optimal_lambda</code>: the penalty parameter used (if
-applicable).</li>
-<li>
-<code>model_class</code>: the shrinkage method used
+<li><p><code>call</code>: the original function call.</p></li>
+<li><p><code>model</code>: The data frame of <code>y</code> and
+<code>x</code> used in the analysis.</p></li>
+<li><p><code>optimal_lambda</code>: the penalty parameter used (if
+applicable).</p></li>
+<li><p><code>model_class</code>: the shrinkage method used
 (e.g.,<code>"Multiplicative"</code>, <code>"Slab"</code>,
-<code>"Linear"</code>, or <code>"ShrinkageRR"</code>).</li>
-<li>
-<code>coefficients</code>: A list of estimated coefficients for each
-applicable estimator for chosen <code>model_class</code>.</li>
-<li>Additional method-specific diagnostics (e.g., fitted values and
-predicted MSE).</li>
+<code>"Linear"</code>, or <code>"ShrinkageRR"</code>).</p></li>
+<li><p><code>coefficients</code>: A list of estimated coefficients for
+each applicable estimator for chosen <code>model_class</code>.</p></li>
+<li><p>Additional method-specific diagnostics (e.g., fitted values and
+predicted MSE).</p></li>
 </ul>
 <p>This vignette provides an overview of the methods implemented in
 <code>savvySh</code> and demonstrates how to use them on <a href="#simulation-examples">simulated data</a> and <a href="#real-data-analysis">real data</a>. We begin with a theoretical
@@ -175,31 +162,41 @@ the Gram matrix of the design.</p>
 <div class="section level3">
 <h3 id="multiplicative-shrinkage">Multiplicative Shrinkage<a class="anchor" aria-label="anchor" href="#multiplicative-shrinkage"></a>
 </h3>
-<p>This family of estimators applies multiplicative shrinkage to the OLS
-coefficients, where the shrinkage factors are computed directly from the
-data using closed-form expressions. These factors depend on the
-magnitude of the OLS estimates and the estimated variance, and aim to
-reduce mean squared error (MSE) by adjusting each coefficient’s
-influence accordingly.</p>
+<p>This class of estimators applies multiplicative adjustments to the
+OLS coefficients using a matrix
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐃</mi><annotation encoding="application/x-tex">\mathbf{D}</annotation></semantics></math>,
+such that the estimator takes the form
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mi>𝛃</mi><mo accent="true">̂</mo></mover><mo>=</mo><mi>𝐃</mi><msup><mover><mi>𝛃</mi><mo accent="true">̂</mo></mover><mrow><mi>O</mi><mi>L</mi><mi>S</mi></mrow></msup></mrow><annotation encoding="application/x-tex">\widehat{\boldsymbol{\beta}} = \mathbf{D} \widehat{\boldsymbol{\beta}}^{OLS}</annotation></semantics></math>.
+The matrix
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐃</mi><annotation encoding="application/x-tex">\mathbf{D}</annotation></semantics></math>
+is chosen to minimize the MSE. Three common forms are:</p>
 <ol style="list-style-type: decimal">
-<li><p><strong>Stein Estimator (St):</strong> A single scalar shrinkage
+<li><strong>Stein Estimator (St):</strong></li>
+</ol>
+<p>The St estimator shrinks all coefficients uniformly by a single
 factor
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mover><msup><mi>a</mi><mo>*</mo></msup><mo accent="true">̂</mo></mover><annotation encoding="application/x-tex">\widehat{a^*}</annotation></semantics></math>
-is applied uniformly to all coefficients. It is derived to minimize MSE
-of the scaled estimator:
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mover><msup><mi>a</mi><mo>*</mo></msup><mo accent="true">̂</mo></mover><annotation encoding="application/x-tex">\widehat{a^*}</annotation></semantics></math>:
 <math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mover><mi>𝛃</mi><mo accent="true">̂</mo></mover><mtext mathvariant="normal">St</mtext></msup><mo>=</mo><mover><msup><mi>a</mi><mo>*</mo></msup><mo accent="true">̂</mo></mover><msup><mover><mi>𝛃</mi><mo accent="true">̂</mo></mover><mtext mathvariant="normal">OLS</mtext></msup><mo>,</mo><mspace width="1.0em"></mspace><mtext mathvariant="normal">where</mtext><mspace width="1.0em"></mspace><mover><msup><mi>a</mi><mo>*</mo></msup><mo accent="true">̂</mo></mover><mo>=</mo><mfrac><mrow><msup><mrow><mo stretchy="true" form="prefix">(</mo><msup><mover><mi>𝛃</mi><mo accent="true">̂</mo></mover><mrow><mi>O</mi><mi>L</mi><mi>S</mi></mrow></msup><mo stretchy="true" form="postfix">)</mo></mrow><mi>T</mi></msup><msup><mover><mi>𝛃</mi><mo accent="true">̂</mo></mover><mrow><mi>O</mi><mi>L</mi><mi>S</mi></mrow></msup></mrow><mrow><msup><mrow><mo stretchy="true" form="prefix">(</mo><msup><mover><mi>𝛃</mi><mo accent="true">̂</mo></mover><mrow><mi>O</mi><mi>L</mi><mi>S</mi></mrow></msup><mo stretchy="true" form="postfix">)</mo></mrow><mi>T</mi></msup><msup><mover><mi>𝛃</mi><mo accent="true">̂</mo></mover><mrow><mi>O</mi><mi>L</mi><mi>S</mi></mrow></msup><mo>+</mo><mover><mrow><mtext mathvariant="normal">MSE</mtext><mrow><mo stretchy="true" form="prefix">(</mo><msup><mover><mi>𝛃</mi><mo accent="true">̂</mo></mover><mtext mathvariant="normal">OLS</mtext></msup><mo stretchy="true" form="postfix">)</mo></mrow></mrow><mo accent="true">̂</mo></mover></mrow></mfrac><mi>.</mi></mrow><annotation encoding="application/x-tex">
 \widehat{\boldsymbol{\beta}}^{\text{St}} = \widehat{a^*} \widehat{\boldsymbol{\beta}}^{\text{OLS}}, \quad \text{where} \quad
 \widehat{a^*} = \frac{\left(\widehat{\boldsymbol\beta}^{OLS}\right)^T\widehat{\boldsymbol\beta}^{OLS}}{\left(\widehat{\boldsymbol\beta}^{OLS}\right)^T\widehat{\boldsymbol\beta}^{OLS} + \widehat{\text{MSE}\left(\widehat{\boldsymbol{\beta}}^{\text{OLS}}\right)}}.
-</annotation></semantics></math></p></li>
-<li><p><strong>Diagonal Shrinkage Estimator (DSh):</strong> Extending
-the St estimator, DSh applies a separate shrinkage factor
+</annotation></semantics></math> This corresponds to
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐃</mi><mo>=</mo><mi>a</mi><msub><mi>𝐈</mi><mrow><mi>p</mi><mo>+</mo><mn>1</mn></mrow></msub></mrow><annotation encoding="application/x-tex">\mathbf{D} = a \mathbf{I}_{p+1}</annotation></semantics></math>
+with a data-driven scalar
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi><mo>=</mo><mover><msup><mi>a</mi><mo>*</mo></msup><mo accent="true">̂</mo></mover></mrow><annotation encoding="application/x-tex">a = \widehat{a^*}</annotation></semantics></math>.
+It reduces variance by scaling all coefficients equally.</p>
+<ol start="2" style="list-style-type: decimal">
+<li><strong>Diagonal Shrinkage Estimator (DSh):</strong></li>
+</ol>
+<p>Extending the St estimator, DSh applies a separate shrinkage factor
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mover><msubsup><mi>b</mi><mi>k</mi><mo>*</mo></msubsup><mo accent="true">̂</mo></mover><annotation encoding="application/x-tex">\widehat{b_k^*}</annotation></semantics></math>
 to each coefficient:
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mover><mi>𝛃</mi><mo accent="true">̂</mo></mover><mtext mathvariant="normal">DSh</mtext></msup><mo>=</mo><mtext mathvariant="normal">diag</mtext><mrow><mo stretchy="true" form="prefix">(</mo><mover><msubsup><mi>b</mi><mn>1</mn><mo>*</mo></msubsup><mo accent="true">̂</mo></mover><mo stretchy="true" form="postfix">)</mo></mrow><mo>,</mo><mspace width="1.0em"></mspace><mtext mathvariant="normal">where</mtext><mspace width="1.0em"></mspace><mover><msubsup><mi>b</mi><mi>k</mi><mo>*</mo></msubsup><mo accent="true">̂</mo></mover><mo>=</mo><mfrac><msup><mrow><mo stretchy="true" form="prefix">(</mo><msubsup><mover><mi>β</mi><mo accent="true">̂</mo></mover><mi>k</mi><mtext mathvariant="normal">OLS</mtext></msubsup><mo stretchy="true" form="postfix">)</mo></mrow><mn>2</mn></msup><mrow><msup><mrow><mo stretchy="true" form="prefix">(</mo><msubsup><mover><mi>β</mi><mo accent="true">̂</mo></mover><mi>k</mi><mtext mathvariant="normal">OLS</mtext></msubsup><mo stretchy="true" form="postfix">)</mo></mrow><mn>2</mn></msup><mo>+</mo><mover><msup><mi>σ</mi><mn>2</mn></msup><mo accent="true">̂</mo></mover><msub><mi>σ</mi><mi>k</mi></msub></mrow></mfrac><mi>.</mi></mrow><annotation encoding="application/x-tex">
-\widehat{\boldsymbol{\beta}}^{\text{DSh}} = \text{diag}\left(\widehat{b_1^*}\right), \quad 
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mover><mi>𝛃</mi><mo accent="true">̂</mo></mover><mtext mathvariant="normal">DSh</mtext></msup><mo>=</mo><mtext mathvariant="normal">diag</mtext><mrow><mo stretchy="true" form="prefix">(</mo><mover><msup><mi>𝐛</mi><mo mathvariant="bold">*</mo></msup><mo accent="true">̂</mo></mover><mo stretchy="true" form="postfix">)</mo></mrow><mo>,</mo><mspace width="1.0em"></mspace><mtext mathvariant="normal">where</mtext><mspace width="1.0em"></mspace><mover><msubsup><mi>b</mi><mi>k</mi><mo>*</mo></msubsup><mo accent="true">̂</mo></mover><mo>=</mo><mfrac><msup><mrow><mo stretchy="true" form="prefix">(</mo><msubsup><mover><mi>β</mi><mo accent="true">̂</mo></mover><mi>k</mi><mtext mathvariant="normal">OLS</mtext></msubsup><mo stretchy="true" form="postfix">)</mo></mrow><mn>2</mn></msup><mrow><msup><mrow><mo stretchy="true" form="prefix">(</mo><msubsup><mover><mi>β</mi><mo accent="true">̂</mo></mover><mi>k</mi><mtext mathvariant="normal">OLS</mtext></msubsup><mo stretchy="true" form="postfix">)</mo></mrow><mn>2</mn></msup><mo>+</mo><mover><msup><mi>σ</mi><mn>2</mn></msup><mo accent="true">̂</mo></mover><msub><mi>σ</mi><mi>k</mi></msub></mrow></mfrac><mi>.</mi></mrow><annotation encoding="application/x-tex">
+\widehat{\boldsymbol{\beta}}^{\text{DSh}} = \text{diag}\left(\widehat{\mathbf{b^*}}\right), \quad 
 \text{where} \quad
 \widehat{b_k^*} = \frac{\left(\widehat{\beta}_k^{\text{OLS}}\right)^2}{\left(\widehat{\beta}_k^{\text{OLS}}\right)^2 + \widehat{\sigma^2} \sigma_k}.
-</annotation></semantics></math> where
+</annotation></semantics></math> This corresponds to
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐃</mi><mo>=</mo><mtext mathvariant="normal">diag</mtext><mrow><mo stretchy="true" form="prefix">(</mo><mi>𝐛</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\mathbf{D} = \text{diag}\left(\mathbf{b}\right)</annotation></semantics></math>
+and
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>σ</mi><mi>k</mi></msub><annotation encoding="application/x-tex">\sigma_k</annotation></semantics></math>
 is the
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>k</mi><mtext mathvariant="normal">th</mtext></msup><annotation encoding="application/x-tex">k^{\text{th}}</annotation></semantics></math>
@@ -207,46 +204,57 @@ diagonal entry of
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>Σ</mi><mrow><mi>−</mi><mn>1</mn></mrow></msup><annotation encoding="application/x-tex">\Sigma^{-1}</annotation></semantics></math>
 and
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mover><msup><mi>σ</mi><mn>2</mn></msup><mo accent="true">̂</mo></mover><annotation encoding="application/x-tex">\widehat{\sigma^2}</annotation></semantics></math>
-is the estimated residual variance.</p></li>
-<li><p><strong>Shrinkage Estimator (Sh):</strong> The most general form,
-this estimator uses a (non-diagonal) matrix shrinkage operator
+is the estimated residual variance.</p>
+<ol start="3" style="list-style-type: decimal">
+<li><strong>Shrinkage Estimator (Sh):</strong></li>
+</ol>
+<p>The Sh estimator is the most general form in the multiplicative
+shrinkage family. It applies a full (non-diagonal) matrix
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mover><msup><mi>𝐂</mi><mo>*</mo></msup><mo accent="true">̂</mo></mover><annotation encoding="application/x-tex">\widehat{\mathbf{C}^*}</annotation></semantics></math>
-derived from minimizing the MSE. The optimal matrix solves the Sylvester
-equation:
+to the OLS estimate and requires solving a <em>Sylvester equation</em>:
 <math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mover><mi>𝛃</mi><mo accent="true">̂</mo></mover><mtext mathvariant="normal">Sh</mtext></msup><mo>=</mo><mover><msup><mi>𝐂</mi><mo>*</mo></msup><mo accent="true">̂</mo></mover><msup><mover><mi>𝛃</mi><mo accent="true">̂</mo></mover><mtext mathvariant="normal">OLS</mtext></msup><mo>,</mo><mspace width="1.0em"></mspace><mrow><mtext mathvariant="normal">where </mtext><mspace width="0.333em"></mspace></mrow><mover><msup><mi>𝐂</mi><mo>*</mo></msup><mo accent="true">̂</mo></mover><mrow><mspace width="0.333em"></mspace><mtext mathvariant="normal"> solves the Sylvester equation:</mtext></mrow><mspace width="0.222em"></mspace><msup><mi>Σ</mi><mrow><mi>−</mi><mn>1</mn></mrow></msup><mi>𝐂</mi><mo>+</mo><mi>𝐂</mi><msup><mover><mi>𝛃</mi><mo accent="true">̂</mo></mover><mtext mathvariant="normal">OLS</mtext></msup><msup><mrow><mo stretchy="true" form="prefix">(</mo><msup><mover><mi>𝛃</mi><mo accent="true">̂</mo></mover><mtext mathvariant="normal">OLS</mtext></msup><mo stretchy="true" form="postfix">)</mo></mrow><mi>T</mi></msup><mo>=</mo><msup><mover><mi>𝛃</mi><mo accent="true">̂</mo></mover><mtext mathvariant="normal">OLS</mtext></msup><msup><mrow><mo stretchy="true" form="prefix">(</mo><msup><mover><mi>𝛃</mi><mo accent="true">̂</mo></mover><mtext mathvariant="normal">OLS</mtext></msup><mo stretchy="true" form="postfix">)</mo></mrow><mi>T</mi></msup><mi>.</mi></mrow><annotation encoding="application/x-tex">
 \widehat{\boldsymbol{\beta}}^{\text{Sh}} = \widehat{\mathbf{C}^*} \widehat{\boldsymbol{\beta}}^{\text{OLS}}, \quad \text{where } \widehat{\mathbf{C}^*} \text{ solves the Sylvester equation:} \ \Sigma^{-1} \mathbf{C} + \mathbf{C} \widehat{\boldsymbol{\beta}}^{\text{OLS}} \left(\widehat{\boldsymbol{\beta}}^{\text{OLS}}\right)^T = \widehat{\boldsymbol{\beta}}^{\text{OLS}} \left(\widehat{\boldsymbol{\beta}}^{\text{OLS}}\right)^T.
-</annotation></semantics></math></p></li>
-</ol>
+</annotation></semantics></math> This corresponds to
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐃</mi><mo>=</mo><mtext mathvariant="normal">diag</mtext><mrow><mo stretchy="true" form="prefix">(</mo><mi>𝐂</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\mathbf{D} = \text{diag}\left(\mathbf{C}\right)</annotation></semantics></math>.
+Unlike St and DSh, the Sh estimator allows interactions across
+coefficients through off-diagonal entries in <span class="math inline">$\mathbf{C}^$</span>, capturing richer shrinkage
+structures.</p>
 </div>
 <div class="section level3">
 <h3 id="slab-regression">Slab Regression<a class="anchor" aria-label="anchor" href="#slab-regression"></a>
 </h3>
-<p>Slab regression methods introduce a structured quadratic penalty that
-shrinks the OLS coefficients in specific directions. These directions
-can be fixed (e.g., equal
+<p>Slab regression introduces a penalty that shrinks the estimated
+coefficients along specific directions, which is a special case of the
+<em>Generalized LASSO</em> estimator introduced in <a href="https://www.jstor.org/stable/23033600" class="external-link">Tibshirani and Taylor
+(2011)</a>. The penalty is quadratic and controls how much shrinkage is
+applied in each direction. These directions can be fixed (e.g., equal
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext mathvariant="bold">𝐮</mtext><mo>=</mo><mn>𝟏</mn></mrow><annotation encoding="application/x-tex">\textbf{u} = \mathbf{1}</annotation></semantics></math>)
 or determined by the structure of the data (e.g., eigenvectors of the
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Σ</mi><annotation encoding="application/x-tex">\Sigma</annotation></semantics></math>).</p>
 <ol style="list-style-type: decimal">
-<li><p><strong>(Simple) Slab Regression (SR):</strong> The SR estimator
-penalizes projection of the coefficient vector onto a fixed direction
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐮</mi><annotation encoding="application/x-tex">\mathbf{u}</annotation></semantics></math>,
-often the constant vector
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext mathvariant="bold">𝐮</mtext><mo>=</mo><mn>𝟏</mn></mrow><annotation encoding="application/x-tex">\textbf{u} = \mathbf{1}</annotation></semantics></math>:
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mover><mi>𝛃</mi><mo accent="true">̂</mo></mover><mrow><mi>S</mi><mi>R</mi></mrow></msup><mrow><mo stretchy="true" form="prefix">(</mo><mi>μ</mi><mo>;</mo><mtext mathvariant="bold">𝐮</mtext><mo stretchy="true" form="postfix">)</mo></mrow><mo>:=</mo><mo>arg</mo><munder><mo>min</mo><mrow><mi>𝛃</mi><mo>∈</mo><msup><mi>ℜ</mi><mrow><mi>p</mi><mo>+</mo><mn>1</mn></mrow></msup></mrow></munder><mrow><mo stretchy="true" form="prefix">(</mo><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></munderover><mo minsize="1.2" maxsize="1.2" stretchy="false" form="prefix">(</mo><msub><mi>y</mi><mi>i</mi></msub><mo>−</mo><msubsup><mi>𝐱</mi><mi>i</mi><mi>⊤</mi></msubsup><mi>𝛃</mi><msup><mo minsize="1.2" maxsize="1.2" stretchy="false" form="postfix">)</mo><mn>2</mn></msup><mo>+</mo><mi>μ</mi><mo minsize="1.2" maxsize="1.2" stretchy="false" form="prefix">(</mo><msup><mi>𝐮</mi><mi>⊤</mi></msup><mi>𝛃</mi><msup><mo minsize="1.2" maxsize="1.2" stretchy="false" form="postfix">)</mo><mn>2</mn></msup><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">
-\widehat{\boldsymbol{\beta}}^{SR}\left(\mu;\textbf{u}\right) := \arg\min_{\boldsymbol{\beta}\in\Re^{p+1}} \left( \sum_{i=1}^n \big(y_i - \mathbf{x}_i^\top \boldsymbol{\beta}\big)^2 + \mu \big(\mathbf{u}^\top \boldsymbol{\beta}\big)^2 \right)
-</annotation></semantics></math> The parameter
+<li><strong>(Simple) Slab Regression (SR):</strong></li>
+</ol>
+<p>The SR estimator adds a penalty based on a single direction vector
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐮</mi><mo>∈</mo><msup><mi>ℝ</mi><mrow><mi>p</mi><mo>+</mo><mn>1</mn></mrow></msup></mrow><annotation encoding="application/x-tex">\mathbf{u} \in \mathbb{R}^{p+1}</annotation></semantics></math>,
+often chosen as the constant vector
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>𝟏</mn><annotation encoding="application/x-tex">\mathbf{1}</annotation></semantics></math>.
+The estimator is defined as:
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mover><mi>𝛃</mi><mo accent="true">̂</mo></mover><mrow><mi>S</mi><mi>R</mi></mrow></msup><mrow><mo stretchy="true" form="prefix">(</mo><mi>μ</mi><mo>;</mo><mtext mathvariant="bold">𝐮</mtext><mo stretchy="true" form="postfix">)</mo></mrow><mo>:=</mo><mo>arg</mo><munder><mo>min</mo><mrow><mi>𝛃</mi><mo>∈</mo><msup><mi>ℜ</mi><mrow><mi>p</mi><mo>+</mo><mn>1</mn></mrow></msup></mrow></munder><mrow><mo stretchy="true" form="prefix">(</mo><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></munderover><mo minsize="1.2" maxsize="1.2" stretchy="false" form="prefix">(</mo><msub><mi>y</mi><mi>i</mi></msub><mo>−</mo><msubsup><mi>𝐱</mi><mi>i</mi><mi>⊤</mi></msubsup><mi>𝛃</mi><msup><mo minsize="1.2" maxsize="1.2" stretchy="false" form="postfix">)</mo><mn>2</mn></msup><mo>+</mo><mi>μ</mi><mo minsize="1.2" maxsize="1.2" stretchy="false" form="prefix">(</mo><msup><mi>𝐮</mi><mi>⊤</mi></msup><mi>𝛃</mi><msup><mo minsize="1.2" maxsize="1.2" stretchy="false" form="postfix">)</mo><mn>2</mn></msup><mo stretchy="true" form="postfix">)</mo></mrow><mo>,</mo></mrow><annotation encoding="application/x-tex">
+\widehat{\boldsymbol{\beta}}^{SR}\left(\mu;\textbf{u}\right) := \arg\min_{\boldsymbol{\beta}\in\Re^{p+1}} \left( \sum_{i=1}^n \big(y_i - \mathbf{x}_i^\top \boldsymbol{\beta}\big)^2 + \mu \big(\mathbf{u}^\top \boldsymbol{\beta}\big)^2 \right),
+</annotation></semantics></math> where
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>μ</mi><mo>≥</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\mu \geq 0</annotation></semantics></math>
-controls the strength of the shrinkage along
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐮</mi><annotation encoding="application/x-tex">\mathbf{u}</annotation></semantics></math>.</p></li>
-<li><p><strong>Generalized Slab Regression (GSR):</strong> The GSR
-estimator extends SR by allowing shrinkage in multiple directions:
+controls the amount of shrinkage along
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐮</mi><annotation encoding="application/x-tex">\mathbf{u}</annotation></semantics></math>
+and has a closed-form.</p>
+<ol start="2" style="list-style-type: decimal">
+<li><strong>Generalized Slab Regression (GSR):</strong></li>
+</ol>
+<p>The GSR estimator extends SR by allowing shrinkage in multiple
+directions:
 <math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mover><mi>𝛃</mi><mo accent="true">̂</mo></mover><mrow><mi>G</mi><mi>S</mi><mi>R</mi></mrow></msup><mrow><mo stretchy="true" form="prefix">(</mo><mi>𝛍</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>:=</mo><mo>arg</mo><munder><mo>min</mo><mrow><mi>𝛃</mi><mo>∈</mo><msup><mi>ℜ</mi><mrow><mi>p</mi><mo>+</mo><mn>1</mn></mrow></msup></mrow></munder><mrow><mo stretchy="true" form="prefix">(</mo><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></munderover><mo minsize="1.2" maxsize="1.2" stretchy="false" form="prefix">(</mo><msub><mi>y</mi><mi>i</mi></msub><mo>−</mo><msubsup><mi>𝐱</mi><mi>i</mi><mi>⊤</mi></msubsup><mi>𝛃</mi><msup><mo minsize="1.2" maxsize="1.2" stretchy="false" form="postfix">)</mo><mn>2</mn></msup><mo>+</mo><munder><mo>∑</mo><mrow><mi>l</mi><mo>∈</mo><mi>L</mi></mrow></munder><msub><mi>μ</mi><mi>l</mi></msub><mo minsize="1.2" maxsize="1.2" stretchy="false" form="prefix">(</mo><msubsup><mi>𝐮</mi><mi>l</mi><mi>⊤</mi></msubsup><mi>𝛃</mi><msup><mo minsize="1.2" maxsize="1.2" stretchy="false" form="postfix">)</mo><mn>2</mn></msup><mo stretchy="true" form="postfix">)</mo></mrow><mo>,</mo></mrow><annotation encoding="application/x-tex">
 \widehat{\boldsymbol{\beta}}^{GSR}(\boldsymbol{\mu}) := \arg\min_{\boldsymbol{\beta} \in \Re^{p+1}} 
 \left(\sum_{i=1}^n \big(y_i - \mathbf{x}_i^\top \boldsymbol{\beta}\big)^2 + \sum_{l \in L} \mu_l \big(\mathbf{u}_l^\top \boldsymbol{\beta}\big)^2 \right),
-</annotation></semantics></math></p></li>
-</ol>
-<p>where
+</annotation></semantics></math> where
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>μ</mi><mi>l</mi></msub><mo>≥</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\mu_l \geq 0</annotation></semantics></math>
 controls the shrinkage along the direction specified by
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>𝐮</mi><mi>l</mi></msub><annotation encoding="application/x-tex">\mathbf{u}_l</annotation></semantics></math>,
@@ -255,47 +263,50 @@ and
 represents the set of directions. Typically, the vectors
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>𝐮</mi><mi>l</mi></msub><mo>∈</mo><msup><mi>ℜ</mi><mrow><mi>p</mi><mo>+</mo><mn>1</mn></mrow></msup></mrow><annotation encoding="application/x-tex">\mathbf{u}_l \in \Re^{p+1}</annotation></semantics></math>
 are chosen as eigenvectors of
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Σ</mi><mo>:=</mo><msup><mi>𝐗</mi><mi>⊤</mi></msup><mi>𝐗</mi></mrow><annotation encoding="application/x-tex">\Sigma := \mathbf{X}^\top \mathbf{X}</annotation></semantics></math>.</p>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Σ</mi><mo>:=</mo><msup><mi>𝐗</mi><mi>⊤</mi></msup><mi>𝐗</mi></mrow><annotation encoding="application/x-tex">\Sigma := \mathbf{X}^\top \mathbf{X}</annotation></semantics></math>.
+This generalization leads to more flexible and potentially
+better-performing estimators.</p>
 </div>
 <div class="section level3">
 <h3 id="linear-shrinkage">Linear Shrinkage<a class="anchor" aria-label="anchor" href="#linear-shrinkage"></a>
 </h3>
-<p>The optimal linear shrinkage estimator (LSh) is a weighted average
-between an OLS estimator and a target estimator
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mover><mi>𝛃</mi><mo accent="true">̂</mo></mover><mrow><mi>i</mi><mi>n</mi><mi>d</mi></mrow></msup><mo>=</mo><msup><mover><mi>Σ</mi><mo accent="true">̃</mo></mover><mrow><mi>−</mi><mn>1</mn></mrow></msup><msup><mtext mathvariant="bold">𝐗</mtext><mi>T</mi></msup><mtext mathvariant="bold">𝐲</mtext></mrow><annotation encoding="application/x-tex">\widehat{\boldsymbol{\beta}}^{ind} = \widetilde{\Sigma}^{-1}\textbf{X}^T\textbf{y}</annotation></semantics></math>
-with
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mi>Σ</mi><mo accent="true">̃</mo></mover><mo>=</mo><mtext mathvariant="normal">diag</mtext><mrow><mo stretchy="true" form="prefix">(</mo><mi>Σ</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\widetilde{\Sigma}=\text{diag}(\Sigma)</annotation></semantics></math>
-by assuming that data are standardized
-(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mover><mtext mathvariant="bold">𝐱</mtext><mo accent="true">‾</mo></mover><mi>i</mi></msub><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\bar{\textbf{x}}_i = 0</annotation></semantics></math>
-and
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mi>y</mi><mo accent="true">‾</mo></mover><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\bar{y}=0</annotation></semantics></math>),
-which eliminates the need to estimate the intercept.</p>
-<p>The linear shrinkage estimator is given by:
+<p>The LSh estimator combines the OLS estimator (computed through the
+origin) with a target estimator that assumes uncorrelated covariates.
+This target estimator is given by
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mover><mi>𝛃</mi><mo accent="true">̂</mo></mover><mrow><mi>i</mi><mi>n</mi><mi>d</mi></mrow></msup><mo>=</mo><msup><mover><mi>Σ</mi><mo accent="true">̃</mo></mover><mrow><mi>−</mi><mn>1</mn></mrow></msup><msup><mi>𝐗</mi><mi>T</mi></msup><mi>𝐲</mi></mrow><annotation encoding="application/x-tex">\widehat{\boldsymbol{\beta}}^{ind} = \widetilde{\Sigma}^{-1}\mathbf{X}^T\mathbf{y}</annotation></semantics></math>,
+where
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mi>Σ</mi><mo accent="true">̃</mo></mover><mo>=</mo><mrow><mi mathvariant="normal">d</mi><mi mathvariant="normal">i</mi><mi mathvariant="normal">a</mi><mi mathvariant="normal">g</mi></mrow><mrow><mo stretchy="true" form="prefix">(</mo><mi>Σ</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\widetilde{\Sigma} = \mathrm{diag}(\Sigma)</annotation></semantics></math>.
+The method assumes that the data are standardized so that the intercept
+is not needed. The LSh estimator is defined as:
 <math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mover><mi>𝛃</mi><mo accent="true">̂</mo></mover><mrow><mi>i</mi><mi>n</mi><mi>d</mi></mrow></msup><mrow><mo stretchy="true" form="prefix">(</mo><mi>ρ</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>:=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>−</mo><mi>ρ</mi><mo stretchy="true" form="postfix">)</mo></mrow><msup><mover><mover><mrow><mi>𝛃</mi><mspace width="0.167em"></mspace></mrow><mo accent="true">̂</mo></mover><mo accent="true">̂</mo></mover><mrow><mi>O</mi><mi>L</mi><mi>S</mi></mrow></msup><mo>+</mo><mi>ρ</mi><msup><mover><mi>𝛃</mi><mo accent="true">̂</mo></mover><mrow><mi>i</mi><mi>n</mi><mi>d</mi></mrow></msup><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mi>ρ</mi><msup><mover><mi>Σ</mi><mo accent="true">̃</mo></mover><mrow><mi>−</mi><mn>1</mn></mrow></msup><mi>Σ</mi><mo>+</mo><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>−</mo><mi>ρ</mi><mo stretchy="true" form="postfix">)</mo></mrow><msub><mtext mathvariant="bold">𝐈</mtext><mi>p</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow><msup><mover><mover><mrow><mi>𝛃</mi><mspace width="0.167em"></mspace></mrow><mo accent="true">̂</mo></mover><mo accent="true">̂</mo></mover><mrow><mi>O</mi><mi>L</mi><mi>S</mi></mrow></msup><mo>:=</mo><mi>Σ</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>ρ</mi><mo stretchy="true" form="postfix">)</mo></mrow><msup><mover><mover><mrow><mi>𝛃</mi><mspace width="0.167em"></mspace></mrow><mo accent="true">̂</mo></mover><mo accent="true">̂</mo></mover><mrow><mi>O</mi><mi>L</mi><mi>S</mi></mrow></msup><mo>,</mo></mrow><annotation encoding="application/x-tex">
 \widehat{\boldsymbol{\beta}}^{ind}(\rho):=(1-\rho)\widehat{\widehat{\boldsymbol{\beta}\,}}^{OLS}+\rho \widehat{\boldsymbol{\beta}}^{ind}=\left(\rho\widetilde{\Sigma}^{-1}\Sigma + (1-\rho)\textbf{I}_p\right)\widehat{\widehat{\boldsymbol{\beta}\,}}^{OLS}:=\Sigma(\rho)\widehat{\widehat{\boldsymbol{\beta}\,}}^{OLS}, 
 </annotation></semantics></math> where
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mover><mover><mrow><mi>𝛃</mi><mspace width="0.167em"></mspace></mrow><mo accent="true">̂</mo></mover><mo accent="true">̂</mo></mover><mrow><mi>O</mi><mi>L</mi><mi>S</mi></mrow></msup><annotation encoding="application/x-tex">\widehat{\widehat{\boldsymbol{\beta}\,}}^{OLS}</annotation></semantics></math>
-is the OLS estimator through the origin, while
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mover><mover><mi>𝛃</mi><mo accent="true">̂</mo></mover><mo accent="true">̂</mo></mover><mrow><mi>O</mi><mi>L</mi><mi>S</mi></mrow></msup><annotation encoding="application/x-tex">\widehat{\widehat{\boldsymbol{\beta}}}^{OLS}</annotation></semantics></math>
+is the OLS estimator without intercept, and
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>ρ</mi><annotation encoding="application/x-tex">\rho</annotation></semantics></math>
-is the shrinkage intensity estimator.</p>
+is the shrinkage intensity chosen to reduce MSE.</p>
 </div>
 <div class="section level3">
 <h3 id="shrinkage-ridge-regression">Shrinkage Ridge Regression<a class="anchor" aria-label="anchor" href="#shrinkage-ridge-regression"></a>
 </h3>
-<p>The shrinkage ridge regression (SRR) estimator modifies the standard
-RR approach by applying shrinkage to the covariance matrix itself.
-Rather than shrinking toward the identity matrix, SRR shrinks the sample
+<p>The SRR estimator improves ridge regression by shrinking the sample
 covariance matrix
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Σ</mi><annotation encoding="application/x-tex">\Sigma</annotation></semantics></math>
-toward a scalar multiple of the identity matrix, which is similar to <a href="https://www.sciencedirect.com/science/article/pii/S0047259X03000964" class="external-link">Ledoit
-and Wolf(2004)</a>.</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mover><mi>𝛃</mi><mo accent="true">̂</mo></mover><mrow><mi>S</mi><mi>R</mi><mi>R</mi></mrow></msup><mrow><mo stretchy="true" form="prefix">(</mo><mi>ρ</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mo minsize="1.2" maxsize="1.2" stretchy="false" form="prefix">(</mo><msup><mi>Σ</mi><mo>*</mo></msup><mrow><mo stretchy="true" form="prefix">(</mo><mi>ρ</mi><mo stretchy="true" form="postfix">)</mo></mrow><msup><mo minsize="1.2" maxsize="1.2" stretchy="false" form="postfix">)</mo><mrow><mi>−</mi><mn>1</mn></mrow></msup><msup><mtext mathvariant="bold">𝐗</mtext><mi>T</mi></msup><mtext mathvariant="bold">𝐲</mtext><mspace width="1.0em"></mspace><mtext mathvariant="normal">with</mtext><mspace width="1.0em"></mspace><msup><mi>Σ</mi><mo>*</mo></msup><mrow><mo stretchy="true" form="prefix">(</mo><mi>ρ</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>−</mo><mi>ρ</mi><mo stretchy="true" form="postfix">)</mo></mrow><mi>Σ</mi><mo>+</mo><mi>ρ</mi><mi>v</mi><msub><mtext mathvariant="bold">𝐈</mtext><mrow><mi>p</mi><mo>+</mo><mn>1</mn></mrow></msub><mo>,</mo></mrow><annotation encoding="application/x-tex">
-\widehat{\boldsymbol{\beta}}^{SRR}(\rho)=\big(\Sigma^*(\rho)\big)^{-1}\textbf{X}^T\textbf{y} \quad \text{with} \quad \Sigma^*(\rho)=(1-\rho)\Sigma+\rho v \textbf{I}_{p+1}, 
-</annotation></semantics></math> and the optimal
+toward a scaled identity matrix
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>v</mi><msub><mi>𝐈</mi><mrow><mi>p</mi><mo>+</mo><mn>1</mn></mrow></msub></mrow><annotation encoding="application/x-tex">v \mathbf{I}_{p+1}</annotation></semantics></math>,
+where
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>v</mi><mo>=</mo><mfrac><mn>1</mn><mrow><mi>p</mi><mo>+</mo><mn>1</mn></mrow></mfrac><mrow><mi mathvariant="normal">T</mi><mi mathvariant="normal">r</mi></mrow><mrow><mo stretchy="true" form="prefix">(</mo><mi>Σ</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">v = \frac{1}{p+1} \mathrm{Tr}(\Sigma)</annotation></semantics></math>.
+This idea follows the approach of <a href="https://www.sciencedirect.com/science/article/pii/S0047259X03000964" class="external-link">Ledoit
+and Wolf(2004)</a>, but SRR selects the shrinkage level
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>ρ</mi><annotation encoding="application/x-tex">\rho</annotation></semantics></math>
+by directly minimizing the MSE of the regression coefficients, not the
+covariance. The SRR estimator is given by:
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mover><mi>𝛃</mi><mo accent="true">̂</mo></mover><mrow><mi>S</mi><mi>R</mi><mi>R</mi></mrow></msup><mrow><mo stretchy="true" form="prefix">(</mo><mi>ρ</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mo minsize="1.2" maxsize="1.2" stretchy="false" form="prefix">(</mo><msup><mi>Σ</mi><mo>*</mo></msup><mrow><mo stretchy="true" form="prefix">(</mo><mi>ρ</mi><mo stretchy="true" form="postfix">)</mo></mrow><msup><mo minsize="1.2" maxsize="1.2" stretchy="false" form="postfix">)</mo><mrow><mi>−</mi><mn>1</mn></mrow></msup><msup><mtext mathvariant="bold">𝐗</mtext><mi>T</mi></msup><mtext mathvariant="bold">𝐲</mtext><mspace width="1.0em"></mspace><mtext mathvariant="normal">with</mtext><mspace width="1.0em"></mspace><msup><mi>Σ</mi><mo>*</mo></msup><mrow><mo stretchy="true" form="prefix">(</mo><mi>ρ</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>−</mo><mi>ρ</mi><mo stretchy="true" form="postfix">)</mo></mrow><mi>Σ</mi><mo>+</mo><mi>ρ</mi><mi>v</mi><msub><mtext mathvariant="bold">𝐈</mtext><mrow><mi>p</mi><mo>+</mo><mn>1</mn></mrow></msub><mi>.</mi></mrow><annotation encoding="application/x-tex">
+\widehat{\boldsymbol{\beta}}^{SRR}(\rho)=\big(\Sigma^*(\rho)\big)^{-1}\textbf{X}^T\textbf{y} \quad \text{with} \quad \Sigma^*(\rho)=(1-\rho)\Sigma+\rho v \textbf{I}_{p+1}.
+</annotation></semantics></math> The optimal shrinkage parameter
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>ρ</mi><mo>*</mo></msup><annotation encoding="application/x-tex">\rho^*</annotation></semantics></math>
-is chosen so that
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>M</mi><mi>S</mi><mi>E</mi><mo minsize="1.2" maxsize="1.2" stretchy="false" form="prefix">(</mo><msup><mover><mi>𝛃</mi><mo accent="true">̂</mo></mover><mrow><mi>S</mi><mi>R</mi><mi>R</mi></mrow></msup><mrow><mo stretchy="true" form="prefix">(</mo><mi>ρ</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo minsize="1.2" maxsize="1.2" stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">MSE\big(\widehat{\boldsymbol{\beta}}^{SRR}(\rho)\big)</annotation></semantics></math>
-is minimized.</p>
+is chosen to minimize
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>M</mi><mi>S</mi><mi>E</mi><mo minsize="1.2" maxsize="1.2" stretchy="false" form="prefix">(</mo><msup><mover><mi>𝛃</mi><mo accent="true">̂</mo></mover><mrow><mi>S</mi><mi>R</mi><mi>R</mi></mrow></msup><mrow><mo stretchy="true" form="prefix">(</mo><mi>ρ</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo minsize="1.2" maxsize="1.2" stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">MSE\big(\widehat{\boldsymbol{\beta}}^{SRR}(\rho)\big)</annotation></semantics></math>.</p>
 </div>
 <div class="section level3">
 <h3 id="summary-of-shrinkage-estimators">Summary of Shrinkage Estimators<a class="anchor" aria-label="anchor" href="#summary-of-shrinkage-estimators"></a>
@@ -336,7 +347,7 @@ is minimized.</p>
 <td><strong>Yes</strong></td>
 </tr>
 <tr class="odd">
-<td><strong>Stein (St)</strong></td>
+<td><strong>St</strong></td>
 <td>Global (scalar)</td>
 <td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><msup><mi>a</mi><mo>*</mo></msup><mo accent="true">̂</mo></mover><mo>⋅</mo><msup><mover><mi>β</mi><mo accent="true">̂</mo></mover><mtext mathvariant="normal">OLS</mtext></msup></mrow><annotation encoding="application/x-tex">\widehat{a^*} \cdot \widehat{\beta}^{\text{OLS}}</annotation></semantics></math></td>
 <td>No</td>
@@ -344,7 +355,7 @@ is minimized.</p>
 <td>No</td>
 </tr>
 <tr class="even">
-<td><strong>Diagonal Shrinkage (DSh)</strong></td>
+<td><strong>DSh</strong></td>
 <td>Coordinate-wise (diagonal)</td>
 <td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐃</mi><mo>⋅</mo><msup><mover><mi>β</mi><mo accent="true">̂</mo></mover><mtext mathvariant="normal">OLS</mtext></msup></mrow><annotation encoding="application/x-tex">\mathbf{D} \cdot \widehat{\beta}^{\text{OLS}}</annotation></semantics></math></td>
 <td>No</td>
@@ -352,7 +363,7 @@ is minimized.</p>
 <td>No</td>
 </tr>
 <tr class="odd">
-<td><strong>Shrinkage (Sh)</strong></td>
+<td><strong>Sh</strong></td>
 <td>Matrix shrinkage (non-diagonal)</td>
 <td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐂</mi><mo>⋅</mo><msup><mover><mi>β</mi><mo accent="true">̂</mo></mover><mtext mathvariant="normal">OLS</mtext></msup></mrow><annotation encoding="application/x-tex">\mathbf{C} \cdot \widehat{\beta}^{\text{OLS}}</annotation></semantics></math></td>
 <td>No</td>
@@ -360,7 +371,7 @@ is minimized.</p>
 <td>No</td>
 </tr>
 <tr class="even">
-<td><strong>Slab Regression (SR)</strong></td>
+<td><strong>SR</strong></td>
 <td>Fixed direction (e.g.,
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>𝟏</mn><annotation encoding="application/x-tex">\mathbf{1}</annotation></semantics></math>)</td>
 <td>Penalized projection</td>
@@ -369,7 +380,7 @@ is minimized.</p>
 <td>No</td>
 </tr>
 <tr class="odd">
-<td><strong>Generalized Slab (GSR)</strong></td>
+<td><strong>GSR</strong></td>
 <td>Multiple directions (eigenvectors)</td>
 <td>Penalized projection</td>
 <td>No</td>
@@ -377,7 +388,7 @@ is minimized.</p>
 <td>No</td>
 </tr>
 <tr class="even">
-<td><strong>Linear Shrinkage (LSh)</strong></td>
+<td><strong>LSh</strong></td>
 <td>Toward diagonal target</td>
 <td>Convex combination</td>
 <td><strong>Yes</strong></td>
@@ -385,7 +396,7 @@ is minimized.</p>
 <td>No</td>
 </tr>
 <tr class="odd">
-<td><strong>Shrinkage Ridge (SRR)</strong></td>
+<td><strong>SRR</strong></td>
 <td>Toward scaled identity</td>
 <td>Modified Ridge</td>
 <td>No</td>
@@ -416,7 +427,8 @@ different forms of correlation and dependence. Each simulation is
 followed by a table comparing
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>L</mi><mn>2</mn></msub><annotation encoding="application/x-tex">L_2</annotation></semantics></math>
 distances and estimated coefficients.</p>
-<p>The following data-generating processes (DGPs) are considered:</p>
+<p>The following <em>data-generating processes (DGPs)</em> are
+considered:</p>
 <ul>
 <li>
 <a href="#multivariate-gaussian-distribution">Multivariate Gaussian
@@ -463,7 +475,7 @@ for
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mo>≤</mo><mi>k</mi><mo>≤</mo><mi>p</mi></mrow><annotation encoding="application/x-tex">1 \leq k \leq p</annotation></semantics></math>
 where
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Φ</mi><annotation encoding="application/x-tex">\Phi</annotation></semantics></math>
-is the cumulative distribution function (CDF) of
+is the <em>cumulative distribution function (CDF)</em> of
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi><mrow><mo stretchy="true" form="prefix">(</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">N(0,1)</annotation></semantics></math>,
 and
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>F</mi><mrow><mi>−</mi><mn>1</mn></mrow></msup><annotation encoding="application/x-tex">F^{-1}</annotation></semantics></math>
@@ -502,10 +514,8 @@ assess the shrinkage effect across varying coefficient scales.</p>
 <h3 id="multiplicative-shrinkage-and-slab-regression">Multiplicative Shrinkage and Slab Regression<a class="anchor" aria-label="anchor" href="#multiplicative-shrinkage-and-slab-regression"></a>
 </h3>
 <p>This section shows how <code>savvySh</code> implements multiplicative
-shrinkage including Stein Estimator (St), Diagonal Shrinkage (DSh), and
-Shrinkage (Sh); Slab Shrinkage including (Simple) Slab Regression (SR)
-and Generalized Slab Regression (GSR). Each method is compared to
-OLS.</p>
+shrinkage including St, DSh, and Sh; Slab Shrinkage including SR and
+GSR. Each method is compared to OLS.</p>
 <div class="section level4">
 <h4 id="multivariate-gaussian-distribution">Multivariate Gaussian Distribution<a class="anchor" aria-label="anchor" href="#multivariate-gaussian-distribution"></a>
 </h4>
@@ -569,8 +579,7 @@ while the second table displays the actual estimated coefficients
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># L2 comparison</span></span>
 <span><span class="va">l2_table</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
-<span>  Method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Ordinary Least Squares (OLS)"</span>, <span class="st">"Stein (St)"</span>, <span class="st">"Diagonal Shrinkage (DSh)"</span>, <span class="st">"Shrinkage (Sh)"</span>,</span>
-<span>             <span class="st">"Slab Regression (SR)"</span>, <span class="st">"Generalized Slab Regression (GSR)"</span><span class="op">)</span>,</span>
+<span>  Method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"OLS"</span>, <span class="st">"St"</span>, <span class="st">"DSh"</span>, <span class="st">"Sh"</span>, <span class="st">"SR"</span>, <span class="st">"GSR"</span><span class="op">)</span>,</span>
 <span>  L2_Distance <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="op">(</span><span class="va">beta_ols</span> <span class="op">-</span> <span class="va">beta_true</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="op">(</span><span class="va">beta_St</span>  <span class="op">-</span> <span class="va">beta_true</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span>,</span>
@@ -590,27 +599,27 @@ while the second table displays the actual estimated coefficients
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">Ordinary Least Squares (OLS)</td>
+<td align="left">OLS</td>
 <td align="right">0.9791</td>
 </tr>
 <tr class="even">
-<td align="left">Stein (St)</td>
+<td align="left">St</td>
 <td align="right">0.9292</td>
 </tr>
 <tr class="odd">
-<td align="left">Diagonal Shrinkage (DSh)</td>
+<td align="left">DSh</td>
 <td align="right">0.9261</td>
 </tr>
 <tr class="even">
-<td align="left">Shrinkage (Sh)</td>
+<td align="left">Sh</td>
 <td align="right">0.9787</td>
 </tr>
 <tr class="odd">
-<td align="left">Slab Regression (SR)</td>
+<td align="left">SR</td>
 <td align="right">1.0092</td>
 </tr>
 <tr class="even">
-<td align="left">Generalized Slab Regression (GSR)</td>
+<td align="left">GSR</td>
 <td align="right">0.9491</td>
 </tr>
 </tbody>
@@ -844,8 +853,7 @@ while the second table displays the actual estimated coefficients
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># L2 comparison</span></span>
 <span><span class="va">l2_table</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
-<span>  Method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Ordinary Least Squares (OLS)"</span>, <span class="st">"Stein (St)"</span>, <span class="st">"Diagonal Shrinkage (DSh)"</span>, <span class="st">"Shrinkage (Sh)"</span>,</span>
-<span>             <span class="st">"Slab Regression (SR)"</span>, <span class="st">"Generalized Slab Regression (GSR)"</span><span class="op">)</span>,</span>
+<span>  Method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"OLS"</span>, <span class="st">"St"</span>, <span class="st">"DSh"</span>, <span class="st">"Sh"</span>, <span class="st">"SR"</span>, <span class="st">"GSR"</span><span class="op">)</span>,</span>
 <span>  L2_Distance <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="op">(</span><span class="va">beta_ols</span> <span class="op">-</span> <span class="va">beta_true</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="op">(</span><span class="va">beta_St</span>  <span class="op">-</span> <span class="va">beta_true</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span>,</span>
@@ -865,27 +873,27 @@ while the second table displays the actual estimated coefficients
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">Ordinary Least Squares (OLS)</td>
+<td align="left">OLS</td>
 <td align="right">5.8495</td>
 </tr>
 <tr class="even">
-<td align="left">Stein (St)</td>
+<td align="left">St</td>
 <td align="right">5.8271</td>
 </tr>
 <tr class="odd">
-<td align="left">Diagonal Shrinkage (DSh)</td>
+<td align="left">DSh</td>
 <td align="right">5.2781</td>
 </tr>
 <tr class="even">
-<td align="left">Shrinkage (Sh)</td>
+<td align="left">Sh</td>
 <td align="right">5.8494</td>
 </tr>
 <tr class="odd">
-<td align="left">Slab Regression (SR)</td>
+<td align="left">SR</td>
 <td align="right">5.9631</td>
 </tr>
 <tr class="even">
-<td align="left">Generalized Slab Regression (GSR)</td>
+<td align="left">GSR</td>
 <td align="right">5.1581</td>
 </tr>
 </tbody>
@@ -1084,8 +1092,7 @@ while the second table displays the actual estimated coefficients
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># L2 comparison</span></span>
 <span><span class="va">l2_table</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
-<span>  Method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Ordinary Least Squares (OLS)"</span>, <span class="st">"Stein (St)"</span>, <span class="st">"Diagonal Shrinkage (DSh)"</span>, <span class="st">"Shrinkage (Sh)"</span>,</span>
-<span>             <span class="st">"Slab Regression (SR)"</span>, <span class="st">"Generalized Slab Regression (GSR)"</span><span class="op">)</span>,</span>
+<span>  Method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"OLS"</span>, <span class="st">"St"</span>, <span class="st">"DSh"</span>, <span class="st">"Sh"</span>, <span class="st">"SR"</span>, <span class="st">"GSR"</span><span class="op">)</span>,</span>
 <span>  L2_Distance <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="op">(</span><span class="va">beta_ols</span> <span class="op">-</span> <span class="va">beta_true</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="op">(</span><span class="va">beta_St</span>  <span class="op">-</span> <span class="va">beta_true</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span>,</span>
@@ -1105,27 +1112,27 @@ while the second table displays the actual estimated coefficients
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">Ordinary Least Squares (OLS)</td>
+<td align="left">OLS</td>
 <td align="right">3.0967</td>
 </tr>
 <tr class="even">
-<td align="left">Stein (St)</td>
+<td align="left">St</td>
 <td align="right">1.0756</td>
 </tr>
 <tr class="odd">
-<td align="left">Diagonal Shrinkage (DSh)</td>
+<td align="left">DSh</td>
 <td align="right">1.8059</td>
 </tr>
 <tr class="even">
-<td align="left">Shrinkage (Sh)</td>
+<td align="left">Sh</td>
 <td align="right">3.0724</td>
 </tr>
 <tr class="odd">
-<td align="left">Slab Regression (SR)</td>
+<td align="left">SR</td>
 <td align="right">3.1182</td>
 </tr>
 <tr class="even">
-<td align="left">Generalized Slab Regression (GSR)</td>
+<td align="left">GSR</td>
 <td align="right">1.6176</td>
 </tr>
 </tbody>
@@ -1274,9 +1281,8 @@ while the second table displays the actual estimated coefficients
 <div class="section level3">
 <h3 id="linear-shrinkage-1">Linear Shrinkage<a class="anchor" aria-label="anchor" href="#linear-shrinkage-1"></a>
 </h3>
-<p>This section evaluates linear shrinkage estimators (LSh), where each
-coefficient is uniformly shrunk toward zero. Data are mean-centered
-before estimation.</p>
+<p>This section evaluates LSh, where each coefficient is uniformly
+shrunk toward zero. Data are mean-centered before estimation.</p>
 <div class="section level4">
 <h4 id="multivariate-gaussian-distribution-1">Multivariate Gaussian Distribution<a class="anchor" aria-label="anchor" href="#multivariate-gaussian-distribution-1"></a>
 </h4>
@@ -1336,7 +1342,7 @@ while the second table displays the actual estimated coefficients
 <code class="sourceCode R"><span></span>
 <span><span class="co"># L2 comparison</span></span>
 <span><span class="va">l2_table</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
-<span>  Method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Ordinary Least Squares (OLS)"</span>, <span class="st">"Linear Shrinkage (LSh)"</span><span class="op">)</span>,</span>
+<span>  Method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"OLS"</span>, <span class="st">"LSh"</span><span class="op">)</span>,</span>
 <span>  L2_Distance <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="op">(</span><span class="va">beta_ols</span> <span class="op">-</span> <span class="va">beta_true</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="op">(</span><span class="va">beta_LSh</span>  <span class="op">-</span> <span class="va">beta_true</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
@@ -1352,11 +1358,11 @@ while the second table displays the actual estimated coefficients
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">Ordinary Least Squares (OLS)</td>
+<td align="left">OLS</td>
 <td align="right">0.9697</td>
 </tr>
 <tr class="even">
-<td align="left">Linear Shrinkage (LSh)</td>
+<td align="left">LSh</td>
 <td align="right">1.0187</td>
 </tr>
 </tbody>
@@ -1504,7 +1510,7 @@ while the second table displays the actual estimated coefficients
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># L2 comparison</span></span>
 <span><span class="va">l2_table</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
-<span>  Method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Ordinary Least Squares (OLS)"</span>, <span class="st">"Linear Shrinkage (LSh)"</span><span class="op">)</span>,</span>
+<span>  Method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"OLS)"</span>, <span class="st">"LSh"</span><span class="op">)</span>,</span>
 <span>  L2_Distance <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="op">(</span><span class="va">beta_ols</span> <span class="op">-</span> <span class="va">beta_true</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="op">(</span><span class="va">beta_LSh</span>  <span class="op">-</span> <span class="va">beta_true</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
@@ -1520,11 +1526,11 @@ while the second table displays the actual estimated coefficients
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">Ordinary Least Squares (OLS)</td>
+<td align="left">OLS)</td>
 <td align="right">5.6927</td>
 </tr>
 <tr class="even">
-<td align="left">Linear Shrinkage (LSh)</td>
+<td align="left">LSh</td>
 <td align="right">4.8586</td>
 </tr>
 </tbody>
@@ -1615,10 +1621,10 @@ while the second table displays the actual estimated coefficients
 <div class="section level3">
 <h3 id="shrinkage-ridge-regression-1">Shrinkage Ridge Regression<a class="anchor" aria-label="anchor" href="#shrinkage-ridge-regression-1"></a>
 </h3>
-<p>This section introduces the Shrinkage Ridge Regression (SRR) method.
-The SRR estimator replaces the standard covariance matrix used in ridge
-regression with a linear shrinkage estimate that blends the sample
-covariance matrix with a scaled identity matrix.</p>
+<p>This section introduces the SRR method. The SRR estimator replaces
+the standard covariance matrix used in ridge regression with a linear
+shrinkage estimate that blends the sample covariance matrix with a
+scaled identity matrix.</p>
 <div class="section level4">
 <h4 id="latent-space-features">Latent Space Features<a class="anchor" aria-label="anchor" href="#latent-space-features"></a>
 </h4>
@@ -1626,8 +1632,7 @@ covariance matrix with a scaled identity matrix.</p>
 covariates are generated using a latent factor model with a small amount
 of additive Gaussian noise. This simulates a low-rank structure in the
 design matrix. We compare ridge regression estimates using
-<code>glmnet</code> against the shrinkage ridge regression (SRR) from
-<code>savvySh</code>.</p>
+<code>glmnet</code> against the SRR from <code>savvySh</code>.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Load packages</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">savvySh</span><span class="op">)</span></span>
@@ -1676,7 +1681,7 @@ while the second table displays the actual estimated coefficients
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># L2 comparison</span></span>
 <span><span class="va">l2_table</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
-<span>  Method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Ridge Regression (RR)"</span>, <span class="st">"Shrinkage Ridge Regression (SRR)"</span><span class="op">)</span>,</span>
+<span>  Method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"RR"</span>, <span class="st">"SRR"</span><span class="op">)</span>,</span>
 <span>  L2_Distance <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="op">(</span><span class="va">beta_RR</span> <span class="op">-</span> <span class="va">beta_true</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="op">(</span><span class="va">beta_SRR</span>  <span class="op">-</span> <span class="va">beta_true</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
@@ -1692,11 +1697,11 @@ while the second table displays the actual estimated coefficients
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">Ridge Regression (RR)</td>
+<td align="left">RR</td>
 <td align="right">13.8884</td>
 </tr>
 <tr class="even">
-<td align="left">Shrinkage Ridge Regression (SRR)</td>
+<td align="left">SRR</td>
 <td align="right">9.0212</td>
 </tr>
 </tbody>
@@ -1801,13 +1806,13 @@ These examples are designed to illustrate how the shrinkage methods can
 be used in applied settings such as generalized linear models and
 portfolio selection. We do not run the code or present specific results
 here; instead, we provide clean, reproducible examples for users to
-adapt and explore on their own. The detailed results can be find in the
-<a href="#main-paper">main paper</a>.</p>
+adapt and explore on their own. The detailed results and preprocessing
+procedures can be found in the <a href="http//....">main paper</a>.</p>
 <ul>
 <li>The <strong>cybersickness dataset</strong> is used for illustrating
-shrinkage GLMs using a Poisson model. The main Shirnkage GLMs function
+shrinkage GLMs using a Poisson model. The main Shrinkage GLMs function
 is part of the related package <code>ShrinkageGLMs</code>, you can find
-<a href="https://github.com/Ziwei-ChenChen/GLMs" class="external-link">here</a>.</li>
+<a href="https://github.com/Ziwei-ChenChen/ShrinkageGLMs" class="external-link">here</a>.</li>
 <li>The <strong>returns_441 dataset</strong> contains portfolio returns
 and is used for demonstrating shrinkage estimation in financial asset
 allocation.</li>
@@ -1964,13 +1969,13 @@ dataset, included in the package under
 for 441 stocks including the index, with <code>Date</code> formatted as
 <code>YYYYMMDD</code>. For each rolling window, we:</p>
 <ul>
-<li>Fit multiple regression-based models (OLS, RR, St, DSh, Sh, SR, GSR,
-SRR)</li>
-<li>Extract the estimated coefficients and compute portfolio
-weights</li>
-<li>Simulate out-of-sample portfolio performance</li>
-<li>Compute rolling statistics: expected annual returns, volatility, and
-Sharpe ratios</li>
+<li><p>Fit multiple regression-based models (OLS, RR, St, DSh, Sh, SR,
+GSR, SRR).</p></li>
+<li><p>Extract the estimated coefficients and compute portfolio
+weights.</p></li>
+<li><p>Simulate out-of-sample portfolio performance.</p></li>
+<li><p>Compute rolling statistics: expected annual returns, volatility,
+and Sharpe ratios.</p></li>
 </ul>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">savvySh</span><span class="op">)</span></span>
