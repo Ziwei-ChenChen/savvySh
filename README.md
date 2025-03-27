@@ -10,10 +10,17 @@ This package builds on theoretical work discussed in:
 
 Asimit, V., Cidota, M. A., Chen, Z., & Asimit, J. (2025). [*Slab and Shrinkage Linear Regression Estimation*](http//...).
 
-Website available at: https://Ziwei-ChenChen.github.io/savvySh; besides, if you want to run the real data analysis on this [website](https://Ziwei-ChenChen.github.io/savvySh), please follow dependency from GitHub:
+The official documentation site is available at: https://Ziwei-ChenChen.github.io/savvySh
+
+If you are interested in applying shrinkage methods within generalized linear models (GLMs), please refer to the companion package [`ShrinkageGLMs`](https://github.com/Ziwei-ChenChen/ShrinkageGLMs). You can install it directly from GitHub:
+
 ```r
-remotes::install_github("Ziwei-ChenChen/ShirnkageGLMs")
+remotes::install_github("Ziwei-ChenChen/ShrinkageGLMs")
 ```
+This will enable you to explore real-data GLM examples shown in the vignette section of the documentation website.
+
+In addition, shrinkage-based methods have also been applied in genetic fine-mapping. For code and examples in that context, please see: [`flashfm-savvySh`](https://github.com/jennasimit/flashfm-savvySh) – A dedicated repository demonstrating statistical fine-mapping using shrinkage estimators.
+
 
 ## Installation Guide
 
@@ -54,7 +61,7 @@ All shrinkage factors are computed in closed form (except SRR, which optimizes s
 
 ## Usage
 
-This is a basic example which shows you how to solve a common problem:
+This is a basic example that shows you how to solve a common problem:
 
 ``` r
 # Simulated example
