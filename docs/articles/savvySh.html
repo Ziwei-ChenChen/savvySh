@@ -103,8 +103,8 @@ uncorrelated covariates. This method is designed for standardized data
 and avoids estimating the intercept.</p></li>
 <li><p><a href="#shrinkage-ridge-regression">Shrinkage Ridge
 Regression:</a> Improves on <em>Ridge Regression (RR)</em> by shrinking
-the covariance matrix toward a diagonal matrix with equal entries,
-balancing the sample structure with a stable target.</p></li>
+toward a diagonal matrix with equal entries, balancing the sample
+structure with a stable target.</p></li>
 </ul>
 <p><strong>Inputs</strong>: The primary inputs to <code>savvySh</code>
 are similar to those of a regression function:</p>
@@ -162,14 +162,21 @@ the Gram matrix of the design.</p>
 <div class="section level3">
 <h3 id="multiplicative-shrinkage">Multiplicative Shrinkage<a class="anchor" aria-label="anchor" href="#multiplicative-shrinkage"></a>
 </h3>
-<p>This class of estimators applies multiplicative adjustments to the
-OLS coefficients using a matrix
+<p>This class of estimators modifies the OLS solution by multiplying it
+with a matrix
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐃</mi><annotation encoding="application/x-tex">\mathbf{D}</annotation></semantics></math>,
-such that the estimator takes the form
+yielding the form
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mi>𝛃</mi><mo accent="true">̂</mo></mover><mo>=</mo><mi>𝐃</mi><msup><mover><mi>𝛃</mi><mo accent="true">̂</mo></mover><mrow><mi>O</mi><mi>L</mi><mi>S</mi></mrow></msup></mrow><annotation encoding="application/x-tex">\widehat{\boldsymbol{\beta}} = \mathbf{D} \widehat{\boldsymbol{\beta}}^{OLS}</annotation></semantics></math>.
-The matrix
+The goal is to choose
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐃</mi><annotation encoding="application/x-tex">\mathbf{D}</annotation></semantics></math>
-is chosen to minimize the MSE. Three common forms are:</p>
+to minimize the MSE of the resulting estimator. While earlier work such
+as <a href="https://www.jstor.org/stable/1268658" class="external-link">Hocking et
+al. (1976)</a> focused on the case where the design matrix is in
+canonical form (orthonormal), our framework generalizes these results to
+arbitrary design matrices without requiring that assumption. Common
+choices for
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐃</mi><annotation encoding="application/x-tex">\mathbf{D}</annotation></semantics></math>
+include:</p>
 <ol style="list-style-type: decimal">
 <li>
 <strong>Stein Estimator (St):</strong> The St estimator shrinks all
@@ -228,64 +235,73 @@ capturing richer shrinkage structures.</p>
 <div class="section level3">
 <h3 id="slab-regression">Slab Regression<a class="anchor" aria-label="anchor" href="#slab-regression"></a>
 </h3>
-<p>Slab regression introduces a penalty that shrinks the estimated
-coefficients along specific directions, which is a special case of the
-<em>Generalized LASSO</em> estimator introduced in <a href="https://www.jstor.org/stable/23033600" class="external-link">Tibshirani and Taylor
-(2011)</a>. The penalty is quadratic and controls how much shrinkage is
-applied in each direction. These directions can be fixed (e.g., equal
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext mathvariant="bold">𝐮</mtext><mo>=</mo><mn>𝟏</mn></mrow><annotation encoding="application/x-tex">\textbf{u} = \mathbf{1}</annotation></semantics></math>)
-or determined by the structure of the data (e.g., eigenvectors of the
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Σ</mi><annotation encoding="application/x-tex">\Sigma</annotation></semantics></math>).</p>
+<p>Slab regression introduces a structured quadratic penalty that
+shrinks the regression coefficients in specified directions. It is
+closely related to the <em>Generalized LASSO</em> estimator introduced
+by <a href="https://www.jstor.org/stable/23033600" class="external-link">Tibshirani and Taylor
+(2011)</a>, but with key differences. Unlike the Generalized LASSO, slab
+regression does not aim for variable selection or sparsity, and it
+avoids cross-validation by selecting shrinkage levels through
+theoretical MSE criteria. These penalties are based on projection
+constraints that can be fixed (e.g., constant direction
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐮</mi><mo>=</mo><mn>𝟏</mn></mrow><annotation encoding="application/x-tex">\mathbf{u} = \mathbf{1}</annotation></semantics></math>)
+or structured (e.g., eigenvectors of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Σ</mi><annotation encoding="application/x-tex">\Sigma</annotation></semantics></math>).
+This leads to two main estimators.</p>
 <ol style="list-style-type: decimal">
 <li>
 <strong>(Simple) Slab Regression (SR):</strong> The SR estimator
-adds a penalty based on a single direction vector
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐮</mi><mo>∈</mo><mi>ℜ</mi><msup><mi>R</mi><mrow><mi>p</mi><mo>+</mo><mn>1</mn></mrow></msup></mrow><annotation encoding="application/x-tex">\mathbf{u} \in \Re{R}^{p+1}</annotation></semantics></math>,
-often chosen as the constant vector
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>𝟏</mn><annotation encoding="application/x-tex">\mathbf{1}</annotation></semantics></math>.
-The estimator is defined as:</li>
+applies a single penalty along a fixed direction vector
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐮</mi><mo>∈</mo><msup><mi>ℜ</mi><mrow><mi>p</mi><mo>+</mo><mn>1</mn></mrow></msup></mrow><annotation encoding="application/x-tex">\mathbf{u} \in \Re^{p+1}</annotation></semantics></math>.
+A common choice is
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐮</mi><mo>=</mo><mn>𝟏</mn></mrow><annotation encoding="application/x-tex">\mathbf{u} = \mathbf{1}</annotation></semantics></math>.
+The estimator is given by:</li>
 </ol>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mover><mi>𝛃</mi><mo accent="true">̂</mo></mover><mrow><mi>S</mi><mi>R</mi></mrow></msup><mrow><mo stretchy="true" form="prefix">(</mo><mi>μ</mi><mo>;</mo><mtext mathvariant="bold">𝐮</mtext><mo stretchy="true" form="postfix">)</mo></mrow><mo>:=</mo><mo>arg</mo><munder><mo>min</mo><mrow><mi>𝛃</mi><mo>∈</mo><msup><mi>ℜ</mi><mrow><mi>p</mi><mo>+</mo><mn>1</mn></mrow></msup></mrow></munder><mrow><mo stretchy="true" form="prefix">(</mo><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></munderover><mo minsize="1.2" maxsize="1.2" stretchy="false" form="prefix">(</mo><msub><mi>y</mi><mi>i</mi></msub><mo>−</mo><msubsup><mi>𝐱</mi><mi>i</mi><mi>⊤</mi></msubsup><mi>𝛃</mi><msup><mo minsize="1.2" maxsize="1.2" stretchy="false" form="postfix">)</mo><mn>2</mn></msup><mo>+</mo><mi>μ</mi><mo minsize="1.2" maxsize="1.2" stretchy="false" form="prefix">(</mo><msup><mi>𝐮</mi><mi>⊤</mi></msup><mi>𝛃</mi><msup><mo minsize="1.2" maxsize="1.2" stretchy="false" form="postfix">)</mo><mn>2</mn></msup><mo stretchy="true" form="postfix">)</mo></mrow><mo>,</mo></mrow><annotation encoding="application/x-tex">
 \widehat{\boldsymbol{\beta}}^{SR}\left(\mu;\textbf{u}\right) := \arg\min_{\boldsymbol{\beta}\in\Re^{p+1}} \left( \sum_{i=1}^n \big(y_i - \mathbf{x}_i^\top \boldsymbol{\beta}\big)^2 + \mu \big(\mathbf{u}^\top \boldsymbol{\beta}\big)^2 \right),
 </annotation></semantics></math></p>
 <p>where
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>μ</mi><mo>≥</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\mu \geq 0</annotation></semantics></math>
-controls the amount of shrinkage along
+is the penalty parameter controls the amount of shrinkage along
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐮</mi><annotation encoding="application/x-tex">\mathbf{u}</annotation></semantics></math>
-and has a closed-form.</p>
+and has a closed-form, chosen analytically to minimize MSE under the
+slab constraint
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mrow><mo stretchy="true" form="prefix">(</mo><msup><mi>𝛃</mi><mi>⊤</mi></msup><mi>𝐮</mi><mo stretchy="true" form="postfix">)</mo></mrow><mn>2</mn></msup><annotation encoding="application/x-tex">(\boldsymbol{\beta}^\top \mathbf{u})^2</annotation></semantics></math>.</p>
 <ol start="2" style="list-style-type: decimal">
 <li>
 <strong>Generalized Slab Regression (GSR):</strong> The GSR
-estimator extends SR by allowing shrinkage in multiple directions:</li>
+estimator extends SR by allowing shrinkage in multiple directions. These
+directions are typically chosen as eigenvectors of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Σ</mi><annotation encoding="application/x-tex">\Sigma</annotation></semantics></math>.
+The estimator is:</li>
 </ol>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mover><mi>𝛃</mi><mo accent="true">̂</mo></mover><mrow><mi>G</mi><mi>S</mi><mi>R</mi></mrow></msup><mrow><mo stretchy="true" form="prefix">(</mo><mi>𝛍</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>:=</mo><mo>arg</mo><munder><mo>min</mo><mrow><mi>𝛃</mi><mo>∈</mo><msup><mi>ℜ</mi><mrow><mi>p</mi><mo>+</mo><mn>1</mn></mrow></msup></mrow></munder><mrow><mo stretchy="true" form="prefix">(</mo><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></munderover><mo minsize="1.2" maxsize="1.2" stretchy="false" form="prefix">(</mo><msub><mi>y</mi><mi>i</mi></msub><mo>−</mo><msubsup><mi>𝐱</mi><mi>i</mi><mi>⊤</mi></msubsup><mi>𝛃</mi><msup><mo minsize="1.2" maxsize="1.2" stretchy="false" form="postfix">)</mo><mn>2</mn></msup><mo>+</mo><munder><mo>∑</mo><mrow><mi>l</mi><mo>∈</mo><mi>L</mi></mrow></munder><msub><mi>μ</mi><mi>l</mi></msub><mo minsize="1.2" maxsize="1.2" stretchy="false" form="prefix">(</mo><msubsup><mi>𝐮</mi><mi>l</mi><mi>⊤</mi></msubsup><mi>𝛃</mi><msup><mo minsize="1.2" maxsize="1.2" stretchy="false" form="postfix">)</mo><mn>2</mn></msup><mo stretchy="true" form="postfix">)</mo></mrow><mo>,</mo></mrow><annotation encoding="application/x-tex">
 \widehat{\boldsymbol{\beta}}^{GSR}(\boldsymbol{\mu}) := \arg\min_{\boldsymbol{\beta} \in \Re^{p+1}} 
 \left(\sum_{i=1}^n \big(y_i - \mathbf{x}_i^\top \boldsymbol{\beta}\big)^2 + \sum_{l \in L} \mu_l \big(\mathbf{u}_l^\top \boldsymbol{\beta}\big)^2 \right),
 </annotation></semantics></math></p>
-<p>where
+<p>where each
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>μ</mi><mi>l</mi></msub><mo>≥</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\mu_l \geq 0</annotation></semantics></math>
-controls the shrinkage along the direction specified by
+controls the strength of shrinkage along
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>𝐮</mi><mi>l</mi></msub><annotation encoding="application/x-tex">\mathbf{u}_l</annotation></semantics></math>,
-and
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>L</mi><annotation encoding="application/x-tex">L</annotation></semantics></math>
-represents the set of directions. Typically, the vectors
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>𝐮</mi><mi>l</mi></msub><mo>∈</mo><msup><mi>ℜ</mi><mrow><mi>p</mi><mo>+</mo><mn>1</mn></mrow></msup></mrow><annotation encoding="application/x-tex">\mathbf{u}_l \in \Re^{p+1}</annotation></semantics></math>
-are chosen as eigenvectors of
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Σ</mi><mo>:=</mo><msup><mi>𝐗</mi><mi>⊤</mi></msup><mi>𝐗</mi></mrow><annotation encoding="application/x-tex">\Sigma := \mathbf{X}^\top \mathbf{X}</annotation></semantics></math>.
-This generalization leads to more flexible and potentially
-better-performing estimators.</p>
+and the set
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>ℒ</mi><annotation encoding="application/x-tex">\mathcal{L}</annotation></semantics></math>
+indexes the selected directions. A special case arises when the
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>𝐮</mi><mi>l</mi></msub><annotation encoding="application/x-tex">\mathbf{u}_l</annotation></semantics></math>
+form the standard basis vectors, recovering the classical
+<em>Generalized RR</em> of <a href="https://www.jstor.org/stable/1271436" class="external-link">Hoerl and Kennard
+(1970)</a>.</p>
 </div>
 <div class="section level3">
 <h3 id="linear-shrinkage">Linear Shrinkage<a class="anchor" aria-label="anchor" href="#linear-shrinkage"></a>
 </h3>
 <p>The LSh estimator combines the OLS estimator (computed through the
-origin) with a target estimator that assumes uncorrelated covariates.
+origin) with a target estimator that assumes uncorrelated covariates
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mi>Σ</mi><mo accent="true">̃</mo></mover><mo>=</mo><mrow><mi mathvariant="normal">d</mi><mi mathvariant="normal">i</mi><mi mathvariant="normal">a</mi><mi mathvariant="normal">g</mi></mrow><mrow><mo stretchy="true" form="prefix">(</mo><mi>Σ</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\widetilde{\Sigma} = \mathrm{diag}(\Sigma)</annotation></semantics></math>).
 This target estimator is given by
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mover><mi>𝛃</mi><mo accent="true">̂</mo></mover><mrow><mi>i</mi><mi>n</mi><mi>d</mi></mrow></msup><mo>=</mo><msup><mover><mi>Σ</mi><mo accent="true">̃</mo></mover><mrow><mi>−</mi><mn>1</mn></mrow></msup><msup><mi>𝐗</mi><mi>T</mi></msup><mi>𝐲</mi></mrow><annotation encoding="application/x-tex">\widehat{\boldsymbol{\beta}}^{ind} = \widetilde{\Sigma}^{-1}\mathbf{X}^T\mathbf{y}</annotation></semantics></math>,
-where
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mi>Σ</mi><mo accent="true">̃</mo></mover><mo>=</mo><mrow><mi mathvariant="normal">d</mi><mi mathvariant="normal">i</mi><mi mathvariant="normal">a</mi><mi mathvariant="normal">g</mi></mrow><mrow><mo stretchy="true" form="prefix">(</mo><mi>Σ</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\widetilde{\Sigma} = \mathrm{diag}(\Sigma)</annotation></semantics></math>.
-The method assumes that the data are standardized so that the intercept
-is not needed. The LSh estimator is defined as:</p>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mover><mi>𝛃</mi><mo accent="true">̂</mo></mover><mrow><mi>i</mi><mi>n</mi><mi>d</mi></mrow></msup><mo>=</mo><msup><mover><mi>Σ</mi><mo accent="true">̃</mo></mover><mrow><mi>−</mi><mn>1</mn></mrow></msup><msup><mi>𝐗</mi><mi>T</mi></msup><mi>𝐲</mi></mrow><annotation encoding="application/x-tex">\widehat{\boldsymbol{\beta}}^{ind} = \widetilde{\Sigma}^{-1}\mathbf{X}^T\mathbf{y}</annotation></semantics></math>.
+The method assumes that the data are standardized (zero mean and unit
+variance) so that the intercept is not needed. The LSh estimator is
+defined as:</p>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mover><mi>𝛃</mi><mo accent="true">̂</mo></mover><mrow><mi>i</mi><mi>n</mi><mi>d</mi></mrow></msup><mrow><mo stretchy="true" form="prefix">(</mo><mi>ρ</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>:=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>−</mo><mi>ρ</mi><mo stretchy="true" form="postfix">)</mo></mrow><msup><mover><mover><mrow><mi>𝛃</mi><mspace width="0.167em"></mspace></mrow><mo accent="true">̂</mo></mover><mo accent="true">̂</mo></mover><mrow><mi>O</mi><mi>L</mi><mi>S</mi></mrow></msup><mo>+</mo><mi>ρ</mi><msup><mover><mi>𝛃</mi><mo accent="true">̂</mo></mover><mrow><mi>i</mi><mi>n</mi><mi>d</mi></mrow></msup><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mi>ρ</mi><msup><mover><mi>Σ</mi><mo accent="true">̃</mo></mover><mrow><mi>−</mi><mn>1</mn></mrow></msup><mi>Σ</mi><mo>+</mo><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>−</mo><mi>ρ</mi><mo stretchy="true" form="postfix">)</mo></mrow><msub><mtext mathvariant="bold">𝐈</mtext><mi>p</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow><msup><mover><mover><mrow><mi>𝛃</mi><mspace width="0.167em"></mspace></mrow><mo accent="true">̂</mo></mover><mo accent="true">̂</mo></mover><mrow><mi>O</mi><mi>L</mi><mi>S</mi></mrow></msup><mo>:=</mo><mi>Σ</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>ρ</mi><mo stretchy="true" form="postfix">)</mo></mrow><msup><mover><mover><mrow><mi>𝛃</mi><mspace width="0.167em"></mspace></mrow><mo accent="true">̂</mo></mover><mo accent="true">̂</mo></mover><mrow><mi>O</mi><mi>L</mi><mi>S</mi></mrow></msup><mo>,</mo></mrow><annotation encoding="application/x-tex">
 \widehat{\boldsymbol{\beta}}^{ind}(\rho):=(1-\rho)\widehat{\widehat{\boldsymbol{\beta}\,}}^{OLS}+\rho \widehat{\boldsymbol{\beta}}^{ind}=\left(\rho\widetilde{\Sigma}^{-1}\Sigma + (1-\rho)\textbf{I}_p\right)\widehat{\widehat{\boldsymbol{\beta}\,}}^{OLS}:=\Sigma(\rho)\widehat{\widehat{\boldsymbol{\beta}\,}}^{OLS}, 
 </annotation></semantics></math></p>
@@ -293,30 +309,34 @@ is not needed. The LSh estimator is defined as:</p>
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mover><mover><mi>𝛃</mi><mo accent="true">̂</mo></mover><mo accent="true">̂</mo></mover><mrow><mi>O</mi><mi>L</mi><mi>S</mi></mrow></msup><annotation encoding="application/x-tex">\widehat{\widehat{\boldsymbol{\beta}}}^{OLS}</annotation></semantics></math>
 is the OLS estimator without intercept, and
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>ρ</mi><annotation encoding="application/x-tex">\rho</annotation></semantics></math>
-is the shrinkage intensity chosen to reduce MSE.</p>
+is the shrinkage intensity chosen to improve stability and reduce
+MSE.</p>
 </div>
 <div class="section level3">
 <h3 id="shrinkage-ridge-regression">Shrinkage Ridge Regression<a class="anchor" aria-label="anchor" href="#shrinkage-ridge-regression"></a>
 </h3>
-<p>The SRR estimator improves ridge regression by shrinking the sample
-covariance matrix
+<p>The SRR estimator improves upon standard RR by shrinking the
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Σ</mi><annotation encoding="application/x-tex">\Sigma</annotation></semantics></math>
-toward a scaled identity matrix
+toward a diagonal matrix with equal entries. Specifically, it shrinks
+toward
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>v</mi><msub><mi>𝐈</mi><mrow><mi>p</mi><mo>+</mo><mn>1</mn></mrow></msub></mrow><annotation encoding="application/x-tex">v \mathbf{I}_{p+1}</annotation></semantics></math>,
 where
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>v</mi><mo>=</mo><mfrac><mn>1</mn><mrow><mi>p</mi><mo>+</mo><mn>1</mn></mrow></mfrac><mrow><mi mathvariant="normal">T</mi><mi mathvariant="normal">r</mi></mrow><mrow><mo stretchy="true" form="prefix">(</mo><mi>Σ</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">v = \frac{1}{p+1} \mathrm{Tr}(\Sigma)</annotation></semantics></math>.
-This idea follows the approach of <a href="https://www.sciencedirect.com/science/article/pii/S0047259X03000964" class="external-link">Ledoit
-and Wolf(2004)</a>, but SRR selects the shrinkage level
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>ρ</mi><annotation encoding="application/x-tex">\rho</annotation></semantics></math>
-by directly minimizing the MSE of the regression coefficients, not the
-covariance. The SRR estimator is given by:</p>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>v</mi><mo>=</mo><mfrac><mn>1</mn><mrow><mi>p</mi><mo>+</mo><mn>1</mn></mrow></mfrac><mrow><mi mathvariant="normal">T</mi><mi mathvariant="normal">r</mi></mrow><mrow><mo stretchy="true" form="prefix">(</mo><mi>Σ</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">v = \frac{1}{p+1} \mathrm{Tr}(\Sigma)</annotation></semantics></math>
+is the average variance across all covariates and the intercept. The SRR
+estimator is given by:</p>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mover><mi>𝛃</mi><mo accent="true">̂</mo></mover><mrow><mi>S</mi><mi>R</mi><mi>R</mi></mrow></msup><mrow><mo stretchy="true" form="prefix">(</mo><mi>ρ</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mo minsize="1.2" maxsize="1.2" stretchy="false" form="prefix">(</mo><msup><mi>Σ</mi><mo>*</mo></msup><mrow><mo stretchy="true" form="prefix">(</mo><mi>ρ</mi><mo stretchy="true" form="postfix">)</mo></mrow><msup><mo minsize="1.2" maxsize="1.2" stretchy="false" form="postfix">)</mo><mrow><mi>−</mi><mn>1</mn></mrow></msup><msup><mtext mathvariant="bold">𝐗</mtext><mi>T</mi></msup><mtext mathvariant="bold">𝐲</mtext><mspace width="1.0em"></mspace><mtext mathvariant="normal">with</mtext><mspace width="1.0em"></mspace><msup><mi>Σ</mi><mo>*</mo></msup><mrow><mo stretchy="true" form="prefix">(</mo><mi>ρ</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>−</mo><mi>ρ</mi><mo stretchy="true" form="postfix">)</mo></mrow><mi>Σ</mi><mo>+</mo><mi>ρ</mi><mi>v</mi><msub><mtext mathvariant="bold">𝐈</mtext><mrow><mi>p</mi><mo>+</mo><mn>1</mn></mrow></msub><mi>.</mi></mrow><annotation encoding="application/x-tex">
 \widehat{\boldsymbol{\beta}}^{SRR}(\rho)=\big(\Sigma^*(\rho)\big)^{-1}\textbf{X}^T\textbf{y} \quad \text{with} \quad \Sigma^*(\rho)=(1-\rho)\Sigma+\rho v \textbf{I}_{p+1}.
 </annotation></semantics></math></p>
-<p>The optimal shrinkage parameter
+<p>Unlike the approach in <a href="https://www.sciencedirect.com/science/article/pii/S0047259X03000964" class="external-link">Ledoit
+and Wolf (2004)</a>, which minimizes the MSE of the covariance matrix,
+SRR chooses the optimal
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>ρ</mi><mo>*</mo></msup><annotation encoding="application/x-tex">\rho^*</annotation></semantics></math>
-is chosen to minimize
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>M</mi><mi>S</mi><mi>E</mi><mo minsize="1.2" maxsize="1.2" stretchy="false" form="prefix">(</mo><msup><mover><mi>𝛃</mi><mo accent="true">̂</mo></mover><mrow><mi>S</mi><mi>R</mi><mi>R</mi></mrow></msup><mrow><mo stretchy="true" form="prefix">(</mo><mi>ρ</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo minsize="1.2" maxsize="1.2" stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">MSE\big(\widehat{\boldsymbol{\beta}}^{SRR}(\rho)\big)</annotation></semantics></math>.</p>
+by directly minimizing the MSE of the coefficient estimator. Although
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>ρ</mi><mo>*</mo></msup><annotation encoding="application/x-tex">\rho^*</annotation></semantics></math>
+does not have a closed form, it can be selected numerically. This
+approach is especially useful when the design matrix has a low-rank or
+unstable covariance structure, as often encountered in high-dimensional
+or collinear settings.</p>
 </div>
 <div class="section level3">
 <h3 id="summary-of-shrinkage-estimators">Summary of Shrinkage Estimators<a class="anchor" aria-label="anchor" href="#summary-of-shrinkage-estimators"></a>
@@ -1289,8 +1309,11 @@ while the second table displays the actual estimated coefficients
 <div class="section level3">
 <h3 id="linear-shrinkage-1">Linear Shrinkage<a class="anchor" aria-label="anchor" href="#linear-shrinkage-1"></a>
 </h3>
-<p>This section evaluates LSh, where each coefficient is uniformly
-shrunk toward zero. Data are mean-centered before estimation.</p>
+<p>This section describes the LSh estimator, which shrinks the OLS
+coefficients (through the origin) toward a target based on the diagonal
+of the
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Σ</mi><annotation encoding="application/x-tex">\Sigma</annotation></semantics></math>.
+The method assumes standardized data.</p>
 <div class="section level4">
 <h4 id="multivariate-gaussian-distribution-1">Multivariate Gaussian Distribution<a class="anchor" aria-label="anchor" href="#multivariate-gaussian-distribution-1"></a>
 </h4>
@@ -1629,10 +1652,12 @@ while the second table displays the actual estimated coefficients
 <div class="section level3">
 <h3 id="shrinkage-ridge-regression-1">Shrinkage Ridge Regression<a class="anchor" aria-label="anchor" href="#shrinkage-ridge-regression-1"></a>
 </h3>
-<p>This section introduces the SRR method. The SRR estimator replaces
-the standard covariance matrix used in ridge regression with a linear
-shrinkage estimate that blends the sample covariance matrix with a
-scaled identity matrix.</p>
+<p>The SRR estimator improves upon RR by replacing the
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Σ</mi><annotation encoding="application/x-tex">\Sigma</annotation></semantics></math>
+with a convex combination of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>Σ</mi><annotation encoding="application/x-tex">\Sigma</annotation></semantics></math>
+and a scaled identity matrix, chosen to minimize the MSE of the
+coefficients.</p>
 <div class="section level4">
 <h4 id="latent-space-features">Latent Space Features<a class="anchor" aria-label="anchor" href="#latent-space-features"></a>
 </h4>
