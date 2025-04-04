@@ -37,7 +37,7 @@ These lagged covariates, from time steps t-1 to t-10, are used as predictors for
     </div>
 
     <div class="ref-description section level2">
-    <p>This dataset is derived from <code>cybersickness_row</code> by preprocessing the original physiological measurements.
+    <p>This dataset is derived from cybersickness_row by preprocessing the original physiological measurements.
 For each of the 22 physiological signals, 10 lagged features are created for each participant and time point.
 These lagged covariates, from time steps t-1 to t-10, are used as predictors for regression modeling in cybersickness studies.</p>
     </div>
@@ -49,19 +49,17 @@ These lagged covariates, from time steps t-1 to t-10, are used as predictors for
 
     <div class="section level2">
     <h2 id="format">Format<a class="anchor" aria-label="anchor" href="#format"></a></h2>
-    <p>A data frame with 25663 rows and 132 columns:</p><dl><dt>Intercept</dt>
-<dd><p>Intercept column (all 1s).</p></dd>
-
-  <dt>X2(t-10) to X23(t-1)</dt>
-<dd><p>Lagged features for 22 physiological measurements, 10 lags per variable.</p></dd>
-
-
-</dl></div>
+    <p>An object of class <code>data.frame</code> with 25663 rows and 132 columns.</p>
+    </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>The preprocessing includes:</p><ul><li><p>Creating lagged covariates: For each physiological signal Xi (for i = 2 to 23), new variables are created for values at previous time steps, including Xi(t-1), Xi(t-2), ..., Xi(t-10).</p></li>
-<li><p>To avoid overlap between outcome and covariates, the last 10 rows for each participant are removed.</p></li>
-</ul></div>
+    <p>The preprocessing includes:
+1. Creating lagged covariates: For each physiological signal Xi (for i = 2 to 23), new variables are created for values at previous time steps, including Xi(t-1), Xi(t-2), ..., Xi(t-10).
+2. To avoid overlap between outcome and covariates, the last 10 rows for each participant are removed.</p>
+<p>A data frame with 25663 rows and 132 columns:
+Intercept: Intercept column (all 1s).
+X2(t-10) to X23(t-1): Lagged features for 22 physiological measurements, 10 lags per variable.</p>
+    </div>
 
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>

@@ -5,11 +5,7 @@
 \alias{returns_441}
 \title{Stock Return Panel: 441 Stocks Across 6037 Dates}
 \format{
-A data frame with 6037 rows and 442 columns:
-\describe{
-  \item{Date}{Date of the return observation (format: YYYY-MM-DD).}
-  \item{PERMNO_*}{Each remaining column corresponds to one stock's return.}
-}
+An object of class \code{data.frame} with 6037 rows and 442 columns.
 }
 \usage{
 returns_441
@@ -18,5 +14,11 @@ returns_441
 This dataset contains returns for 441 stocks (identified by their PERMNO codes),
 adjusted for dividends, over 6037 time periods. Each column corresponds to a unique stock,
 and the first column is the date of observation.
+}
+\details{
+A data frame with 6037 rows and 442 columns:
+
+Date: Date of the return observation (format: YYYY-MM-DD).
+PERMNO_*: Each remaining column corresponds to one stock's return.
 }
 \keyword{datasets}

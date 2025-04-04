@@ -643,7 +643,7 @@ kable(coef_table, caption = "Estimated Coefficients by Method (rounded)")
 
 This section provides example code and references for applying the shrinkage estimators implemented in `savvySh` to real-world datasets. These applications demonstrate how shrinkage methods can be used in areas such as generalized linear models, portfolio investment, and fine-mapping in genetics. We do not run the code or present specific results here; instead, we offer clean, reproducible examples that users can adapt. Full details and preprocessing steps can be found in the relevant repositories or the [main paper](http://...).
 
--   The **cybersickness dataset** is used for illustrating shrinkage GLMs using a Poisson model. The main Shrinkage GLMs function is part of the related package `ShrinkageGLMs`, you can find [here](https://github.com/Ziwei-ChenChen/ShrinkageGLMs).
+-   The **cybersickness dataset** is used for illustrating shrinkage GLMs using a Poisson model. The main Shrinkage GLMs function is part of the related package `savvyGLM`, you can find [here](https://github.com/Ziwei-ChenChen/savvyGLM).
 
 -   The **returns_441 dataset** contains portfolio returns and is used for demonstrating shrinkage estimation in financial asset allocation.
 
@@ -655,7 +655,7 @@ This example demonstrates how to apply Poisson GLMs and various shrinkage estima
 
 ```{r, eval=FALSE}
 library(savvySh)
-library(ShrinkageGLMs)
+library(savvyGLM)
 library(MASS)
 
 standardize_features<-function(dataset){  
@@ -680,11 +680,11 @@ fit_and_return_coefficients <- function(x, y) {
   
   # Fitting models
   opt_glm2_OLS <- glm.fit2(x, y, control = control_list, family = family_type)
-  opt_glm2_SR <- glm.fit2_Shirnk(x, y, model_class = "SR", control = control_list, family = family_type)
-  opt_glm2_GSR <- glm.fit2_Shirnk(x, y, model_class = "GSR", control = control_list, family = family_type)
-  opt_glm2_St <- glm.fit2_Shirnk(x, y, model_class = "St", control = control_list, family = family_type)
-  opt_glm2_DSh <- glm.fit2_Shirnk(x, y, model_class = "DSh", control = control_list, family = family_type)
-  opt_glm2_Sh <- glm.fit2_Shirnk(x, y, model_class = "Sh", control = control_list, family = family_type)
+  opt_glm2_SR <- savvy_glm.fit2(x, y, model_class = "SR", control = control_list, family = family_type)
+  opt_glm2_GSR <- savvy_glm.fit2(x, y, model_class = "GSR", control = control_list, family = family_type)
+  opt_glm2_St <- savvy_glm.fit2(x, y, model_class = "St", control = control_list, family = family_type)
+  opt_glm2_DSh <- savvy_glm.fit2(x, y, model_class = "DSh", control = control_list, family = family_type)
+  opt_glm2_Sh <- savvy_glm.fit2(x, y, model_class = "Sh", control = control_list, family = family_type)
   
   # Return a list of coefficients
   return(list(
