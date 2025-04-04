@@ -77,13 +77,13 @@ coef(fit, estimator = "DSh")
 
 ## Authors
 
--   Ziwei Chen – [ziwei.chen.3\@bayes.city.ac.uk](mailto:ziwei.chen.3@bayes.city.ac.uk){.email}
+-   Ziwei Chen – [ziwei.chen.3\@citystgeorges.ac.uk](ziwei.chen.3@citystgeorges.ac.uk)
 
--   Vali Asimit – [asimit\@city.ac.uk](mailto:asimit@city.ac.uk){.email}
+-   Vali Asimit – [asimit\@citystgeorges.ac.uk](asimit@citystgeorges.ac.uk)
 
--   Marina Anca Cidota – [cidota\@fmi.unibuc.ro](mailto:cidota@fmi.unibuc.ro){.email}
+-   Marina Anca Cidota – [cidota\@fmi.unibuc.ro](cidota@fmi.unibuc.ro)
 
--   Jennifer Asimit – [jennifer.asimit\@mrc-bsu.cam.ac.uk](mailto:jennifer.asimit@mrc-bsu.cam.ac.uk){.email}
+-   Jennifer Asimit – [jennifer.asimit\@mrc-bsu.cam.ac.uk](jennifer.asimit@mrc-bsu.cam.ac.uk)
 
 ## License
 
