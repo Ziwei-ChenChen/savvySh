@@ -8,10 +8,10 @@ Asimit, V., Cidota, M. A., Chen, Z., & Asimit, J. (2025). [*Slab and Shrinkage L
 
 The official documentation site is available at: <https://Ziwei-ChenChen.github.io/savvySh>
 
-If you are interested in applying shrinkage methods within generalized linear models (GLMs), please refer to the companion package [`ShrinkageGLMs`](https://github.com/Ziwei-ChenChen/ShrinkageGLMs). You can install it directly from GitHub:
+If you are interested in applying shrinkage methods within generalized linear models (GLMs), please refer to the companion package [`savvyGLM`](https://github.com/Ziwei-ChenChen/savvyGLM). You can install it directly from GitHub:
 
 ``` r
-remotes::install_github("Ziwei-ChenChen/ShrinkageGLMs")
+remotes::install_github("Ziwei-ChenChen/savvyGLM")
 ```
 
 This will enable you to explore real-data GLM examples shown in the vignette section of the documentation website.
