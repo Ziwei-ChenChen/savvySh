@@ -4,12 +4,12 @@ Title: Slab and Shrinkage Linear Regression Estimation
 Version: 0.1.0
 Authors@R: 
     c(
-      person(given = "Ziwei", family = "Chen", role = c("aut", "cre"), email = "Ziwei.Chen.3@bayes.city.ac.uk"),
-      person(given = "Vali", family = "Asimit", role = "aut", email = "asimit@city.ac.uk"),
+      person(given = "Ziwei", family = "Chen", role = c("aut", "cre"), email = "Ziwei.Chen.3@citystgeorges.ac.uk"),
+      person(given = "Vali", family = "Asimit", role = "aut", email = "asimit@citystgeorges.ac.uk"),
       person(given = "Marina Anca", family = "Cidota", role = "aut", email = "cidota@fmi.unibuc.ro"),
       person(given = "Jennifer", family = "Asimit", role = "aut", email = "jennifer.asimit@mrc-bsu.cam.ac.uk")
     )
-Maintainer: Ziwei Chen <ziwei.chen.3@bayes.city.ac.uk>
+Maintainer: Ziwei Chen <ziwei.chen.3@citystgeorges.ac.uk>
 Description: savvySh is an R package that implements a suite of shrinkage estimators for multivariate
  linear regression. It is motivated by Stein's paradox, which shows that introducing a small bias can
  reduce variance and improve the overall mean squared error compared to the ordinary least squares (OLS)
@@ -20,6 +20,7 @@ Description: savvySh is an R package that implements a suite of shrinkage estima
  studies indicate that at least one estimator performs as well as or better than OLS.
 License: MIT + file LICENSE
 Encoding: UTF-8
+URL: https://Ziwei-ChenChen.github.io/savvySh
 LazyData: true
 Imports:
     Matrix,

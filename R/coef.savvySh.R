@@ -12,7 +12,7 @@
 #'
 #' @author
 #' Ziwei Chen, Vali Asimit, Marina Anca Cidota, Jennifer Asimit\cr
-#' Maintainer: Ziwei Chen <ziwei.chen.3@bayes.city.ac.uk>
+#' Maintainer: Ziwei Chen <ziwei.chen.3@citystgeorges.ac.uk>
 #'
 #' @importFrom stats predict
 #' @method coef savvySh_model
