@@ -4,7 +4,7 @@ The `savvySh` package provides a unified interface for fitting shrinkage estimat
 
 This package builds on theoretical work discussed in:
 
-Asimit, V., Cidota, M. A., Chen, Z., & Asimit, J. (2025). [*Slab and Shrinkage Linear Regression Estimation*](http//...).
+Asimit, V., Cidota, M. A., Chen, Z., & Asimit, J. (2025). [*Slab and Shrinkage Linear Regression Estimation*](https://openaccess.city.ac.uk/id/eprint/35005/).
 
 The official documentation site is available at: <https://Ziwei-ChenChen.github.io/savvySh>
 
