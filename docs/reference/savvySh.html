@@ -109,38 +109,49 @@ and <code>"ShrinkageRR"</code> is not used. The default is <code>FALSE</code>.</
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>A list containing the following elements:</p>
-<dl><dt><code>call</code>:</dt>
+<dl><dt>call</dt>
 <dd><p>The matched function call.</p></dd>
 
-<dt><code>model</code>:</dt>
+<dt>model</dt>
 <dd><p>The data frame of <code>y</code> and <code>x</code> used in the analysis.</p></dd>
 
-<dt><code>optimal_lambda</code>:</dt>
+<dt>optimal_lambda</dt>
 <dd><p>The <code>lambda</code> value chosen in <code>RR</code> if <code>x</code> is not full rank.</p></dd>
 
-<dt><code>model_class</code>:</dt>
+<dt>model_class</dt>
 <dd><p>The selected model class.</p></dd>
 
-<dt><code>coefficients</code>:</dt>
+<dt>coefficients</dt>
 <dd><p>A list of estimated coefficients for each applicable estimator in the <code>model_class</code>.</p></dd>
 
-<dt><code>fitted_values</code>:</dt>
+<dt>fitted_values</dt>
 <dd><p>A list of fitted values for each estimator.</p></dd>
 
-<dt><code>pred_MSE</code>:</dt>
+<dt>pred_MSE</dt>
 <dd><p>A list of prediction <code>MSE</code>s for each estimator.</p></dd>
 
-<dt><code>ridge_results</code> (optional):</dt>
+<dt>ridge_results (optional)</dt>
 <dd><p>A list containing detailed results from <code>RR</code>, used when multicollinearity (rank deficiency)
-  is detected in <code>x</code> and the <code>"ShrinkageRR"</code> is not called.
-  This element is included only when <code>RR</code> is applied instead of <code>OLS</code> due to the rank deficiency of <code>x</code>. It contains:</p><ul><li><p><code>lambda_range</code>: The range of <code>lambda</code> values used in the <code>RR</code> cross-validation.</p></li>
-<li><p><code>cvm</code>: A vector of cross-validated mean squared errors for each <code>lambda</code> in <code>lambda_range</code>.</p></li>
-<li><p><code>cvsd</code>: The standard deviation of the cross-validated mean squared errors for each <code>lambda</code>.</p></li>
-<li><p><code>ridge_coefficients</code>: A matrix of coefficients from <code>RR</code> at each <code>lambda</code> value,
-  with each column representing the coefficients corresponding to a specific <code>lambda</code>.</p></li>
-<li><p><code>optimal_lambda</code>:The <code>lambda</code> value that minimizes the cross-validated mean squared error,
-  which is used for the final <code>RR</code> estimation when multicollinearity is detected.</p></li>
-</ul></dd>
+ is detected in <code>x</code> and the <code>"ShrinkageRR"</code> is not called. This element is included only when <code>RR</code> is applied instead of <code>OLS</code>
+ due to the rank deficiency of <code>x</code>. It contains:</p><dl><dt><code>lambda_range</code></dt>
+<dd><p>The range of <code>lambda</code> values used in the <code>RR</code> cross-validation.</p></dd>
+
+ <dt><code>cvm</code></dt>
+<dd><p>A vector of cross-validated mean squared errors for each <code>lambda</code> in <code>lambda_range</code>.</p></dd>
+
+ <dt><code>cvsd</code></dt>
+<dd><p>The standard deviation of the cross-validated mean squared errors for each <code>lambda</code>.</p></dd>
+
+ <dt><code>ridge_coefficients</code></dt>
+<dd><p>A matrix of coefficients from <code>RR</code> at each <code>lambda</code> value,
+ with each column representing the coefficients corresponding to a specific <code>lambda</code>.</p></dd>
+
+ <dt><code>optimal_lambda</code></dt>
+<dd><p>The <code>lambda</code> value that minimizes the cross-validated mean squared error,
+ which is used for the final <code>RR</code> estimation when multicollinearity is detected.</p></dd>
+
+
+</dl></dd>
 
 </dl></div>
     <div class="section level2">
@@ -148,26 +159,47 @@ and <code>"ShrinkageRR"</code> is not used. The default is <code>FALSE</code>.</
     <p>The <em>Slab and Shrinkage Linear Regression Estimation</em> methodology provides a set of estimators that balance bias and variance through shrinkage techniques.
 These estimators address issues by incorporating controlled shrinkage on the <code>OLS</code> solution. The main function offers three classes of shrinkage estimators,
 each tailored for different modeling contexts in <code>model_class</code>.</p>
-<p><strong>Model Classes:</strong></p><ul><li><p><strong>Multiplicative Shrinkage:</strong>
-    This class includes three estimators that use the <code>OLS</code> coefficients as a starting point and apply <em>multiplicative</em> adjustments:
-    </p><ul><li><p><code>St - </code><em>Stein estimator</em>, which shrinks all coefficients toward zero to reduce variance while maintaining unbiasedness.</p></li>
-<li><p><code>DSh - </code><em>Diagonal Shrinkage</em>, where each coefficient is shrunk individually based on its corresponding variance, allowing more targeted shrinkage.</p></li>
-<li><p><code>Sh - </code>A <em>Shrinkage estimator</em> that solves a <em>Sylvester equation</em> for optimal shrinkage; it is included only if <code>include_Sh = TRUE</code>.</p></li>
-</ul></li>
-<li><p><strong>Slab Regression:</strong>
- <em>Slab Regression</em> includes two estimators that apply an adaptive penalty term to the solution:
-  </p><ul><li><p><code>SR - </code><em>Simple Slab Regression</em> modifies the OLS objective by incorporating a quadratic penalty in a fixed direction.
-  This penalty is controlled by a tuning parameter denoted as <code>v</code>. This approach can be viewed as a special case of the <code>generalized lasso</code>
-   but it does not require cross-validation for tuning.</p></li>
-<li><p><code>GSR - </code><em>Generalized Slab Regression</em> extends <code>SR</code> by allowing shrinkage along multiple directions.
-  In this case, the penalty is applied along the eigenvectors of the design covariance matrix, effectively shrinking the estimates
-  in a way that targets selected principal components.</p></li>
-</ul></li>
-<li><p><strong>Shrinkage Ridge Regression:</strong>
-The <em>Shrinkage Ridge Regression (SRR) extends standard ridge regression by additionally shrinking the sample covariance matrix toward a spherical target
-(i.e., a diagonal matrix with equal entries). This extra regularization stabilizes the eigenvalues and yields more robust coefficient estimates,
- particularly when the predictors lie close to a low-dimensional subspace.</em></p></li>
-</ul></div>
+<p><strong>Model Classes:</strong></p><dl><dt><strong>Multiplicative Shrinkage:</strong></dt>
+<dd><p>This class includes three estimators that use the <code>OLS</code> coefficients as a starting point and apply <em>multiplicative</em> adjustments:</p><dl><dt><code>St - </code></dt>
+<dd><p><em>Stein estimator</em>, which shrinks all coefficients toward zero to reduce variance while maintaining unbiasedness.</p></dd>
+
+      <dt><code>DSh - </code></dt>
+<dd><p><em>Diagonal Shrinkage</em>, where each coefficient is shrunk individually based on its corresponding variance, allowing more targeted shrinkage.</p></dd>
+
+      <dt><code>Sh - </code></dt>
+<dd><p>A <em>Shrinkage estimator</em> that solves a <em>Sylvester equation</em> for optimal shrinkage; it is included only if <code>include_Sh = TRUE</code>.</p></dd>
+
+
+</dl><p></p></dd>
+
+
+  <dt><strong>Slab Regression:</strong></dt>
+<dd><p><em>Slab Regression</em> includes two estimators that apply an adaptive penalty term to the solution:</p><dl><dt><code>SR - </code></dt>
+<dd><p><em>Simple Slab Regression</em> modifies the OLS objective by incorporating a quadratic penalty in a fixed direction.
+      This penalty is controlled by a tuning parameter denoted as <code>v</code>. This approach can be viewed as a special case of the <code>generalized lasso</code>
+      but it does not require cross-validation for tuning.</p></dd>
+
+      <dt><code>GSR - </code></dt>
+<dd><p><em>Generalized Slab Regression</em> extends <code>SR</code> by allowing shrinkage along multiple directions.
+      In this case, the penalty is applied along the eigenvectors of the design covariance matrix, effectively shrinking the estimates
+      in a way that targets selected principal components.</p></dd>
+
+
+</dl><p></p></dd>
+
+
+  <dt><strong>Linear Shrinkage:</strong></dt>
+<dd><p>The <em>Linear Shrinkage (LSh)</em> estimator forms a convex combination of the OLS estimator (through the origin) and a target estimator
+    that assumes uncorrelated predictors. This is suitable for standardized data and provides a simple alternative to more complex shrinkage methods.</p></dd>
+
+
+  <dt><strong>Shrinkage Ridge Regression:</strong></dt>
+<dd><p>The <em>Shrinkage Ridge Regression (SRR)</em> extends standard ridge regression by additionally shrinking the sample covariance matrix toward a spherical target
+    (i.e., a diagonal matrix with equal entries). This extra regularization stabilizes the eigenvalues and yields more robust coefficient estimates,
+    particularly when the predictors lie close to a low-dimensional subspace.</p></dd>
+
+
+</dl></div>
     <div class="section level2">
     <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a></h2>
     <p>Asimit, V., Cidota, M. A., Chen, Z., &amp; Asimit, J. (2025). <em>Slab and Shrinkage Linear Regression Estimation</em>.

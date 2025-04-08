@@ -18,7 +18,7 @@ Description: savvySh is an R package that implements a suite of shrinkage estima
  Shrinkage Ridge Regression, where the shrinkage parameter is chosen by minimizing mean squared error).
  It is especially suited for high-dimensional settings or cases with near multicollinearity, and empirical
  studies indicate that at least one estimator performs as well as or better than OLS.
-License: MIT + file LICENSE
+License: GPL (>= 3)
 Encoding: UTF-8
 URL: https://Ziwei-ChenChen.github.io/savvySh
 Imports:

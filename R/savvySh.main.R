@@ -35,58 +35,63 @@
 #' each tailored for different modeling contexts in \code{model_class}.
 #'
 #' \strong{Model Classes:}
-#' \itemize{
-#' \item{\strong{Multiplicative Shrinkage:}}{
+#' \describe{
+#'   \item{\strong{Multiplicative Shrinkage:}}{
 #'     This class includes three estimators that use the \code{OLS} coefficients as a starting point and apply \emph{multiplicative} adjustments:
-#'     \itemize{
+#'     \describe{
 #'       \item{\code{St - }}{\emph{Stein estimator}, which shrinks all coefficients toward zero to reduce variance while maintaining unbiasedness.}
 #'       \item{\code{DSh - }}{\emph{Diagonal Shrinkage}, where each coefficient is shrunk individually based on its corresponding variance, allowing more targeted shrinkage.}
 #'       \item{\code{Sh - }}{A \emph{Shrinkage estimator} that solves a \emph{Sylvester equation} for optimal shrinkage; it is included only if \code{include_Sh = TRUE}.}
 #'     }
 #'   }
 #'
-#' \item{\strong{Slab Regression:}}{
-#'  \emph{Slab Regression} includes two estimators that apply an adaptive penalty term to the solution:
-#'   \itemize{
-#'   \item{\code{SR - }}{\emph{Simple Slab Regression} modifies the OLS objective by incorporating a quadratic penalty in a fixed direction.
-#'   This penalty is controlled by a tuning parameter denoted as \code{v}. This approach can be viewed as a special case of the \code{generalized lasso}
-#'    but it does not require cross-validation for tuning.}
-#'   \item{\code{GSR - }}{\emph{Generalized Slab Regression} extends \code{SR} by allowing shrinkage along multiple directions.
-#'   In this case, the penalty is applied along the eigenvectors of the design covariance matrix, effectively shrinking the estimates
-#'   in a way that targets selected principal components. }
+#'   \item{\strong{Slab Regression:}}{
+#'     \emph{Slab Regression} includes two estimators that apply an adaptive penalty term to the solution:
+#'     \describe{
+#'       \item{\code{SR - }}{\emph{Simple Slab Regression} modifies the OLS objective by incorporating a quadratic penalty in a fixed direction.
+#'       This penalty is controlled by a tuning parameter denoted as \code{v}. This approach can be viewed as a special case of the \code{generalized lasso}
+#'       but it does not require cross-validation for tuning.}
+#'       \item{\code{GSR - }}{\emph{Generalized Slab Regression} extends \code{SR} by allowing shrinkage along multiple directions.
+#'       In this case, the penalty is applied along the eigenvectors of the design covariance matrix, effectively shrinking the estimates
+#'       in a way that targets selected principal components.}
+#'     }
 #'   }
-#'  }
 #'
-#' \item{\strong{Shrinkage Ridge Regression:}}{
-#' The \emph{Shrinkage Ridge Regression (SRR) extends standard ridge regression by additionally shrinking the sample covariance matrix toward a spherical target
-#' (i.e., a diagonal matrix with equal entries). This extra regularization stabilizes the eigenvalues and yields more robust coefficient estimates,
-#'  particularly when the predictors lie close to a low-dimensional subspace.}
-#'  }
-#'}
-#'
-#' @return
-#' A list containing the following elements:
-#' \item{\code{call}:}{ The matched function call.}
-#' \item{\code{model}:}{ The data frame of \code{y} and \code{x} used in the analysis.}
-#' \item{\code{optimal_lambda}:}{ The \code{lambda} value chosen in \code{RR} if \code{x} is not full rank.}
-#' \item{\code{model_class}:}{ The selected model class.}
-#' \item{\code{coefficients}:}{ A list of estimated coefficients for each applicable estimator in the \code{model_class}.}
-#' \item{\code{fitted_values}:}{ A list of fitted values for each estimator.}
-#' \item{\code{pred_MSE}:}{ A list of prediction \code{MSE}s for each estimator.}
-#' \item{\code{ridge_results} (optional):}{
-#'   A list containing detailed results from \code{RR}, used when multicollinearity (rank deficiency)
-#'   is detected in \code{x} and the \code{"ShrinkageRR"} is not called.
-#'   This element is included only when \code{RR} is applied instead of \code{OLS} due to the rank deficiency of \code{x}. It contains:
-#'   \itemize{
-#'   \item{\code{lambda_range}:}{ The range of \code{lambda} values used in the \code{RR} cross-validation.}
-#'   \item{\code{cvm}:}{ A vector of cross-validated mean squared errors for each \code{lambda} in \code{lambda_range}.}
-#'   \item{\code{cvsd}:}{ The standard deviation of the cross-validated mean squared errors for each \code{lambda}.}
-#'   \item{\code{ridge_coefficients}:}{ A matrix of coefficients from \code{RR} at each \code{lambda} value,
-#'   with each column representing the coefficients corresponding to a specific \code{lambda}.}
-#'   \item{\code{optimal_lambda}:}{The \code{lambda} value that minimizes the cross-validated mean squared error,
-#'   which is used for the final \code{RR} estimation when multicollinearity is detected.}
+#'   \item{\strong{Linear Shrinkage:}}{
+#'     The \emph{Linear Shrinkage (LSh)} estimator forms a convex combination of the OLS estimator (through the origin) and a target estimator
+#'     that assumes uncorrelated predictors. This is suitable for standardized data and provides a simple alternative to more complex shrinkage methods.
 #'   }
-#'}
+#'
+#'   \item{\strong{Shrinkage Ridge Regression:}}{
+#'     The \emph{Shrinkage Ridge Regression (SRR)} extends standard ridge regression by additionally shrinking the sample covariance matrix toward a spherical target
+#'     (i.e., a diagonal matrix with equal entries). This extra regularization stabilizes the eigenvalues and yields more robust coefficient estimates,
+#'     particularly when the predictors lie close to a low-dimensional subspace.
+#'   }
+#' }
+#'
+#' @return A list containing the following elements:
+#' \item{call}{The matched function call.}
+#' \item{model}{The data frame of \code{y} and \code{x} used in the analysis.}
+#' \item{optimal_lambda}{The \code{lambda} value chosen in \code{RR} if \code{x} is not full rank.}
+#' \item{model_class}{The selected model class.}
+#' \item{coefficients}{A list of estimated coefficients for each applicable estimator in the \code{model_class}.}
+#' \item{fitted_values}{A list of fitted values for each estimator.}
+#' \item{pred_MSE}{A list of prediction \code{MSE}s for each estimator.}
+#' \item{ridge_results (optional)}{
+#'  A list containing detailed results from \code{RR}, used when multicollinearity (rank deficiency)
+#'  is detected in \code{x} and the \code{"ShrinkageRR"} is not called. This element is included only when \code{RR} is applied instead of \code{OLS}
+#'  due to the rank deficiency of \code{x}. It contains:
+#'  \describe{
+#'  \item{\code{lambda_range}}{The range of \code{lambda} values used in the \code{RR} cross-validation.}
+#'  \item{\code{cvm}}{A vector of cross-validated mean squared errors for each \code{lambda} in \code{lambda_range}.}
+#'  \item{\code{cvsd}}{The standard deviation of the cross-validated mean squared errors for each \code{lambda}.}
+#'  \item{\code{ridge_coefficients}}{A matrix of coefficients from \code{RR} at each \code{lambda} value,
+#'  with each column representing the coefficients corresponding to a specific \code{lambda}.}
+#'  \item{\code{optimal_lambda}}{The \code{lambda} value that minimizes the cross-validated mean squared error,
+#'  which is used for the final \code{RR} estimation when multicollinearity is detected.}
+#'  }
+#' }
+#'
 #'
 #' @author
 #' Ziwei Chen, Vali Asimit, Marina Anca Cidota, Jennifer Asimit\cr
