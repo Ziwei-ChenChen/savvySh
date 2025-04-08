@@ -2,7 +2,7 @@
 % Please edit documentation in R/coef.savvySh.R
 \name{coef.savvySh_model}
 \alias{coef.savvySh_model}
-\title{Extract Coefficients From a Slab and Shrinkage Model Object}
+\title{Extract Coefficients From a Slab and Shrinkage Linear Regression Estimation Object}
 \usage{
 \method{coef}{savvySh_model}(object, estimator = NULL, ...)
 }

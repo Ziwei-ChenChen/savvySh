@@ -1,4 +1,4 @@
-#' Summary of a Fitted Slab and Shrinkage Linear Regression Model with Statistics
+#' Summary of a Slab and Shrinkage Linear Regression Estimation with Statistics
 #'
 #' This function provides a summary of the fitted \code{savvySh_model}, displaying
 #' the estimated coefficients, residuals, standard errors, R-squared, and F-statistics.

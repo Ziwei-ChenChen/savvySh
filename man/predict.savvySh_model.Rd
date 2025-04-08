@@ -2,7 +2,7 @@
 % Please edit documentation in R/predict.savvSh.R
 \name{predict.savvySh_model}
 \alias{predict.savvySh_model}
-\title{Predict for Slab and Shrinkage Linear Regression Models}
+\title{Predict for Slab and Shrinkage Linear Regression Estimation}
 \usage{
 \method{predict}{savvySh_model}(
   object,

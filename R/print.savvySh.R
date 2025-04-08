@@ -1,4 +1,4 @@
-#' Print a Slab and Shrinkage Linear Regression Model Object
+#' Print a Slab and Shrinkage Linear Regression Estimation Object
 #'
 #' Print a summary of the Slab and Shrinkage linear regression model object.
 #'

@@ -2,7 +2,7 @@
 % Please edit documentation in R/summary.savvySh.R
 \name{summary.savvySh_model}
 \alias{summary.savvySh_model}
-\title{Summary of a Fitted Slab and Shrinkage Linear Regression Model with Statistics}
+\title{Summary of a Slab and Shrinkage Linear Regression Estimation with Statistics}
 \usage{
 \method{summary}{savvySh_model}(object, ...)
 }

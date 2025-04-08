@@ -1,4 +1,4 @@
-#' Extract Coefficients From a Slab and Shrinkage Model Object
+#' Extract Coefficients From a Slab and Shrinkage Linear Regression Estimation Object
 #'
 #' Extract the estimated coefficients from a fitted Slab and Shrinkage linear regression model object.
 #'

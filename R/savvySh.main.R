@@ -169,7 +169,9 @@ savvySh <- function(x, y, model_class = c("Multiplicative", "Slab", "Linear", "S
       optimal_lambda <- glmnet_fit$lambda.min
       est <- as.vector(coef(glmnet_fit, s = "lambda.min"))
       fitted_values <- as.vector(predict(glmnet_fit, newx = x, s = optimal_lambda))
-      sigma <- sqrt(sum((y - fitted_values)^2) / (nobs - nvars - 1))
+      df_eff <- sum((svd(x)$d)^2 / ((svd(x)$d)^2 + optimal_lambda))
+      RSS <- sum((y - fitted_values)^2)
+      sigma_square <- (RSS / (nobs - df_eff))^2
       ridge_results <- list(
         lambda_range = glmnet_fit$lambda,
         cvm = glmnet_fit$cvm,
@@ -179,10 +181,9 @@ savvySh <- function(x, y, model_class = c("Multiplicative", "Slab", "Linear", "S
     } else {
       lm_fit <- lm(y ~ x)
       est <- as.vector(lm_fit$coefficients)
-      sigma <- summary(lm_fit)$sigma
+      sigma_square <- (summary(lm_fit)$sigma)^2
       optimal_lambda <- 0
     }
-    sigma_square <- sigma^2
     Sigma_lambda <- t(x_tilde) %*% x_tilde + optimal_lambda * diag(ncol(x_tilde))
     Sigma_lambda_inv <- pd.solve(Sigma_lambda)
 
@@ -226,8 +227,10 @@ savvySh <- function(x, y, model_class = c("Multiplicative", "Slab", "Linear", "S
       glmnet_fit <- cv.glmnet(centered_x, centered_y, alpha = 0, lambda = lambda_vals, nfolds = folds)
       optimal_lambda <- glmnet_fit$lambda.min
       est <- as.vector(coef(glmnet_fit, s = "lambda.min"))[-1]
-      fitted_values <- as.vector(predict(glmnet_fit, newx = x, s = optimal_lambda))
-      sigma <- sqrt(sum((y - fitted_values)^2) / (nobs - nvars))
+      fitted_values <- as.vector(predict(glmnet_fit, newx = centered_x, s = optimal_lambda))
+      df_eff <- sum((svd(centered_x)$d)^2 / ((svd(centered_x)$d)^2 + optimal_lambda))
+      RSS <- sum((centered_y - fitted_values)^2)
+      sigma_square <- (RSS / (nobs - df_eff))^2
       ridge_results <- list(
         lambda_range = glmnet_fit$lambda,
         cvm = glmnet_fit$cvm,
@@ -237,10 +240,9 @@ savvySh <- function(x, y, model_class = c("Multiplicative", "Slab", "Linear", "S
     } else {
       lm_fit <- lm(centered_y ~ centered_x - 1)
       est <- as.vector(lm_fit$coefficients)
-      sigma <- summary(lm_fit)$sigma
+      sigma_square <- (summary(lm_fit)$sigma)^2
       optimal_lambda <- 0
     }
-    sigma_square <- sigma^2
     Sigma_lambda <- t(centered_x) %*% centered_x + optimal_lambda * diag(ncol(centered_x))
     Sigma_lambda_inv <- pd.solve(Sigma_lambda)
     Sigma_tilde <- diag(diag(Sigma_lambda))
@@ -255,7 +257,6 @@ savvySh <- function(x, y, model_class = c("Multiplicative", "Slab", "Linear", "S
     SRR_fitted_values <- as.vector(x_tilde %*% est_SRR)
     pred_MSE_SRR <- mean((y - SRR_fitted_values)^2)
   }
-
   results <- list(
     call = match.call(),
     model = data.frame(y, x),

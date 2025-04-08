@@ -2,7 +2,7 @@
 % Please edit documentation in R/print.savvySh.R
 \name{print.savvySh_model}
 \alias{print.savvySh_model}
-\title{Print a Slab and Shrinkage Linear Regression Model Object}
+\title{Print a Slab and Shrinkage Linear Regression Estimation Object}
 \usage{
 \method{print}{savvySh_model}(x, digits = max(3, getOption("digits") - 3), ...)
 }

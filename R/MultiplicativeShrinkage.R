@@ -33,7 +33,9 @@ DSh_ost <- function(est, sigma_square, Sigma_lambda_inv) {
 
 # Sylvester equation solver.
 # Solves the Sylvester equation A * X + X * B = C using a Schur decomposition method.
-# Adapted from: https://github.com/sakuramomo1005/biADMM/blob/master/R/sylvester.R
+# This code for solving the Sylvester equation was adapted from the biADMM R code,
+# available at: https://github.com/sakuramomo1005/biADMM/blob/master/R/sylvester.R
+# Original Author: sakuramomo1005
 # Parameters:
 #   A      - Numeric matrix.
 #   B      - Numeric matrix.

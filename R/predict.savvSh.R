@@ -1,4 +1,4 @@
-#' Predict for Slab and Shrinkage Linear Regression Models
+#' Predict for Slab and Shrinkage Linear Regression Estimation
 #'
 #' This function predicts fitted values or coefficients for a fitted Slab and Shrinkage linear regression model
 #' created using the \code{savvySh} function.
