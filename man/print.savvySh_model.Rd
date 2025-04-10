@@ -2,30 +2,40 @@
 % Please edit documentation in R/print.savvySh.R
 \name{print.savvySh_model}
 \alias{print.savvySh_model}
-\title{Print a Slab and Shrinkage Linear Regression Estimation Object}
+\title{Print a Slab and Shrinkage Model Summary}
 \usage{
 \method{print}{savvySh_model}(x, digits = max(3, getOption("digits") - 3), ...)
 }
 \arguments{
-\item{x}{Fitted \code{"savvySh_model"} object.}
+\item{x}{A fitted \code{"savvySh_model"} object returned by \code{\link{savvySh}}.}
 
-\item{digits}{Significant digits in the printout.}
+\item{digits}{An integer specifying how many significant digits to display when printing
+coefficients and \code{lambda}. Defaults to \code{max(3, getOption("digits") - 3)}.}
 
-\item{...}{Additional print arguments.}
+\item{...}{Additional arguments passed to \code{\link[base]{print}} (currently unused).}
 }
 \value{
-Invisibly returns a data frame summarizing the model (number of coefficients and lambda values, if any).
+Invisibly returns a \code{data.frame} summarizing each estimator's name, number of non-zero
+coefficients, and the final \code{optimal_lambda} (if any). This can be captured and further
+processed by the user if desired.
 }
 \description{
-Print a summary of the Slab and Shrinkage linear regression model object.
+Displays a concise summary of a fitted \code{\link{savvySh_model}} object, including the original
+function call, the chosen model class, the number of non-zero coefficients per estimator, and
+the optimal \code{lambda} value (if applicable). Additionally, the coefficients for each estimator
+are printed with user-specified precision.
 }
 \details{
-The function prints the call that produced the \code{savvySh_model} object and a summary of the model,
-including the selected model class, the number of non-zero coefficients for each estimator, and
-if applicable, the optimal lambda value.
+This print method aims to provide a quick diagnostic of the fitted model, indicating how many
+coefficients each shrinkage estimator shrank exactly to zero (if any), and what the final
+\code{lambda} parameter was, in the case of rank-deficient data. It also lists the intercept
+and predictor names next to their estimates for each estimator. The function invisibly returns
+a summary \code{data.frame} containing these key metrics.
 }
 \seealso{
-\code{\link{savvySh}}
+\code{\link{savvySh}} for creating a slab and shrinkage model,
+  \code{\link{coef.savvySh_model}} and \code{\link{predict.savvySh_model}} for extracting model coefficients
+  and making predictions.
 }
 \author{
 Ziwei Chen, Vali Asimit, Marina Anca Cidota, Jennifer Asimit\cr

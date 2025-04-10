@@ -2,12 +2,16 @@ Package: savvySh
 Type: Package
 Title: Slab and Shrinkage Linear Regression Estimation
 Version: 0.1.0
-Authors@R: 
+Authors@R:
     c(
-      person(given = "Ziwei", family = "Chen", role = c("aut", "cre"), email = "Ziwei.Chen.3@citystgeorges.ac.uk"),
-      person(given = "Vali", family = "Asimit", role = "aut", email = "asimit@citystgeorges.ac.uk"),
-      person(given = "Marina Anca", family = "Cidota", role = "aut", email = "cidota@fmi.unibuc.ro"),
-      person(given = "Jennifer", family = "Asimit", role = "aut", email = "jennifer.asimit@mrc-bsu.cam.ac.uk")
+      person(given = "Ziwei", family = "Chen", role = c("aut", "cre"), 
+      email = "Ziwei.Chen.3@citystgeorges.ac.uk", comment = c("0009-0009-6376-3850")),
+      person(given = "Vali", family = "Asimit", role = "aut", 
+      email = "asimit@citystgeorges.ac.uk", comment = c("0000-0002-7706-0066")),
+      person(given = "Marina Anca", family = "Cidota", role = "aut", 
+      email = "cidota@fmi.unibuc.ro", comment = c("0009-0004-9505-7233")),
+      person(given = "Jennifer", family = "Asimit", role = "aut", 
+      email = "jennifer.asimit@mrc-bsu.cam.ac.uk", comment = c("0000-0002-4857-2249"))
     )
 Maintainer: Ziwei Chen <ziwei.chen.3@citystgeorges.ac.uk>
 Description: savvySh is an R package that implements a suite of shrinkage estimators for multivariate

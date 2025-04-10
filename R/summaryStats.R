@@ -1,5 +1,4 @@
 #' @keywords internal
-# Helper function to format p-values
 format_p_values <- function(p_values, digits = 4) {
   formatted_p_values <- ifelse(
     p_values < 10^(-digits),
@@ -9,7 +8,7 @@ format_p_values <- function(p_values, digits = 4) {
   return(formatted_p_values)
 }
 
-# Helper function to add significance codes
+#' @keywords internal
 add_significance_codes <- function(p_values) {
   signif_codes <- rep("", length(p_values))
   signif_codes[p_values <= 0.001] <- "***"
@@ -20,7 +19,11 @@ add_significance_codes <- function(p_values) {
   return(signif_codes)
 }
 
-# Helper function to compute summary statistics
+#' @keywords internal
+#' Compute summary statistics for a given set of coefficients in a linear model.
+#' This is used by \code{summary.savvySh_model} to provide OLS-like diagnostics,
+#' including residuals, R-squared, F-stats, and confidence intervals.
+#'
 summaryStats_savvySh <- function(x, y, coefficients, conf_level = 0.95) {
   nobs <- nrow(x)
   nvars <- ncol(x)
@@ -32,17 +35,21 @@ summaryStats_savvySh <- function(x, y, coefficients, conf_level = 0.95) {
 
   fitted_values <- x %*% coefficients
   residuals <- y - fitted_values
-
   residual_quants <- quantile(residuals, probs = c(0, 0.25, 0.5, 0.75, 1))
+
+  df_residual <- nobs - (nvars + as.integer(intercept_present))
   rss <- sum(residuals^2)
-  tss <- sum((y - mean(y))^2)
+  residual_se <- sqrt(rss / df_residual)
+
+  rss <- sum(residuals^2)
   df_residual <- nobs - nvars - as.integer(intercept_present)
   residual_se <- sqrt(rss / df_residual)
 
+  tss <- sum((y - mean(y))^2)
   r_squared <- 1 - (rss / tss)
-  adj_r_squared <- 1 - ((rss / df_residual) / (tss / (nobs - 1)))
+  adj_r_squared <- 1 - (1 - r_squared) * ((nobs - 1) / df_residual)
 
-  xtx_inv <- solve(t(x) %*% x)
+  xtx_inv <- solve(crossprod(x))
   std_err <- residual_se * sqrt(diag(xtx_inv))
 
   t_values <- coefficients / std_err
@@ -53,15 +60,16 @@ summaryStats_savvySh <- function(x, y, coefficients, conf_level = 0.95) {
   f_statistic <- msr / mse
   f_p_value <- pf(f_statistic, nvars, df_residual, lower.tail = FALSE)
 
-  log_likelihood <- -0.5 * nobs * log(sum(residuals^2) / nobs)
-  AIC <- -2 * log_likelihood + 2 * (nvars + as.integer(intercept_present))
-  BIC <- -2 * log_likelihood + log(nobs) * (nvars + as.integer(intercept_present))
+  log_likelihood <- -0.5 * nobs * log(rss / nobs)
+  k <- nvars + as.integer(intercept_present)
+  AIC <- -2 * log_likelihood + 2 * k
+  BIC <- -2 * log_likelihood + log(nobs) * k
   deviance <- rss
 
   alpha <- 1 - conf_level
-  z_value <- qnorm(1 - alpha / 2)
-  confint_lower <- coefficients - z_value * std_err
-  confint_upper <- coefficients + z_value * std_err
+  t_val <- qt(1 - alpha / 2, df = df_residual)
+  confint_lower <- coefficients - t_val * std_err
+  confint_upper <- coefficients + t_val * std_err
 
   list(
     residuals = residuals,

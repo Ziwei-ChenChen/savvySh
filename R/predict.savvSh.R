@@ -1,25 +1,42 @@
-#' Predict for Slab and Shrinkage Linear Regression Estimation
+#' @title Predict Method for Slab and Shrinkage Linear Regression Models
 #'
-#' This function predicts fitted values or coefficients for a fitted Slab and Shrinkage linear regression model
-#' created using the \code{savvySh} function.
+#' @description
+#' Generate predictions (fitted values) or extract coefficients from a \code{"savvySh_model"}
+#' object produced by \code{\link{savvySh}}. This function allows you to specify
+#' which shrinkage estimator to use if multiple estimators are stored in the model.
 #'
-#' @param object Fitted \code{"savvySh_model"} object returned by \code{savvySh}.
-#' @param newx Matrix of new data for which predictions are to be made. Must have the same number of columns as the training data.
-#'             This argument is required for \code{type = "response"}.
-#' @param type Type of prediction required. Can be \code{"response"} (fitted values) or \code{"coefficients"}.
-#'             Defaults to \code{"response"}.
-#' @param estimator The specific estimator to use for prediction. For example, \code{"St"}, \code{"DSh"} if \code{model_class = "Multiplicative"}, etc.
-#'                  This must match one of the estimators in the fitted \code{savvySh_model} object.
-#'                  Defaults to the first available estimator if not specified.
-#' @param ... Additional arguments.
+#' @param object A fitted \code{"savvySh_model"} object returned by \code{\link{savvySh}}.
+#' @param newx A numeric matrix of new data (with the same number of predictors) for which to generate predictions.
+#'   Required if \code{type = "response"}. If \code{type = "coefficients"}, this argument is ignored.
+#' @param type A character string specifying whether to return fitted values (\code{"response"})
+#'   or regression coefficients (\code{"coefficients"}). Defaults to \code{"response"}.
+#' @param estimator A character string naming which shrinkage estimator to use.
+#'   Must match one of the estimators in \code{object$coefficients}. If \code{NULL},
+#'   defaults to the first available estimator in \code{object$coefficients}.
+#' @param ... Additional arguments (currently unused).
 #'
-#' @return Predicted values for \code{type = "response"} or coefficients for \code{type = "coefficients"}.
+#' @details
+#' The behavior depends on the value of \code{type}:
+#' \describe{
+#'   \item{\code{"response"}:}{Returns predicted values for new data supplied via \code{newx}.}
+#'   \item{\code{"coefficients"}:}{Returns the estimated coefficient vector for the requested \code{estimator}.}
+#' }
+#' If no \code{estimator} is specified, it defaults to the first one in the model object.
+#' For instance, a \code{savvySh_model} fitted with \code{model_class = "Multiplicative"} typically has
+#' \code{"St"}, \code{"DSh"}, and possibly \code{"Sh"} if \code{include_Sh = TRUE}.
+#'
+#' @return
+#' If \code{type = "response"}, a numeric vector of predicted values.
+#' If \code{type = "coefficients"}, a named numeric vector of regression coefficients for the chosen estimator.
 #'
 #' @author
 #' Ziwei Chen, Vali Asimit, Marina Anca Cidota, Jennifer Asimit\cr
 #' Maintainer: Ziwei Chen <ziwei.chen.3@citystgeorges.ac.uk>
 #'
-#' @seealso \code{\link{savvySh}}
+#' @seealso
+#'   \code{\link{savvySh}} for fitting Slab and Shrinkage linear models,
+#'   \code{\link{coef.savvySh_model}} for a direct way to extract coefficients without specifying \code{type}.
+#
 #' @method predict savvySh_model
 #' @export
 predict.savvySh_model <- function(object, newx = NULL, type = c("response", "coefficients"), estimator = NULL, ...) {

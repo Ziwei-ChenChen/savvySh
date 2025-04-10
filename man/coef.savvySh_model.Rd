@@ -2,27 +2,38 @@
 % Please edit documentation in R/coef.savvySh.R
 \name{coef.savvySh_model}
 \alias{coef.savvySh_model}
-\title{Extract Coefficients From a Slab and Shrinkage Linear Regression Estimation Object}
+\title{Extract Coefficients for a Slab and Shrinkage Model}
 \usage{
 \method{coef}{savvySh_model}(object, estimator = NULL, ...)
 }
 \arguments{
-\item{object}{A fitted model object of class \code{savvySh_model}.}
+\item{object}{A fitted model object of class \code{savvySh_model} (created by \code{\link{savvySh}}).}
 
-\item{estimator}{The specific estimator to use for extracting coefficients. For example, \code{"St"}, \code{"DSh"}, etc.
-This must match one of the estimators in the fitted \code{savvySh_model} object.
-Defaults to the first available estimator if not specified.}
+\item{estimator}{A character string naming which estimator's coefficients to extract.
+Examples include \code{"St"}, \code{"DSh"}, \code{"Sh"}, \code{"SR"}, \code{"GSR"}, and so on.
+If \code{NULL}, the first available estimator is used.}
 
-\item{...}{Additional arguments passed to the \code{predict} method.}
+\item{...}{Additional arguments passed to \code{\link{predict.savvySh_model}}.}
 }
 \value{
-A named vector of coefficients for the specified estimator.
+A named numeric vector of regression coefficients. If the model includes an intercept,
+  it will appear as \code{(Intercept)} in the returned vector.
 }
 \description{
-Extract the estimated coefficients from a fitted Slab and Shrinkage linear regression model object.
+Extracts the estimated regression coefficients from a \code{\link{savvySh_model}} object,
+specifying which shrinkage estimator to return, if no estimator specified,
+then return the fist avaliable estimator for the chosen \code{model_class}.
+}
+\details{
+This function calls \code{\link{predict.savvySh_model}} internally with \code{type = "coefficients"}
+to retrieve the requested coefficient vector. If an \code{estimator} is not supplied, it defaults
+to the first available estimator in the fitted model (for example, \code{"St"}, \code{"DSh"},
+\code{"SR"}, \code{"GSR"}, etc.). If the requested estimator does not exist in the model object,
+an error is raised.
 }
 \seealso{
-\code{\link{predict.savvySh_model}}, \code{\link{savvySh}}
+\code{\link{predict.savvySh_model}} for related predictions,
+  \code{\link{savvySh}} for fitting a slab and shrinkage model.
 }
 \author{
 Ziwei Chen, Vali Asimit, Marina Anca Cidota, Jennifer Asimit\cr
