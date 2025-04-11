@@ -69,7 +69,8 @@ about the data.</p>
 
 <dt id="arg-model-class">model_class<a class="anchor" aria-label="anchor" href="#arg-model-class"></a></dt>
 <dd><p>A character string specifying the shrinkage model to use. Options are <code>"Multiplicative"</code>,
-<code>"Slab"</code>, <code>"Linear"</code>, and <code>"ShrinkageRR"</code>. The default is <code>"Multiplicative"</code>.</p></dd>
+<code>"Slab"</code>, <code>"Linear"</code>, and <code>"ShrinkageRR"</code>. The default is <code>"Multiplicative"</code>.
+ If the user supplies more than one model, a warning is issued and only the first option is used.</p></dd>
 
 
 <dt id="arg-v">v<a class="anchor" aria-label="anchor" href="#arg-v"></a></dt>
@@ -156,7 +157,9 @@ If <code>x</code> is rank-deficient, it is the chosen <code>RR</code> <code>lamb
     <p>The <em>Slab and Shrinkage Linear Regression Estimation</em> methodology provides four classes of shrinkage estimators
 that reduce variance in the OLS solution by introducing a small, structured bias. These methods handle overfitting,
 collinearity, and high-dimensional scenarios by controlling how and where the coefficients are shrunk. Each class offers a distinct strategy
-for controlling instability and improving mean squared error (MSE) in linear models and tailored for different modeling contexts in <code>model_class</code>.</p>
+for controlling instability and improving mean squared error (MSE) in linear models, tailored for different modeling contexts specified
+in the <code>model_class</code> argument. Note that if the user provides more than one option in <code>model_class</code>, only the first option is used,
+and a warning is issued.</p>
 <p><strong>Model Classes:</strong></p><dl><dt><strong>Multiplicative Shrinkage:</strong></dt>
 <dd><p>This class includes three estimators that use the <code>OLS</code> coefficients as a starting point and apply
     <em>multiplicative</em> adjustments:</p>

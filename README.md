@@ -68,11 +68,12 @@ x <- matrix(rnorm(100 * 10), 100, 10)
 y <- rnorm(100)
 
 # Fit shrinkage estimators
-fit <- savvySh(x, y, model_class = "Multiplicative")
+fit <- savvySh(x, y, model_class = "Multiplicative", include_Sh = TRUE)
 
 # Extract coefficients
 coef(fit, estimator = "St")
 coef(fit, estimator = "DSh")
+coef(fit, estimator = "Sh")
 ```
 
 ## Authors

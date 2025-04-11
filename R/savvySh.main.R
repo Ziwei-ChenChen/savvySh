@@ -14,7 +14,8 @@
 #' @param x A matrix of predictor variables.
 #' @param y A vector of response variable.
 #' @param model_class A character string specifying the shrinkage model to use. Options are \code{"Multiplicative"},
-#'                   \code{"Slab"}, \code{"Linear"}, and \code{"ShrinkageRR"}. The default is \code{"Multiplicative"}.
+#' \code{"Slab"}, \code{"Linear"}, and \code{"ShrinkageRR"}. The default is \code{"Multiplicative"}.
+#'  If the user supplies more than one model, a warning is issued and only the first option is used.
 #' @param v A numeric value controlling the strength of shrinkage for the \code{SR} estimator in the \code{"Slab"} model.
 #' Must be a positive number. Default is 1.
 #' @param lambda_vals A vector of \code{lambda} values for \code{RR}. This is used only when
@@ -33,7 +34,9 @@
 #' The \emph{Slab and Shrinkage Linear Regression Estimation} methodology provides four classes of shrinkage estimators
 #' that reduce variance in the OLS solution by introducing a small, structured bias. These methods handle overfitting,
 #' collinearity, and high-dimensional scenarios by controlling how and where the coefficients are shrunk. Each class offers a distinct strategy
-#' for controlling instability and improving mean squared error (MSE) in linear models and tailored for different modeling contexts in \code{model_class}.
+#' for controlling instability and improving mean squared error (MSE) in linear models, tailored for different modeling contexts specified
+#' in the \code{model_class} argument. Note that if the user provides more than one option in \code{model_class}, only the first option is used,
+#' and a warning is issued.
 #'
 #' \strong{Model Classes:}
 #' \describe{
@@ -125,7 +128,14 @@ savvySh <- function(x, y, model_class = c("Multiplicative", "Slab", "Linear", "S
 
   x <- as.matrix(x)
   y <- as.vector(y)
-  model_class <- match.arg(model_class, choices = model_class)
+
+  valid_models <- c("Multiplicative", "Slab", "Linear", "ShrinkageRR")
+  if (length(model_class) > 1) {
+    warning("model_class should be a single option. Using the first element: ", model_class[1])
+    model_class <- model_class[1]
+  } else {
+    model_class <- match.arg(model_class, choices = model_class)
+  }
 
   if (nrow(x) != length(y)) {
     stop("The number of rows in x must match the length of y.")
@@ -133,10 +143,11 @@ savvySh <- function(x, y, model_class = c("Multiplicative", "Slab", "Linear", "S
   if (anyNA(x) || anyNA(y)) {
     stop("x or y contains missing values. Please impute or handle missing data before proceeding.")
   }
-  valid_models <- c("Multiplicative", "Slab", "Linear", "ShrinkageRR")
+
   if (!model_class %in% valid_models) {
-    stop(paste("Invalid model_class specified. Choose from:", paste(valid_models, collapse=", ")))
+    stop(paste("Invalid model_class specified. Choose from:", paste(valid_models, collapse = ", ")))
   }
+
   model <- data.frame(y, x)
   if (is.null(colnames(x))) {
     colnames(x) <- paste("V", seq_len(ncol(x)), sep = "")
@@ -273,6 +284,7 @@ savvySh <- function(x, y, model_class = c("Multiplicative", "Slab", "Linear", "S
     SRR_fitted_values <- as.vector(x_tilde %*% est_SRR)
     pred_MSE_SRR <- mean((y - SRR_fitted_values)^2)
   }
+
   results <- list(
     call = match.call(),
     model = data.frame(y, x),
@@ -316,9 +328,6 @@ savvySh <- function(x, y, model_class = c("Multiplicative", "Slab", "Linear", "S
   }
 
   class(results) <- "savvySh_model"
-
   return(results)
 }
-
-
 

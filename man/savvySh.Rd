@@ -14,7 +14,8 @@ savvySh(x, y, model_class = c("Multiplicative", "Slab", "Linear", "ShrinkageRR")
 \item{y}{A vector of response variable.}
 
 \item{model_class}{A character string specifying the shrinkage model to use. Options are \code{"Multiplicative"},
-\code{"Slab"}, \code{"Linear"}, and \code{"ShrinkageRR"}. The default is \code{"Multiplicative"}.}
+\code{"Slab"}, \code{"Linear"}, and \code{"ShrinkageRR"}. The default is \code{"Multiplicative"}.
+ If the user supplies more than one model, a warning is issued and only the first option is used.}
 
 \item{v}{A numeric value controlling the strength of shrinkage for the \code{SR} estimator in the \code{"Slab"} model.
 Must be a positive number. Default is 1.}
@@ -70,7 +71,9 @@ about the data.
 The \emph{Slab and Shrinkage Linear Regression Estimation} methodology provides four classes of shrinkage estimators
 that reduce variance in the OLS solution by introducing a small, structured bias. These methods handle overfitting,
 collinearity, and high-dimensional scenarios by controlling how and where the coefficients are shrunk. Each class offers a distinct strategy
-for controlling instability and improving mean squared error (MSE) in linear models and tailored for different modeling contexts in \code{model_class}.
+for controlling instability and improving mean squared error (MSE) in linear models, tailored for different modeling contexts specified
+in the \code{model_class} argument. Note that if the user provides more than one option in \code{model_class}, only the first option is used,
+and a warning is issued.
 
 \strong{Model Classes:}
 \describe{

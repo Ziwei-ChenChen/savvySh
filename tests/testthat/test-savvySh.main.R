@@ -6,26 +6,26 @@ x <- matrix(rnorm(100 * 10), ncol = 10)
 y <- rnorm(100)
 
 test_that("savvySh function handles input validation correctly", {
-  expect_error(savvySh(x, y[1:50]), "The number of rows in x must match the length of y.")
+  expect_error(savvySh(x, y[1:50], model_class = "Multiplicative"), "The number of rows in x must match the length of y.")
   x_with_na <- x
   x_with_na[1, 1] <- NA
-  expect_error(savvySh(x_with_na, y), "x or y contains missing values. Please impute or handle missing data before proceeding.")
+  expect_error(savvySh(x_with_na, y, model_class = "Multiplicative"), "x or y contains missing values. Please impute or handle missing data before proceeding.")
 
   y_with_na <- y
   y_with_na[1] <- NA
-  expect_error(savvySh(x, y_with_na), "x or y contains missing values. Please impute or handle missing data before proceeding.")
-  expect_error(savvySh(x[1:5, ], y[1:5]), "Number of features in x must be less than the number of observations.")
+  expect_error(savvySh(x, y_with_na, model_class = "Multiplicative"), "x or y contains missing values. Please impute or handle missing data before proceeding.")
+  expect_error(savvySh(x[1:5, ], y[1:5], model_class = "Multiplicative"), "Number of features in x must be less than the number of observations.")
 })
 
 test_that("savvySh function handles exclusion parameter validation correctly", {
-  expect_error(savvySh(x, y, exclude = c(0, 1)), "Exclusion must not contain NA or zero values.")
-  expect_error(savvySh(x, y, exclude = NA), "Exclusion must not contain NA or zero values.")
-  expect_error(savvySh(x, y, exclude = c(100)), "Exclusion indices are out of bounds.")
-  expect_error(savvySh(x, y, exclude = list(1, 2)), "Exclusion must be a vector.")
-  expect_error(savvySh(x, y, exclude = "non_existent_col"), "Exclusion names must match column names.")
-  expect_silent(savvySh(x, y, exclude = c(1, 2)))
-  expect_silent(savvySh(x, y, exclude = c("V1", "V2")))
-  expect_error(savvySh(x, y, exclude = c(1, "V2")), "Exclusion names must match column names.")
+  expect_error(savvySh(x, y, exclude = c(0, 1), model_class = "Multiplicative"), "Exclusion must not contain NA or zero values.")
+  expect_error(savvySh(x, y, exclude = NA, model_class = "Multiplicative"), "Exclusion must not contain NA or zero values.")
+  expect_error(savvySh(x, y, exclude = c(100), model_class = "Multiplicative"), "Exclusion indices are out of bounds.")
+  expect_error(savvySh(x, y, exclude = list(1, 2), model_class = "Multiplicative"), "Exclusion must be a vector.")
+  expect_error(savvySh(x, y, exclude = "non_existent_col", model_class = "Multiplicative"), "Exclusion names must match column names.")
+  expect_silent(savvySh(x, y, exclude = c(1, 2), model_class = "Multiplicative"))
+  expect_silent(savvySh(x, y, exclude = c("V1", "V2"), model_class = "Multiplicative"))
+  expect_error(savvySh(x, y, exclude = c(1, "V2"), model_class = "Multiplicative"), "Exclusion names must match column names.")
 })
 
 test_that("savvySh function validates model_class argument correctly", {
@@ -39,19 +39,26 @@ test_that("savvySh function validates model_class argument correctly", {
   )
 })
 
+test_that("savvySh warns and uses the first model when multiple model_class values are provided", {
+  warn_msg <- capture_warnings(savvySh(x, y, model_class = c("Multiplicative", "Slab")))
+  expect_match(warn_msg, "model_class should be a single option. Using the first element:")
+  result <- suppressWarnings(savvySh(x, y, model_class = c("Multiplicative", "Slab")))
+  expect_equal(result$model_class, "Multiplicative")
+})
+
 test_that("savvySh function validates lambda_vals and folds arguments correctly", {
   x_multicollinear <- cbind(x, x[, 1])
   lambda_vals <- 10^seq(-3, 1, length.out = 5)
   expect_error(
-    savvySh(x_multicollinear, y, lambda_vals = c(0.1), folds = 5),
+    savvySh(x_multicollinear, y, model_class = "Multiplicative", lambda_vals = c(0.1), folds = 5),
     "Need more than one value of lambda_vals for cross-validation."
   )
   expect_error(
-    savvySh(x_multicollinear, y, lambda_vals = lambda_vals, folds = 2.5),
+    savvySh(x_multicollinear, y, model_class = "Multiplicative", lambda_vals = lambda_vals, folds = 2.5),
     "Number of folds must be an integer greater than or equal to 3."
   )
   expect_error(
-    savvySh(x_multicollinear, y, lambda_vals = lambda_vals, folds = 2),
+    savvySh(x_multicollinear, y, model_class = "Multiplicative", lambda_vals = lambda_vals, folds = 2),
     "Number of folds must be an integer greater than or equal to 3."
   )
 })

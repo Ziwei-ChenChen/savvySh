@@ -34,7 +34,7 @@ For each estimator (e.g., \code{"St"}, \code{"DSh"}, \code{"SR"}, \code{"GSR"}, 
 
 These results are printed to the console for each estimator in turn. Users can compare how each
 shrinkage approach performs with respect to fit and significance. Internally, it relies on
-\code{summaryStats_savvySh} for key computations.
+\code{summaryStats_savvySh()} in \code{summaryStats} for key computations.
 }
 \seealso{
 \code{\link{savvySh}} for fitting slab and shrinkage models,
