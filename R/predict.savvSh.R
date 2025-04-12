@@ -1,82 +1,112 @@
 #' @title Predict Method for Slab and Shrinkage Linear Regression Models
 #'
 #' @description
-#' Generate predictions (fitted values) or extract coefficients from a \code{"savvySh_model"}
-#' object produced by \code{\link{savvySh}}. This function allows you to specify
-#' which shrinkage estimator to use if multiple estimators are stored in the model.
+#' Generate predictions (fitted values) or extract regression coefficients from a
+#' \code{savvySh_model} object returned by \code{savvySh}. This function allows you to
+#' specify one or more shrinkage estimators (via the \code{estimator} parameter) available
+#' in the model. If no estimator is specified, all available estimators are used and their
+#' results are returned in a named list.
 #'
-#' @param object A fitted \code{"savvySh_model"} object returned by \code{\link{savvySh}}.
-#' @param newx A numeric matrix of new data (with the same number of predictors) for which to generate predictions.
-#'   Required if \code{type = "response"}. If \code{type = "coefficients"}, this argument is ignored.
-#' @param type A character string specifying whether to return fitted values (\code{"response"})
-#'   or regression coefficients (\code{"coefficients"}). Defaults to \code{"response"}.
-#' @param estimator A character string naming which shrinkage estimator to use.
-#'   Must match one of the estimators in \code{object$coefficients}. If \code{NULL},
-#'   defaults to the first available estimator in \code{object$coefficients}.
+#' @param object A fitted \code{savvySh_model} object produced by \code{savvySh}.
+#' @param newx A numeric matrix of new predictor data for which to generate predictions.
+#'   This argument is required if \code{type = "response"} and is ignored if \code{type = "coefficients"}.
+#' @param type A character string specifying the output type. Options are \code{"response"} to return
+#'   predicted values and \code{"coefficients"} to extract regression coefficient vectors. Defaults to \code{"response"}.
+#' @param estimator A character vector naming one or more shrinkage estimator(s) to use.
+#'   These must match names present in \code{object$coefficients}. If \code{NULL},
+#'   all available estimators are used.
 #' @param ... Additional arguments (currently unused).
 #'
 #' @details
 #' The behavior depends on the value of \code{type}:
 #' \describe{
-#'   \item{\code{"response"}:}{Returns predicted values for new data supplied via \code{newx}.}
-#'   \item{\code{"coefficients"}:}{Returns the estimated coefficient vector for the requested \code{estimator}.}
+#'   \item{\code{"response"}:}{Generates predicted values using the coefficient estimates
+#'       from the specified shrinkage estimator(s) for new data supplied via \code{newx}.}
+#'   \item{\code{"coefficients"}:}{Extracts the regression coefficient vector(s) corresponding
+#'       to the specified estimator(s). Coefficient names are assigned based on whether an intercept
+#'       is present (for Linear shrinkage, no intercept).}
 #' }
-#' If no \code{estimator} is specified, it defaults to the first one in the model object.
-#' For instance, a \code{savvySh_model} fitted with \code{model_class = "Multiplicative"} typically has
-#' \code{"St"}, \code{"DSh"}, and possibly \code{"Sh"} if \code{include_Sh = TRUE}.
+#'
+#' If no \code{estimator} is specified, the function returns results for all available estimators
+#' as a named list. If a single estimator is specified (or only one is provided in the vector), the result
+#' is returned as a numeric vector (for coefficients) or a numeric vector of predictions (for response).
 #'
 #' @return
-#' If \code{type = "response"}, a numeric vector of predicted values.
-#' If \code{type = "coefficients"}, a named numeric vector of regression coefficients for the chosen estimator.
+#' If \code{type = "response"}, the function returns:
+#' \itemize{
+#'   \item A numeric vector of predicted values if exactly one estimator is specified;
+#'   \item Otherwise, a named list of numeric vectors, one for each specified estimator.
+#' }
+#' If \code{type = "coefficients"}, the function returns:
+#' \itemize{
+#'   \item A named numeric vector of regression coefficients if exactly one estimator is specified;
+#'   \item Otherwise, a named list of numeric vectors corresponding to each specified estimator.
+#' }
+#'
+#' @seealso
+#'   \code{\link{savvySh}} for fitting slab and shrinkage linear models,
+#'   \code{\link{coef.savvySh_model}} for direct coefficient extraction.
 #'
 #' @author
 #' Ziwei Chen, Vali Asimit, Marina Anca Cidota, Jennifer Asimit\cr
 #' Maintainer: Ziwei Chen <ziwei.chen.3@citystgeorges.ac.uk>
 #'
-#' @seealso
-#'   \code{\link{savvySh}} for fitting Slab and Shrinkage linear models,
-#'   \code{\link{coef.savvySh_model}} for a direct way to extract coefficients without specifying \code{type}.
-#
 #' @method predict savvySh_model
 #' @export
-predict.savvySh_model <- function(object, newx = NULL, type = c("response", "coefficients"), estimator = NULL, ...) {
+predict.savvySh_model <- function(object, newx = NULL, type = c("response", "coefficients"),
+                                  estimator = NULL, ...) {
   valid_types <- c("response", "coefficients")
+  if (length(type) != 1) {
+    stop("Please specify exactly one type: 'response' or 'coefficients'.")
+  }
   if (!type %in% valid_types) {
     stop("Invalid type specified. Use 'response' or 'coefficients'.")
   }
-
-  type <- match.arg(type, valid_types)
-
   if (is.null(object$coefficients) || !is.list(object$coefficients)) {
     stop("Invalid 'savvySh_model' object: coefficients are missing or improperly structured.")
   }
 
   if (is.null(estimator)) {
-    estimator <- names(object$coefficients)[1]
-    warning("No estimator specified. Defaulting to the first available estimator: ", estimator)
+    if (length(names(object$coefficients)) > 1) {
+      estimator <- names(object$coefficients)
+      warning("No estimator specified. Returning results for all available estimators: ",
+              paste(estimator, collapse = ", "))
+    } else {
+      estimator <- names(object$coefficients)
+    }
+  } else {
+    if (!is.character(estimator)) {
+      stop("Estimator must be a character vector of estimator names.")
+    }
+    if (!all(estimator %in% names(object$coefficients))) {
+      stop("The specified estimator(s) '", paste(estimator, collapse = ", "),
+           "' are not available. Choose from: ", paste(names(object$coefficients), collapse = ", "))
+    }
   }
 
-  if (!(estimator %in% names(object$coefficients))) {
-    stop("The specified estimator '", estimator, "' is not available. Choose from: ",
-         paste(names(object$coefficients), collapse = ", "))
-  }
-
-  coefficients <- object$coefficients[[estimator]]
-  intercept_present <- ncol(object$model) == length(coefficients)
-
-  if (is.null(coefficients) || length(coefficients) == 0) {
-    stop(paste("The coefficients for the estimator", estimator, "are missing or empty."))
-  }
+  first_coefs <- object$coefficients[[estimator[1]]]
+  intercept_present <- (ncol(object$model) == length(first_coefs))
 
   if (type == "coefficients") {
-    coef_names <- if (intercept_present) {
-      c("(Intercept)", paste0("V", seq_len(ncol(object$model)-1)))
+    coefs_list <- lapply(estimator, function(est_name) {
+      coefs <- object$coefficients[[est_name]]
+      if (is.null(coefs) || length(coefs) == 0) {
+        stop(paste("The coefficients for the estimator", est_name, "are missing or empty."))
+      }
+      coef_names <- if (intercept_present) {
+        c("(Intercept)", paste0("V", seq_len(ncol(object$model) - 1)))
+      } else {
+        paste0("V", seq_len(length(coefs)))
+      }
+      names(coefs) <- coef_names
+      coefs
+    })
+    if (length(estimator) == 1) {
+      return(coefs_list[[1]])
     } else {
-      paste0("V", seq_len(length(coefficients)))
+      names(coefs_list) <- estimator
+      return(coefs_list)
     }
-    names(coefficients) <- coef_names
-
-    return(coefficients)
   }
 
   if (type == "response") {
@@ -84,17 +114,21 @@ predict.savvySh_model <- function(object, newx = NULL, type = c("response", "coe
       stop("You need to supply a matrix of new values for 'newx'.")
     }
     newx <- as.matrix(newx)
-    nvars <- length(coefficients) - as.numeric(intercept_present)
+    nvars <- if (intercept_present) length(first_coefs) - 1 else length(first_coefs)
     if (ncol(newx) != nvars) {
-      stop("The number of variables in 'newx' must match the number of predictors in the model.")
+      stop("The number of columns in 'newx' must match the number of predictors in the model.")
     }
-
-    model_intercept <- if (intercept_present) coefficients[1] else 0
-    model_coefs <- if (intercept_present) coefficients[-1] else coefficients
-    predictions <- model_intercept + newx %*% model_coefs
-
-    return(predictions)
+    predictions <- lapply(estimator, function(est_name) {
+      coefs <- object$coefficients[[est_name]]
+      inter <- if (intercept_present) coefs[1] else 0
+      beta <- if (intercept_present) coefs[-1] else coefs
+      as.vector(inter + newx %*% beta)
+    })
+    if (length(estimator) == 1) {
+      return(predictions[[1]])
+    } else {
+      names(predictions) <- estimator
+      return(predictions)
+    }
   }
 }
-
-

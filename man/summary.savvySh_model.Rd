@@ -4,41 +4,42 @@
 \alias{summary.savvySh_model}
 \title{Summarize a Slab and Shrinkage Linear Regression Model}
 \usage{
-\method{summary}{savvySh_model}(object, ...)
+\method{summary}{savvySh_model}(object, estimator = NULL, ...)
 }
 \arguments{
-\item{object}{A fitted model object of class \code{savvySh_model}, produced by \code{\link{savvySh}}.}
+\item{object}{A fitted model object of class \code{savvySh_model}, produced by \code{savvySh}.}
+
+\item{estimator}{A character vector naming one or more estimators to summarize (e.g., \code{"St"}, \code{"DSh"},
+\code{"SR"}, \code{"GSR"}, \code{"Sh"}, etc.). If \code{NULL} (default), summaries for all available estimators are printed.}
 
 \item{...}{Additional arguments (currently unused).}
 }
 \value{
-Prints a multi-section summary for each estimator within the model.
-No value is returned, but the summary is printed to the console.
+Invisibly returns a \code{data.frame} summarizing key metrics for each estimator (including estimator name,
+number of non-zero coefficients, and optimal \code{lambda} if available).
 }
 \description{
-Provides a comprehensive summary of each estimator within a \code{\link{savvySh_model}} object, including:
-estimated coefficients, confidence intervals, residual statistics, R-squared measures, F-statistics,
-and information criteria (AIC, BIC).
+Provides a comprehensive summary for one or more shrinkage estimators contained within a
+\code{savvySh_model} object produced by \code{savvySh}. The summary includes estimated coefficients,
+confidence intervals, residual statistics, R-squared measures, F-statistics, and information criteria (AIC, BIC)
+for each specified estimator.
 }
 \details{
-For each estimator (e.g., \code{"St"}, \code{"DSh"}, \code{"SR"}, \code{"GSR"}, \code{"Sh"}, etc.) present in the
-\code{savvySh_model} object, this function computes:
+For each estimator present in the \code{savvySh_model} object (or for the user-specified subset), this function computes:
 \itemize{
-  \item Residual distribution summary (quantiles).
-  \item Estimated coefficient table (Estimates, standard errors, t-values, p-values, confidence intervals).
+  \item A summary of the residual distribution (quantiles).
+  \item A coefficient table including estimates, standard errors, t-values, p-values, and confidence intervals.
   \item Residual standard error and degrees of freedom.
-  \item R-squared and adjusted R-squared.
-  \item F-statistic (testing overall regression significance) and p-value.
-  \item AIC, BIC, and deviance to gauge model fit.
+  \item R-squared and adjusted R-squared measures.
+  \item F-statistic (and its p-value) for testing overall regression significance.
+  \item Information criteria (AIC, BIC) and deviance for model fit.
 }
-
-These results are printed to the console for each estimator in turn. Users can compare how each
-shrinkage approach performs with respect to fit and significance. Internally, it relies on
-\code{summaryStats_savvySh()} in \code{summaryStats} for key computations.
+These results are printed in sequence for the selected estimator(s). If no estimator is specified,
+summaries for all available estimators are printed.
 }
 \seealso{
-\code{\link{savvySh}} for fitting slab and shrinkage models,
-  \code{\link{predict.savvySh_model}} for making predictions,
+\code{\link{savvySh}} for fitting slab and shrinkage linear models,
+  \code{\link{predict.savvySh_model}} for generating predictions,
   \code{\link{coef.savvySh_model}} for extracting coefficients directly.
 }
 \author{

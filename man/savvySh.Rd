@@ -13,7 +13,7 @@ savvySh(x, y, model_class = c("Multiplicative", "Slab", "Linear", "ShrinkageRR")
 
 \item{y}{A vector of response variable.}
 
-\item{model_class}{A character string specifying the shrinkage model to use. Options are \code{"Multiplicative"},
+\item{model_class}{A character string specifying the shrinkage model to use. Options can choose from \code{"Multiplicative"},
 \code{"Slab"}, \code{"Linear"}, and \code{"ShrinkageRR"}. The default is \code{"Multiplicative"}.
  If the user supplies more than one model, a warning is issued and only the first option is used.}
 

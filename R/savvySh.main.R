@@ -13,7 +13,7 @@
 #'
 #' @param x A matrix of predictor variables.
 #' @param y A vector of response variable.
-#' @param model_class A character string specifying the shrinkage model to use. Options are \code{"Multiplicative"},
+#' @param model_class A character string specifying the shrinkage model to use. Options can choose from \code{"Multiplicative"},
 #' \code{"Slab"}, \code{"Linear"}, and \code{"ShrinkageRR"}. The default is \code{"Multiplicative"}.
 #'  If the user supplies more than one model, a warning is issued and only the first option is used.
 #' @param v A numeric value controlling the strength of shrinkage for the \code{SR} estimator in the \code{"Slab"} model.
@@ -330,4 +330,5 @@ savvySh <- function(x, y, model_class = c("Multiplicative", "Slab", "Linear", "S
   class(results) <- "savvySh_model"
   return(results)
 }
+
 
