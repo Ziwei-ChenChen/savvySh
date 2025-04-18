@@ -432,7 +432,7 @@ or collinear settings.</p>
 <td>Modified Ridge</td>
 <td>No</td>
 <td>
-<strong>Yes</strong> (theoretical minimization)</td>
+<strong>Yes</strong> (numerical minimization)</td>
 <td><strong>Yes</strong></td>
 </tr>
 </tbody>
@@ -2111,11 +2111,10 @@ and Sharpe ratios.</p></li>
 <span>    <span class="va">daily_returns_mat</span><span class="op">[</span><span class="va">i</span>, <span class="op">]</span> <span class="op">&lt;-</span> <span class="va">daily_returns_list</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span></span>
 <span>  <span class="op">}</span></span>
 <span>  </span>
-<span>  <span class="va">expected_daily_returns</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/colSums.html" class="external-link">rowMeans</a></span><span class="op">(</span><span class="va">daily_returns_mat</span><span class="op">)</span></span>
-<span>  <span class="va">annual_returns</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="fl">1</span> <span class="op">+</span> <span class="va">expected_daily_returns</span><span class="op">)</span><span class="op">^</span><span class="fl">252</span> <span class="op">-</span> <span class="fl">1</span></span>
-<span>  <span class="va">daily_vols</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="va">daily_returns_mat</span>, <span class="fl">1</span>, <span class="va">sd</span><span class="op">)</span></span>
-<span>  <span class="va">annual_vols</span> <span class="op">&lt;-</span> <span class="va">daily_vols</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="fl">252</span><span class="op">)</span></span>
-<span>  <span class="va">annual_sharp</span> <span class="op">&lt;-</span> <span class="va">annual_returns</span> <span class="op">/</span> <span class="va">annual_vols</span></span>
+<span>  <span class="va">returns_xts_mat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/xts/man/xts.html" class="external-link">xts</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="va">daily_returns_mat</span><span class="op">)</span>, order.by <span class="op">=</span> <span class="va">test_dates</span><span class="op">)</span></span>
+<span>  <span class="va">annual_returns</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/PerformanceAnalytics/man/Return.annualized.html" class="external-link">Return.annualized</a></span><span class="op">(</span>R <span class="op">=</span> <span class="va">returns_xts_mat</span>, scale <span class="op">=</span> <span class="fl">252</span><span class="op">)</span></span>
+<span>  <span class="va">annual_vols</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/PerformanceAnalytics/man/StdDev.annualized.html" class="external-link">StdDev.annualized</a></span><span class="op">(</span>R <span class="op">=</span> <span class="va">returns_xts_mat</span>, scale <span class="op">=</span> <span class="fl">252</span><span class="op">)</span></span>
+<span>  <span class="va">annual_sharp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">annual_returns</span> <span class="op">/</span> <span class="va">annual_vols</span><span class="op">)</span></span>
 <span></span>
 <span>  <span class="va">window_result_returns</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="va">annual_returns</span><span class="op">)</span><span class="op">)</span></span>
 <span>  <span class="va">window_result_returns</span><span class="op">$</span><span class="va">Window</span> <span class="op">&lt;-</span> <span class="va">window_index</span></span>

@@ -153,7 +153,7 @@ Unlike the approach in [Ledoit and Wolf (2004)](https://www.sciencedirect.com/sc
 | **SR** | Fixed direction (e.g., $\mathbf{1}$) | Penalized projection | No | No | No |
 | **GSR** | Multiple directions (eigenvectors) | Penalized projection | No | No | No |
 | **LSh** | Toward diagonal target | Convex combination | **Yes** | No | No |
-| **SRR** | Toward scaled identity | Modified Ridge | No | **Yes** (theoretical minimization) | **Yes** |
+| **SRR** | Toward scaled identity | Modified Ridge | No | **Yes** (numerical minimization) | **Yes** |
 
 ------------------------------------------------------------------------
 
@@ -894,11 +894,10 @@ for (window_index in seq_len(max_windows)) {
     daily_returns_mat[i, ] <- daily_returns_list[[i]]
   }
   
-  expected_daily_returns <- rowMeans(daily_returns_mat)
-  annual_returns <- (1 + expected_daily_returns)^252 - 1
-  daily_vols <- apply(daily_returns_mat, 1, sd)
-  annual_vols <- daily_vols * sqrt(252)
-  annual_sharp <- annual_returns / annual_vols
+  returns_xts_mat <- xts(t(daily_returns_mat), order.by = test_dates)
+  annual_returns <- Return.annualized(R = returns_xts_mat, scale = 252)
+  annual_vols <- StdDev.annualized(R = returns_xts_mat, scale = 252)
+  annual_sharp <- as.numeric(annual_returns / annual_vols)
 
   window_result_returns <- as.data.frame(t(annual_returns))
   window_result_returns$Window <- window_index
