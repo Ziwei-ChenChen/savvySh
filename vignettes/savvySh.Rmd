@@ -894,10 +894,13 @@ for (window_index in seq_len(max_windows)) {
     daily_returns_mat[i, ] <- daily_returns_list[[i]]
   }
   
-  returns_xts_mat <- xts(t(daily_returns_mat), order.by = test_dates)
-  annual_returns <- Return.annualized(R = returns_xts_mat, scale = 252)
-  annual_vols <- StdDev.annualized(R = returns_xts_mat, scale = 252)
-  annual_sharp <- as.numeric(annual_returns / annual_vols)
+  T_val <- ncol(daily_returns_mat)
+  annual_returns <- apply(daily_returns_mat + 1, 1, function(x) {
+    prod(x)^(252 / T_val) - 1
+  })
+  daily_vols  <- apply(daily_returns_mat, 1, sd)
+  annual_vols <- daily_vols * sqrt(252)
+  annual_sharp <- annual_returns / annual_vols
 
   window_result_returns <- as.data.frame(t(annual_returns))
   window_result_returns$Window <- window_index
