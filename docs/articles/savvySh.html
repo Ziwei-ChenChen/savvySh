@@ -662,7 +662,6 @@ while the second table displays the actual estimated coefficients
 <code class="sourceCode R"><span></span>
 <span><span class="co"># Coefficient comparison table</span></span>
 <span><span class="va">coef_table</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
-<span>  Term <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">beta_ols</span><span class="op">)</span>,</span>
 <span>  OLS <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">beta_ols</span>, <span class="fl">3</span><span class="op">)</span>,</span>
 <span>  St <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">beta_St</span>, <span class="fl">3</span><span class="op">)</span>,</span>
 <span>  DSh <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">beta_DSh</span>, <span class="fl">3</span><span class="op">)</span>,</span>
@@ -673,22 +672,10 @@ while the second table displays the actual estimated coefficients
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">coef_table</span>, caption <span class="op">=</span> <span class="st">"Estimated Coefficients by Method (rounded)"</span><span class="op">)</span></span></code></pre></div>
-<table style="width:100%;" class="table">
+<table class="table">
 <caption>Estimated Coefficients by Method (rounded)</caption>
-<colgroup>
-<col width="16%">
-<col width="16%">
-<col width="9%">
-<col width="9%">
-<col width="9%">
-<col width="9%">
-<col width="9%">
-<col width="9%">
-<col width="7%">
-</colgroup>
 <thead><tr class="header">
 <th align="left"></th>
-<th align="left">Term</th>
 <th align="right">OLS</th>
 <th align="right">St</th>
 <th align="right">DSh</th>
@@ -700,7 +687,6 @@ while the second table displays the actual estimated coefficients
 <tbody>
 <tr class="odd">
 <td align="left">(Intercept)</td>
-<td align="left">(Intercept)</td>
 <td align="right">1.135</td>
 <td align="right">1.129</td>
 <td align="right">1.113</td>
@@ -710,7 +696,6 @@ while the second table displays the actual estimated coefficients
 <td align="right">1</td>
 </tr>
 <tr class="even">
-<td align="left">X1</td>
 <td align="left">X1</td>
 <td align="right">-1.148</td>
 <td align="right">-1.142</td>
@@ -722,7 +707,6 @@ while the second table displays the actual estimated coefficients
 </tr>
 <tr class="odd">
 <td align="left">X2</td>
-<td align="left">X2</td>
 <td align="right">2.348</td>
 <td align="right">2.336</td>
 <td align="right">2.311</td>
@@ -732,7 +716,6 @@ while the second table displays the actual estimated coefficients
 <td align="right">2</td>
 </tr>
 <tr class="even">
-<td align="left">X3</td>
 <td align="left">X3</td>
 <td align="right">-2.079</td>
 <td align="right">-2.068</td>
@@ -744,7 +727,6 @@ while the second table displays the actual estimated coefficients
 </tr>
 <tr class="odd">
 <td align="left">X4</td>
-<td align="left">X4</td>
 <td align="right">3.120</td>
 <td align="right">3.103</td>
 <td align="right">3.090</td>
@@ -754,7 +736,6 @@ while the second table displays the actual estimated coefficients
 <td align="right">3</td>
 </tr>
 <tr class="even">
-<td align="left">X5</td>
 <td align="left">X5</td>
 <td align="right">-2.923</td>
 <td align="right">-2.908</td>
@@ -766,7 +747,6 @@ while the second table displays the actual estimated coefficients
 </tr>
 <tr class="odd">
 <td align="left">X6</td>
-<td align="left">X6</td>
 <td align="right">4.286</td>
 <td align="right">4.263</td>
 <td align="right">4.264</td>
@@ -776,7 +756,6 @@ while the second table displays the actual estimated coefficients
 <td align="right">4</td>
 </tr>
 <tr class="even">
-<td align="left">X7</td>
 <td align="left">X7</td>
 <td align="right">-4.759</td>
 <td align="right">-4.734</td>
@@ -788,7 +767,6 @@ while the second table displays the actual estimated coefficients
 </tr>
 <tr class="odd">
 <td align="left">X8</td>
-<td align="left">X8</td>
 <td align="right">5.196</td>
 <td align="right">5.168</td>
 <td align="right">5.178</td>
@@ -799,7 +777,6 @@ while the second table displays the actual estimated coefficients
 </tr>
 <tr class="even">
 <td align="left">X9</td>
-<td align="left">X9</td>
 <td align="right">-5.120</td>
 <td align="right">-5.093</td>
 <td align="right">-5.103</td>
@@ -809,7 +786,6 @@ while the second table displays the actual estimated coefficients
 <td align="right">-5</td>
 </tr>
 <tr class="odd">
-<td align="left">X10</td>
 <td align="left">X10</td>
 <td align="right">6.245</td>
 <td align="right">6.212</td>
@@ -1705,11 +1681,14 @@ design matrix. We compare ridge regression estimates using
 <span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="va">n_val</span>,mean<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/vector.html" class="external-link">as.vector</a></span><span class="op">(</span><span class="va">X_intercept</span><span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span><span class="va">beta_true</span><span class="op">)</span>,sd<span class="op">=</span><span class="va">sigma_val</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Fit models</span></span>
-<span><span class="va">glmnet_fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://glmnet.stanford.edu/reference/cv.glmnet.html" class="external-link">cv.glmnet</a></span><span class="op">(</span><span class="va">X</span>, <span class="va">y</span>, alpha <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
+<span><span class="va">OLS_results</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">y</span><span class="op">~</span><span class="va">X_noisy</span><span class="op">)</span></span>
+<span><span class="va">beta_OLS</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/coef.html" class="external-link">coef</a></span><span class="op">(</span><span class="va">OLS_results</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">glmnet_fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://glmnet.stanford.edu/reference/cv.glmnet.html" class="external-link">cv.glmnet</a></span><span class="op">(</span><span class="va">X_noisy</span>, <span class="va">y</span>, alpha <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
 <span><span class="va">lambda_min_RR_glmnet</span> <span class="op">&lt;-</span> <span class="va">glmnet_fit</span><span class="op">$</span><span class="va">lambda.min</span></span>
 <span><span class="va">beta_RR</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html" class="external-link">as.vector</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/coef.html" class="external-link">coef</a></span><span class="op">(</span><span class="va">glmnet_fit</span>, s <span class="op">=</span> <span class="st">"lambda.min"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">SRR_results</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/savvySh.html">savvySh</a></span><span class="op">(</span><span class="va">X</span>, <span class="va">y</span>, model_class <span class="op">=</span> <span class="st">"ShrinkageRR"</span><span class="op">)</span></span>
+<span><span class="va">SRR_results</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/savvySh.html">savvySh</a></span><span class="op">(</span><span class="va">X_noisy</span>, <span class="va">y</span>, model_class <span class="op">=</span> <span class="st">"ShrinkageRR"</span><span class="op">)</span></span>
 <span><span class="va">beta_SRR</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/coef.html" class="external-link">coef</a></span><span class="op">(</span><span class="va">SRR_results</span>, <span class="st">"SRR"</span><span class="op">)</span></span></code></pre></div>
 <p>The tables below report the results of each estimator: the first
 table shows the
@@ -1720,13 +1699,13 @@ while the second table displays the actual estimated coefficients
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># L2 comparison</span></span>
 <span><span class="va">l2_table</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
-<span>  Method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"RR"</span>, <span class="st">"SRR"</span><span class="op">)</span>,</span>
+<span>  Method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"OLS"</span>, <span class="st">"RR"</span>, <span class="st">"SRR"</span><span class="op">)</span>,</span>
 <span>  L2_Distance <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>     <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="op">(</span><span class="va">beta_OLS</span> <span class="op">-</span> <span class="va">beta_true</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="op">(</span><span class="va">beta_RR</span> <span class="op">-</span> <span class="va">beta_true</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="op">(</span><span class="va">beta_SRR</span>  <span class="op">-</span> <span class="va">beta_true</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span>
 <span><span class="op">)</span></span>
-<span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">l2_table</span>, digits <span class="op">=</span> <span class="fl">4</span>, caption <span class="op">=</span> <span class="st">"L2 Distance Between Estimated and True Coefficients"</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <caption>L2 Distance Between Estimated and True Coefficients</caption>
@@ -1736,12 +1715,16 @@ while the second table displays the actual estimated coefficients
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">RR</td>
-<td align="right">13.8884</td>
+<td align="left">OLS</td>
+<td align="right">313.7002</td>
 </tr>
 <tr class="even">
+<td align="left">RR</td>
+<td align="right">13.8878</td>
+</tr>
+<tr class="odd">
 <td align="left">SRR</td>
-<td align="right">9.0212</td>
+<td align="right">9.0543</td>
 </tr>
 </tbody>
 </table>
@@ -1749,85 +1732,97 @@ while the second table displays the actual estimated coefficients
 <code class="sourceCode R"><span></span>
 <span><span class="co"># Coefficient comparison table</span></span>
 <span><span class="va">coef_table</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
-<span>  OLS <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">beta_RR</span>, <span class="fl">3</span><span class="op">)</span>,</span>
-<span>  LSh <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">beta_SRR</span>, <span class="fl">3</span><span class="op">)</span>,</span>
+<span>  OLS <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">beta_OLS</span>, <span class="fl">3</span><span class="op">)</span>,</span>
+<span>  RR <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">beta_RR</span>, <span class="fl">3</span><span class="op">)</span>,</span>
+<span>  SRR <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">beta_SRR</span>, <span class="fl">3</span><span class="op">)</span>,</span>
 <span>  True <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">round</a></span><span class="op">(</span><span class="va">beta_true</span>, <span class="fl">3</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
-<span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">coef_table</span>, caption <span class="op">=</span> <span class="st">"Estimated Coefficients by Method (rounded)"</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <caption>Estimated Coefficients by Method (rounded)</caption>
 <thead><tr class="header">
 <th align="left"></th>
 <th align="right">OLS</th>
-<th align="right">LSh</th>
+<th align="right">RR</th>
+<th align="right">SRR</th>
 <th align="right">True</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
 <td align="left">(Intercept)</td>
+<td align="right">1.010</td>
 <td align="right">1.011</td>
-<td align="right">1.009</td>
+<td align="right">1.007</td>
 <td align="right">1</td>
 </tr>
 <tr class="even">
-<td align="left">V1</td>
+<td align="left">X_noisy1</td>
+<td align="right">45.350</td>
 <td align="right">3.057</td>
-<td align="right">2.815</td>
+<td align="right">2.838</td>
 <td align="right">-1</td>
 </tr>
 <tr class="odd">
-<td align="left">V2</td>
-<td align="right">-8.060</td>
-<td align="right">-2.284</td>
+<td align="left">X_noisy2</td>
+<td align="right">-4.960</td>
+<td align="right">-8.059</td>
+<td align="right">-2.278</td>
 <td align="right">2</td>
 </tr>
 <tr class="even">
-<td align="left">V3</td>
+<td align="left">X_noisy3</td>
+<td align="right">147.454</td>
 <td align="right">-0.907</td>
-<td align="right">-0.864</td>
+<td align="right">-0.780</td>
 <td align="right">-2</td>
 </tr>
 <tr class="odd">
-<td align="left">V4</td>
+<td align="left">X_noisy4</td>
+<td align="right">42.069</td>
 <td align="right">2.850</td>
-<td align="right">4.453</td>
+<td align="right">4.477</td>
 <td align="right">3</td>
 </tr>
 <tr class="even">
-<td align="left">V5</td>
+<td align="left">X_noisy5</td>
+<td align="right">-63.730</td>
 <td align="right">0.541</td>
-<td align="right">0.192</td>
+<td align="right">0.154</td>
 <td align="right">-3</td>
 </tr>
 <tr class="odd">
-<td align="left">V6</td>
+<td align="left">X_noisy6</td>
+<td align="right">-186.510</td>
 <td align="right">1.760</td>
-<td align="right">1.735</td>
+<td align="right">1.627</td>
 <td align="right">4</td>
 </tr>
 <tr class="even">
-<td align="left">V7</td>
+<td align="left">X_noisy7</td>
+<td align="right">118.817</td>
 <td align="right">0.063</td>
-<td align="right">-0.801</td>
+<td align="right">-0.727</td>
 <td align="right">-4</td>
 </tr>
 <tr class="odd">
-<td align="left">V8</td>
+<td align="left">X_noisy8</td>
+<td align="right">-17.079</td>
 <td align="right">2.482</td>
-<td align="right">3.605</td>
+<td align="right">3.598</td>
 <td align="right">5</td>
 </tr>
 <tr class="even">
-<td align="left">V9</td>
-<td align="right">-0.034</td>
-<td align="right">-1.972</td>
+<td align="left">X_noisy9</td>
+<td align="right">-132.102</td>
+<td align="right">-0.035</td>
+<td align="right">-2.048</td>
 <td align="right">-5</td>
 </tr>
 <tr class="odd">
-<td align="left">V10</td>
+<td align="left">X_noisy10</td>
+<td align="right">31.292</td>
 <td align="right">3.009</td>
-<td align="right">3.100</td>
+<td align="right">3.117</td>
 <td align="right">6</td>
 </tr>
 </tbody>
@@ -1874,7 +1869,9 @@ is to predict this ordinal outcome using lagged predictors. Here we show
 how to preprocess, fit models, and evaluate prediction performance using
 metrics such as MSE, RMSE, and MAE.</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://Ziwei-ChenChen.github.io/savvySh">savvySh</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"Ziwei-ChenChen/savvyGLM"</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://Ziwei-ChenChen.github.io/savvyGLM" class="external-link">savvyGLM</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://Ziwei-ChenChen.github.io/savvySh">savvySh</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://Ziwei-ChenChen.github.io/savvyGLM" class="external-link">savvyGLM</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://www.stats.ox.ac.uk/pub/MASS4/" class="external-link">MASS</a></span><span class="op">)</span></span>
 <span></span>
@@ -1897,14 +1894,13 @@ metrics such as MSE, RMSE, and MAE.</p>
 <span>  <span class="va">family_type</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">poisson</a></span><span class="op">(</span>link <span class="op">=</span> <span class="st">"log"</span><span class="op">)</span></span>
 <span>  </span>
 <span>  <span class="co"># Fitting models</span></span>
-<span>  <span class="va">opt_glm2_OLS</span> <span class="op">&lt;-</span> <span class="fu">glm.fit2</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, control <span class="op">=</span> <span class="va">control_list</span>, family <span class="op">=</span> <span class="va">family_type</span><span class="op">)</span></span>
-<span>  <span class="va">opt_glm2_SR</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Ziwei-ChenChen.github.io/savvyGLM/reference/savvy_glm.fit2.html" class="external-link">savvy_glm.fit2</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, model_class <span class="op">=</span> <span class="st">"SR"</span>, control <span class="op">=</span> <span class="va">control_list</span>, family <span class="op">=</span> <span class="va">family_type</span><span class="op">)</span></span>
-<span>  <span class="va">opt_glm2_GSR</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Ziwei-ChenChen.github.io/savvyGLM/reference/savvy_glm.fit2.html" class="external-link">savvy_glm.fit2</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, model_class <span class="op">=</span> <span class="st">"GSR"</span>, control <span class="op">=</span> <span class="va">control_list</span>, family <span class="op">=</span> <span class="va">family_type</span><span class="op">)</span></span>
-<span>  <span class="va">opt_glm2_St</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Ziwei-ChenChen.github.io/savvyGLM/reference/savvy_glm.fit2.html" class="external-link">savvy_glm.fit2</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, model_class <span class="op">=</span> <span class="st">"St"</span>, control <span class="op">=</span> <span class="va">control_list</span>, family <span class="op">=</span> <span class="va">family_type</span><span class="op">)</span></span>
-<span>  <span class="va">opt_glm2_DSh</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Ziwei-ChenChen.github.io/savvyGLM/reference/savvy_glm.fit2.html" class="external-link">savvy_glm.fit2</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, model_class <span class="op">=</span> <span class="st">"DSh"</span>, control <span class="op">=</span> <span class="va">control_list</span>, family <span class="op">=</span> <span class="va">family_type</span><span class="op">)</span></span>
-<span>  <span class="va">opt_glm2_Sh</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Ziwei-ChenChen.github.io/savvyGLM/reference/savvy_glm.fit2.html" class="external-link">savvy_glm.fit2</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, model_class <span class="op">=</span> <span class="st">"Sh"</span>, control <span class="op">=</span> <span class="va">control_list</span>, family <span class="op">=</span> <span class="va">family_type</span><span class="op">)</span></span>
+<span>  <span class="va">opt_glm2_OLS</span> <span class="op">&lt;-</span> <span class="fu">glm.fit2</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, family <span class="op">=</span> <span class="va">family_type</span>, control <span class="op">=</span> <span class="va">control_list</span><span class="op">)</span></span>
+<span>  <span class="va">opt_glm2_SR</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Ziwei-ChenChen.github.io/savvyGLM/reference/savvy_glm.fit2.html" class="external-link">savvy_glm.fit2</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, model_class <span class="op">=</span> <span class="st">"SR"</span>, family <span class="op">=</span> <span class="va">family_type</span>, control <span class="op">=</span> <span class="va">control_list</span><span class="op">)</span></span>
+<span>  <span class="va">opt_glm2_GSR</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Ziwei-ChenChen.github.io/savvyGLM/reference/savvy_glm.fit2.html" class="external-link">savvy_glm.fit2</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, model_class <span class="op">=</span> <span class="st">"GSR"</span>, family <span class="op">=</span> <span class="va">family_type</span>, control <span class="op">=</span> <span class="va">control_list</span><span class="op">)</span></span>
+<span>  <span class="va">opt_glm2_St</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Ziwei-ChenChen.github.io/savvyGLM/reference/savvy_glm.fit2.html" class="external-link">savvy_glm.fit2</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, model_class <span class="op">=</span> <span class="st">"St"</span>, family <span class="op">=</span> <span class="va">family_type</span>, control <span class="op">=</span> <span class="va">control_list</span><span class="op">)</span></span>
+<span>  <span class="va">opt_glm2_DSh</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Ziwei-ChenChen.github.io/savvyGLM/reference/savvy_glm.fit2.html" class="external-link">savvy_glm.fit2</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, model_class <span class="op">=</span> <span class="st">"DSh"</span>, family <span class="op">=</span> <span class="va">family_type</span>, control <span class="op">=</span> <span class="va">control_list</span><span class="op">)</span></span>
+<span>  <span class="va">opt_glm2_Sh</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://Ziwei-ChenChen.github.io/savvyGLM/reference/savvy_glm.fit2.html" class="external-link">savvy_glm.fit2</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, model_class <span class="op">=</span> <span class="st">"Sh"</span>, family <span class="op">=</span> <span class="va">family_type</span>, control <span class="op">=</span> <span class="va">control_list</span><span class="op">)</span></span>
 <span>  </span>
-<span>  <span class="co"># Return a list of coefficients</span></span>
 <span>  <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>    glm2_OLS_result <span class="op">=</span> <span class="va">opt_glm2_OLS</span><span class="op">$</span><span class="va">coefficients</span>,</span>
 <span>    glm2_SR_result <span class="op">=</span> <span class="va">opt_glm2_SR</span><span class="op">$</span><span class="va">coefficients</span>,</span>
@@ -1916,7 +1912,6 @@ metrics such as MSE, RMSE, and MAE.</p>
 <span><span class="op">}</span></span>
 <span></span>
 <span><span class="va">test_model</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">glm_coefficients</span>, <span class="va">data_X</span>, <span class="va">data_Y</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  </span>
 <span>  <span class="va">upper_limit</span> <span class="op">&lt;-</span> <span class="fl">3</span>  <span class="co"># =3 for 4 classes; =9 for 10 classes</span></span>
 <span>  </span>
 <span>  <span class="co">### Model 1 ---&gt; OLS ###</span></span>
@@ -1931,11 +1926,11 @@ metrics such as MSE, RMSE, and MAE.</p>
 <span>  <span class="va">predicted_glm2_GSR</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">floor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="va">data_X</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">glm_coefficients</span><span class="op">$</span><span class="va">glm2_GSR_result</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span>  <span class="va">predicted_glm2_GSR</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">predicted_glm2_GSR</span> <span class="op">&lt;=</span> <span class="va">upper_limit</span>, <span class="va">predicted_glm2_GSR</span>, <span class="va">upper_limit</span><span class="op">)</span></span>
 <span>  </span>
-<span>  <span class="co">### Model 4 ---&gt; St ###</span></span>
+<span>  <span class="co">### Model 4 ---&gt; Stein ###</span></span>
 <span>  <span class="va">predicted_glm2_St</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">floor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="va">data_X</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">glm_coefficients</span><span class="op">$</span><span class="va">glm2_St_result</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span>  <span class="va">predicted_glm2_St</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">predicted_glm2_St</span> <span class="op">&lt;=</span> <span class="va">upper_limit</span>, <span class="va">predicted_glm2_St</span>, <span class="va">upper_limit</span><span class="op">)</span></span>
 <span>  </span>
-<span>  <span class="co">### Model 5 ---&gt; DSh ###</span></span>
+<span>  <span class="co">### Model 5 ---&gt; Diagonal Shrinkage ###</span></span>
 <span>  <span class="va">predicted_glm2_DSh</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">floor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="va">data_X</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">glm_coefficients</span><span class="op">$</span><span class="va">glm2_DSh_result</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span>  <span class="va">predicted_glm2_DSh</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">predicted_glm2_DSh</span> <span class="op">&lt;=</span> <span class="va">upper_limit</span>, <span class="va">predicted_glm2_DSh</span>, <span class="va">upper_limit</span><span class="op">)</span></span>
 <span>  </span>
@@ -1963,44 +1958,51 @@ metrics such as MSE, RMSE, and MAE.</p>
 <span>  <span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">out_of_sample_performance</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">percentage</span> <span class="op">=</span> <span class="fl">0.3</span>, <span class="va">no_trials</span> <span class="op">=</span> <span class="fl">50</span>, <span class="va">datain</span> <span class="op">=</span> <span class="va">cybersickness_10lags</span>, <span class="va">fileout</span> <span class="op">=</span> <span class="st">"results10.csv"</span><span class="op">)</span> <span class="op">{</span></span>
+<code class="sourceCode R"><span><span class="va">out_of_sample_performance</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">percentage</span> <span class="op">=</span> <span class="fl">0.3</span>, <span class="va">no_trials</span> <span class="op">=</span> <span class="fl">50</span>, <span class="va">filein</span> <span class="op">=</span> <span class="st">"data_for_regression10.csv"</span>, <span class="va">fileout</span> <span class="op">=</span> <span class="st">"results10.csv"</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  </span>
-<span>  <span class="va">data</span> <span class="op">&lt;-</span> <span class="va">datain</span></span>
+<span>  <span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="va">filein</span><span class="op">)</span></span>
 <span>  <span class="va">agregated_results</span><span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">4</span><span class="op">*</span><span class="fl">3</span><span class="op">)</span></span>
-<span>  <span class="va">data</span><span class="op">&lt;-</span><span class="fu">set_classes</span><span class="op">(</span><span class="va">data</span><span class="op">)</span>   </span>
+<span>  </span>
+<span>  <span class="va">data</span><span class="op">&lt;-</span><span class="fu">set_classes</span><span class="op">(</span><span class="va">data</span><span class="op">)</span>   <span class="co"># for 4 classes</span></span>
+<span>  <span class="co">#data[,ncol(data)]&lt;-floor(data[,ncol(data)])  # for 10 classes -- the scores 2.5 and 3.5 are floored</span></span>
+<span>  </span>
 <span>  <span class="va">data</span><span class="op">&lt;-</span><span class="fu">standardize_features</span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span>
 <span>  </span>
 <span>  <span class="kw">for</span> <span class="op">(</span><span class="va">r</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="va">no_trials</span><span class="op">)</span><span class="op">{</span></span>
-<span>    <span class="va">bound</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">floor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span><span class="op">*</span><span class="op">(</span><span class="fl">1</span><span class="op">-</span><span class="va">percentage</span><span class="op">)</span><span class="op">)</span> </span>
-<span>    <span class="va">data</span> <span class="op">&lt;-</span> <span class="va">data</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span><span class="op">)</span>, <span class="op">]</span>      </span>
+<span>    <span class="co">#for train-test split with percentage e.g. 70-30</span></span>
+<span>    <span class="va">bound</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">floor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span><span class="op">*</span><span class="op">(</span><span class="fl">1</span><span class="op">-</span><span class="va">percentage</span><span class="op">)</span><span class="op">)</span> <span class="co">#define % of training</span></span>
+<span>    <span class="va">data</span> <span class="op">&lt;-</span> <span class="va">data</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span><span class="op">)</span>, <span class="op">]</span>           <span class="co">#sample rows </span></span>
 <span>    <span class="va">train</span> <span class="op">&lt;-</span> <span class="va">data</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="va">bound</span>, <span class="op">]</span>            </span>
 <span>    <span class="va">test</span> <span class="op">&lt;-</span> <span class="va">data</span><span class="op">[</span><span class="op">(</span><span class="va">bound</span><span class="op">+</span><span class="fl">1</span><span class="op">)</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span>, <span class="op">]</span></span>
 <span>    </span>
+<span>    <span class="co">#training</span></span>
 <span>    <span class="va">X.tilde</span> <span class="op">&lt;-</span> <span class="va">train</span><span class="op">[</span>,<span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">train</span><span class="op">)</span><span class="op">]</span></span>
 <span>    <span class="va">X</span> <span class="op">&lt;-</span>  <span class="va">X.tilde</span><span class="op">[</span>,<span class="op">-</span><span class="fl">1</span><span class="op">]</span></span>
 <span>    <span class="va">train_X</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">train</span><span class="op">[</span>,<span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">train</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span>
 <span>    <span class="va">train_Y</span> <span class="op">&lt;-</span>  <span class="va">train</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">train</span><span class="op">)</span><span class="op">]</span></span>
 <span>    <span class="va">glm_coefficients</span><span class="op">&lt;-</span><span class="fu">fit_and_return_coefficients</span><span class="op">(</span><span class="va">train_X</span>, <span class="va">train_Y</span><span class="op">)</span></span>
 <span>    </span>
+<span>    <span class="co">#test</span></span>
 <span>    <span class="va">test_X</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">test</span><span class="op">[</span>,<span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">test</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span>
 <span>    <span class="va">test_Y</span> <span class="op">&lt;-</span>  <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">test</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">test</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span>
 <span>    <span class="va">results</span><span class="op">&lt;-</span><span class="fu">test_model</span><span class="op">(</span><span class="va">glm_coefficients</span>, <span class="va">test_X</span>, <span class="va">test_Y</span><span class="op">)</span></span>
 <span>    <span class="va">agregated_results</span><span class="op">&lt;-</span><span class="va">agregated_results</span><span class="op">+</span><span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span></span>
 <span>  <span class="op">}</span></span>
 <span>  </span>
+<span>  <span class="co"># Average results over trials</span></span>
+<span>  <span class="va">aggregated_results</span> <span class="op">&lt;-</span> <span class="va">aggregated_results</span> <span class="op">/</span> <span class="va">no_trials</span></span>
 <span>  <span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="va">agregated_results</span><span class="op">)</span>, nrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span>, byrow<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"MSE"</span>, <span class="st">"RMSE"</span>, <span class="st">"MAE"</span><span class="op">)</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"GLM2"</span>, <span class="st">"SR"</span>, <span class="st">"GSR"</span>, <span class="st">"St"</span>, <span class="st">"DSh"</span>, <span class="st">"Sh"</span><span class="op">)</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/utils/write.table.html" class="external-link">write.csv</a></span><span class="op">(</span><span class="va">df</span>, <span class="va">fileout</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
 <span></span>
-<span><span class="va">datain</span> <span class="op">&lt;-</span> <span class="va">cybersickness_10lags</span></span>
+<span><span class="va">input_file_path</span> <span class="op">&lt;-</span> <span class="st">"data_for_regression10.csv"</span></span>
 <span><span class="va">output_file_path</span> <span class="op">&lt;-</span> <span class="st">"results10.csv"</span></span>
-<span></span>
 <span><span class="va">run_performance_test</span> <span class="op">&lt;-</span> <span class="fu">out_of_sample_performance</span><span class="op">(</span></span>
-<span>  percentage <span class="op">=</span> <span class="fl">0.3</span>,         </span>
+<span>  percentage <span class="op">=</span> <span class="fl">0.3</span>,        </span>
 <span>  no_trials <span class="op">=</span> <span class="fl">50</span>,            </span>
-<span>  datain <span class="op">=</span> <span class="va">datain</span>,  </span>
+<span>  filein <span class="op">=</span> <span class="va">input_file_path</span>,  </span>
 <span>  fileout <span class="op">=</span> <span class="va">output_file_path</span> </span>
 <span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -2014,8 +2016,8 @@ dataset, included in the package under
 for 441 stocks including the index, with <code>Date</code> formatted as
 <code>YYYYMMDD</code>. For each rolling window, we:</p>
 <ul>
-<li><p>Fit multiple regression-based models (OLS, RR, St, DSh, Sh, SR,
-GSR, SRR).</p></li>
+<li><p>Fit multiple regression-based models (OLS, RR, POET_99%, St, DSh,
+Sh, SR, GSR, SRR).</p></li>
 <li><p>Extract the estimated coefficients and compute portfolio
 weights.</p></li>
 <li><p>Simulate out-of-sample portfolio performance.</p></li>
@@ -2030,6 +2032,7 @@ and Sharpe ratios.</p></li>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://lubridate.tidyverse.org" class="external-link">lubridate</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">quadprog</span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/joshuaulrich/xts" class="external-link">xts</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">POET</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">data</span> <span class="op">&lt;-</span> <span class="va">returns_441</span></span>
 <span><span class="va">data</span><span class="op">$</span><span class="va">Date</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/zoo/man/yearmon.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">Date</span><span class="op">)</span>, format <span class="op">=</span> <span class="st">"%Y%m%d"</span><span class="op">)</span></span>
@@ -2037,7 +2040,7 @@ and Sharpe ratios.</p></li>
 <span></span>
 <span><span class="va">training_size</span> <span class="op">&lt;-</span> <span class="fl">5</span> <span class="op">*</span> <span class="fl">252</span>  </span>
 <span><span class="va">testing_size</span>  <span class="op">&lt;-</span> <span class="fl">3</span> <span class="op">*</span> <span class="fl">21</span>  </span>
-<span><span class="va">step_size</span>     <span class="op">&lt;-</span> <span class="fl">3</span> <span class="op">*</span> <span class="fl">21</span>   </span>
+<span><span class="va">step_size</span> <span class="op">&lt;-</span> <span class="fl">3</span> <span class="op">*</span> <span class="fl">21</span>   </span>
 <span><span class="va">n_total</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span>
 <span><span class="va">max_windows</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">floor</a></span><span class="op">(</span><span class="op">(</span><span class="va">n_total</span> <span class="op">-</span> <span class="va">training_size</span> <span class="op">-</span> <span class="va">testing_size</span><span class="op">)</span> <span class="op">/</span> <span class="va">step_size</span><span class="op">)</span> <span class="op">+</span> <span class="fl">1</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"Total rows:"</span>, <span class="va">n_total</span>, <span class="st">"\n"</span><span class="op">)</span></span>
@@ -2049,40 +2052,67 @@ and Sharpe ratios.</p></li>
 <span>  <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">w</span>, <span class="va">w_last</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">poet_est_99</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span>  <span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span></span>
+<span>  <span class="va">n</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span>  <span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span>  </span>
+<span>  <span class="va">x_mean</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/colSums.html" class="external-link">colMeans</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span>  <span class="va">y_mean</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span></span>
+<span>  <span class="va">x_c</span> <span class="op">&lt;-</span> <span class="va">x</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="va">x_mean</span>, each <span class="op">=</span> <span class="va">n</span><span class="op">)</span>, <span class="va">n</span>, <span class="va">p</span><span class="op">)</span></span>
+<span>  <span class="va">y_c</span> <span class="op">&lt;-</span> <span class="va">y</span> <span class="op">-</span> <span class="va">y_mean</span></span>
+<span>  <span class="va">Y</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="va">x_c</span><span class="op">)</span></span>
+<span>  </span>
+<span>  <span class="co"># Choose K to explain 99% variance</span></span>
+<span>  <span class="va">eigvals</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/eigen.html" class="external-link">eigen</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html" class="external-link">cov</a></span><span class="op">(</span><span class="va">x_c</span><span class="op">)</span>, symmetric <span class="op">=</span> <span class="cn">TRUE</span>, only.values <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">$</span><span class="va">values</span></span>
+<span>  <span class="va">eigvals_sorted</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="va">eigvals</span>, decreasing <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>  <span class="va">cumsum_vals</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cumsum.html" class="external-link">cumsum</a></span><span class="op">(</span><span class="va">eigvals_sorted</span><span class="op">)</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">eigvals_sorted</span><span class="op">)</span></span>
+<span>  <span class="va">K</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">cumsum_vals</span> <span class="op">&gt;=</span> <span class="fl">0.99</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span>
+<span>  <span class="va">poet_result</span> <span class="op">&lt;-</span> <span class="fu">POET</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/POET/man/POET.html" class="external-link">POET</a></span><span class="op">(</span><span class="va">Y</span>, K <span class="op">=</span> <span class="va">K</span><span class="op">)</span></span>
+<span>  <span class="va">Sigma_hat</span> <span class="op">&lt;-</span> <span class="va">poet_result</span><span class="op">$</span><span class="va">SigmaY</span></span>
+<span>  </span>
+<span>  <span class="va">xcyc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/matrix-products.html" class="external-link">crossprod</a></span><span class="op">(</span><span class="va">x_c</span>, <span class="va">y_c</span><span class="op">)</span> <span class="op">/</span> <span class="va">n</span></span>
+<span>  <span class="va">beta_1p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/solve-methods.html" class="external-link">solve</a></span><span class="op">(</span><span class="va">Sigma_hat</span>, <span class="va">xcyc</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="va">beta_0</span> <span class="op">&lt;-</span> <span class="va">y_mean</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">x_mean</span> <span class="op">*</span> <span class="va">beta_1p</span><span class="op">)</span></span>
+<span>  <span class="va">beta_full</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">beta_0</span>, <span class="va">beta_1p</span><span class="op">)</span></span>
+<span>  </span>
+<span>  <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/vector.html" class="external-link">as.vector</a></span><span class="op">(</span><span class="va">beta_full</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rolling_annual_expected_returns</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">rolling_annual_sharpe_ratios</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">rolling_annual_volatilities</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
 <span><span class="kw">for</span> <span class="op">(</span><span class="va">window_index</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="va">max_windows</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">start_index</span> <span class="op">&lt;-</span> <span class="fl">1</span> <span class="op">+</span> <span class="op">(</span><span class="va">window_index</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span> <span class="op">*</span> <span class="va">step_size</span></span>
 <span>  <span class="va">train_start</span> <span class="op">&lt;-</span> <span class="va">start_index</span></span>
-<span>  <span class="va">train_end</span>   <span class="op">&lt;-</span> <span class="va">start_index</span> <span class="op">+</span> <span class="va">training_size</span> <span class="op">-</span> <span class="fl">1</span></span>
-<span>  <span class="va">test_start</span>  <span class="op">&lt;-</span> <span class="va">train_end</span> <span class="op">+</span> <span class="fl">1</span></span>
-<span>  <span class="va">test_end</span>    <span class="op">&lt;-</span> <span class="va">train_end</span> <span class="op">+</span> <span class="va">testing_size</span></span>
-<span>  </span>
+<span>  <span class="va">train_end</span> <span class="op">&lt;-</span> <span class="va">start_index</span> <span class="op">+</span> <span class="va">training_size</span> <span class="op">-</span> <span class="fl">1</span></span>
+<span>  <span class="va">test_start</span> <span class="op">&lt;-</span> <span class="va">train_end</span> <span class="op">+</span> <span class="fl">1</span></span>
+<span>  <span class="va">test_end</span> <span class="op">&lt;-</span> <span class="va">train_end</span> <span class="op">+</span> <span class="va">testing_size</span></span>
+<span></span>
 <span>  <span class="va">train_data</span> <span class="op">&lt;-</span> <span class="va">data</span><span class="op">[</span><span class="va">train_start</span><span class="op">:</span><span class="va">train_end</span>, <span class="op">]</span></span>
-<span>  <span class="va">test_data</span>  <span class="op">&lt;-</span> <span class="va">data</span><span class="op">[</span><span class="va">test_start</span><span class="op">:</span><span class="va">test_end</span>, <span class="op">]</span></span>
+<span>  <span class="va">test_data</span> <span class="op">&lt;-</span> <span class="va">data</span><span class="op">[</span><span class="va">test_start</span><span class="op">:</span><span class="va">test_end</span>, <span class="op">]</span></span>
 <span>  <span class="va">train_returns</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">train_data</span><span class="op">[</span>, <span class="op">-</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span>  </span>
-<span>  <span class="va">test_returns</span>  <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">test_data</span><span class="op">[</span>, <span class="op">-</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span> </span>
+<span>  <span class="va">test_returns</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">test_data</span><span class="op">[</span>, <span class="op">-</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span>  </span>
+<span>  </span>
+<span>  <span class="co"># Create X_train and Y_train</span></span>
+<span>  <span class="co"># Y_train is last column (Company441)</span></span>
+<span>  <span class="co"># X_train is (Y_train - first 440 columns)</span></span>
 <span>  <span class="va">Y_train</span> <span class="op">&lt;-</span> <span class="va">train_returns</span><span class="op">[</span>, <span class="fl">441</span><span class="op">]</span></span>
 <span>  <span class="va">X_train</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="va">Y_train</span>, nrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">train_returns</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">440</span><span class="op">)</span> <span class="op">-</span> <span class="va">train_returns</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">440</span><span class="op">]</span></span>
 <span>  </span>
-<span>  <span class="va">beta_ols</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/coef.html" class="external-link">coef</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">Y_train</span> <span class="op">~</span> <span class="va">X_train</span><span class="op">)</span><span class="op">)</span></span>
-<span>  <span class="va">glmnet_fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://glmnet.stanford.edu/reference/cv.glmnet.html" class="external-link">cv.glmnet</a></span><span class="op">(</span><span class="va">X_train</span>, <span class="va">Y_train</span>, alpha <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span>
-<span>  <span class="va">lambda_min_RR_glmnet</span> <span class="op">&lt;-</span> <span class="va">glmnet_fit</span><span class="op">$</span><span class="va">lambda.min</span></span>
-<span>  <span class="va">beta_RR</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html" class="external-link">as.vector</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/coef.html" class="external-link">coef</a></span><span class="op">(</span><span class="va">glmnet_fit</span>, s <span class="op">=</span> <span class="st">"lambda.min"</span><span class="op">)</span><span class="op">)</span></span>
-<span>  <span class="va">multi_results</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/savvySh.html">savvySh</a></span><span class="op">(</span><span class="va">X_train</span>, <span class="va">Y_train</span>, model_class <span class="op">=</span> <span class="st">"Multiplicative"</span>, include_Sh <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span>  <span class="va">slab_results</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/savvySh.html">savvySh</a></span><span class="op">(</span><span class="va">X_train</span>, <span class="va">Y_train</span>, model_class <span class="op">=</span> <span class="st">"Slab"</span><span class="op">)</span></span>
-<span>  <span class="va">srr_results</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/savvySh.html">savvySh</a></span><span class="op">(</span><span class="va">X_train</span>, <span class="va">Y_train</span>, model_class <span class="op">=</span> <span class="st">"ShrinkageRR"</span><span class="op">)</span></span>
-<span>  </span>
+<span>  <span class="co"># Fit all estimators</span></span>
 <span>  <span class="va">est_results</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>    OLS  <span class="op">=</span> <span class="va">beta_ols</span>,</span>
-<span>    RR   <span class="op">=</span> <span class="va">beta_RR</span>,</span>
-<span>    St   <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/coef.html" class="external-link">coef</a></span><span class="op">(</span><span class="va">multi_results</span>, <span class="st">"St"</span><span class="op">)</span>,</span>
-<span>    DSh  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/coef.html" class="external-link">coef</a></span><span class="op">(</span><span class="va">multi_results</span>, <span class="st">"DSh"</span><span class="op">)</span>,</span>
-<span>    Sh   <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/coef.html" class="external-link">coef</a></span><span class="op">(</span><span class="va">multi_results</span>, <span class="st">"Sh"</span><span class="op">)</span>, </span>
-<span>    SR   <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/coef.html" class="external-link">coef</a></span><span class="op">(</span><span class="va">slab_results</span>, <span class="st">"SR"</span><span class="op">)</span>,</span>
-<span>    GSR  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/coef.html" class="external-link">coef</a></span><span class="op">(</span><span class="va">slab_results</span>, <span class="st">"GSR"</span><span class="op">)</span>,</span>
-<span>    SRR  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/coef.html" class="external-link">coef</a></span><span class="op">(</span><span class="va">srr_results</span>, <span class="st">"SRR"</span><span class="op">)</span></span>
+<span>    OLS <span class="op">=</span> <span class="fu">OLS_est</span><span class="op">(</span><span class="va">X_train</span>, <span class="va">Y_train</span><span class="op">)</span><span class="op">$</span><span class="va">est</span>,</span>
+<span>    RR <span class="op">=</span> <span class="fu">RR_est</span><span class="op">(</span><span class="va">X_train</span>, <span class="va">Y_train</span><span class="op">)</span><span class="op">$</span><span class="va">est</span>,</span>
+<span>    POET_99 <span class="op">=</span> <span class="fu">poet_est_99</span><span class="op">(</span><span class="va">X_train</span>, <span class="va">Y_train</span><span class="op">)</span>,</span>
+<span>    St <span class="op">=</span> <span class="fu">St_ost</span><span class="op">(</span><span class="va">X_train</span>, <span class="va">Y_train</span><span class="op">)</span>,</span>
+<span>    DSh <span class="op">=</span> <span class="fu">DSh_ost</span><span class="op">(</span><span class="va">X_train</span>, <span class="va">Y_train</span><span class="op">)</span>,</span>
+<span>    Sh <span class="op">=</span> <span class="fu">Sh_ost</span><span class="op">(</span><span class="va">X_train</span>, <span class="va">Y_train</span><span class="op">)</span>, </span>
+<span>    SR <span class="op">=</span> <span class="fu">SR_ost</span><span class="op">(</span><span class="va">X_train</span>, <span class="va">Y_train</span><span class="op">)</span>,</span>
+<span>    GSR <span class="op">=</span> <span class="fu">GSR_ost</span><span class="op">(</span><span class="va">X_train</span>, <span class="va">Y_train</span><span class="op">)</span>,</span>
+<span>    SRR <span class="op">=</span> <span class="fu">SRR_shrinkage_ost</span><span class="op">(</span><span class="va">X_train</span>, <span class="va">Y_train</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span>
 <span>  <span class="va">weights_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">est_results</span>, <span class="va">get_full_weights</span><span class="op">)</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">weights_list</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">est_results</span><span class="op">)</span></span>
@@ -2091,9 +2121,8 @@ and Sharpe ratios.</p></li>
 <span>  <span class="va">test_returns_xts</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/xts/man/xts.html" class="external-link">xts</a></span><span class="op">(</span><span class="va">test_returns</span>, order.by <span class="op">=</span> <span class="va">test_dates</span><span class="op">)</span></span>
 <span>  <span class="va">daily_returns_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">weights_list</span>, <span class="kw">function</span><span class="op">(</span><span class="va">w</span><span class="op">)</span> <span class="op">{</span></span>
 <span>    <span class="va">rp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/PerformanceAnalytics/man/Return.portfolio.html" class="external-link">Return.portfolio</a></span><span class="op">(</span>R <span class="op">=</span> <span class="va">test_returns_xts</span>, weights <span class="op">=</span> <span class="va">w</span><span class="op">)</span></span>
-<span>    <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">rp</span><span class="op">)</span><span class="op">)</span></span>
+<span>    <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">rp</span><span class="op">)</span><span class="op">)</span> </span>
 <span>  <span class="op">}</span><span class="op">)</span></span>
-<span>  </span>
 <span>  <span class="va">daily_values_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">daily_returns_list</span>, <span class="kw">function</span><span class="op">(</span><span class="va">r</span><span class="op">)</span> <span class="op">{</span></span>
 <span>    <span class="va">cum_val</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cumsum.html" class="external-link">cumprod</a></span><span class="op">(</span><span class="fl">1</span> <span class="op">+</span> <span class="va">r</span><span class="op">)</span></span>
 <span>    <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="va">cum_val</span><span class="op">)</span></span>
@@ -2105,20 +2134,19 @@ and Sharpe ratios.</p></li>
 <span>  <span class="va">daily_returns_mat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fl">0</span>, nrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">model_names</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="va">n_test</span><span class="op">)</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">daily_values_mat</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">model_names</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">daily_returns_mat</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">model_names</span></span>
-<span>  </span>
 <span>  <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_along</a></span><span class="op">(</span><span class="va">model_names</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span>    <span class="va">daily_values_mat</span><span class="op">[</span><span class="va">i</span>, <span class="op">]</span>  <span class="op">&lt;-</span> <span class="va">daily_values_list</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span></span>
 <span>    <span class="va">daily_returns_mat</span><span class="op">[</span><span class="va">i</span>, <span class="op">]</span> <span class="op">&lt;-</span> <span class="va">daily_returns_list</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span></span>
 <span>  <span class="op">}</span></span>
 <span>  </span>
-<span>  <span class="va">T_val</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">daily_returns_mat</span><span class="op">)</span></span>
-<span>  <span class="va">annual_returns</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="va">daily_returns_mat</span> <span class="op">+</span> <span class="fl">1</span>, <span class="fl">1</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/prod.html" class="external-link">prod</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">^</span><span class="op">(</span><span class="fl">252</span> <span class="op">/</span> <span class="va">T_val</span><span class="op">)</span> <span class="op">-</span> <span class="fl">1</span></span>
-<span>  <span class="op">}</span><span class="op">)</span></span>
-<span>  <span class="va">daily_vols</span>  <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="va">daily_returns_mat</span>, <span class="fl">1</span>, <span class="va">sd</span><span class="op">)</span></span>
-<span>  <span class="va">annual_vols</span> <span class="op">&lt;-</span> <span class="va">daily_vols</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="fl">252</span><span class="op">)</span></span>
-<span>  <span class="va">annual_sharp</span> <span class="op">&lt;-</span> <span class="va">annual_returns</span> <span class="op">/</span> <span class="va">annual_vols</span></span>
-<span></span>
+<span>  <span class="va">returns_xts_mat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/xts/man/xts.html" class="external-link">xts</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="va">daily_returns_mat</span><span class="op">)</span>, order.by <span class="op">=</span> <span class="va">test_dates</span><span class="op">)</span></span>
+<span>  <span class="va">annual_returns</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/PerformanceAnalytics/man/Return.annualized.html" class="external-link">Return.annualized</a></span><span class="op">(</span>R <span class="op">=</span> <span class="va">returns_xts_mat</span>, scale <span class="op">=</span> <span class="fl">252</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">annual_returns</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">returns_xts_mat</span><span class="op">)</span></span>
+<span>  <span class="va">annual_vols</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/PerformanceAnalytics/man/StdDev.annualized.html" class="external-link">StdDev.annualized</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">returns_xts_mat</span>, scale <span class="op">=</span> <span class="fl">252</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">annual_vols</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">returns_xts_mat</span><span class="op">)</span></span>
+<span>  <span class="va">annual_sharp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/PerformanceAnalytics/man/SharpeRatio.annualized.html" class="external-link">SharpeRatio.annualized</a></span><span class="op">(</span>R <span class="op">=</span> <span class="va">returns_xts_mat</span>, scale <span class="op">=</span> <span class="fl">252</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">annual_sharp</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">returns_xts_mat</span><span class="op">)</span></span>
+<span>  </span>
 <span>  <span class="va">window_result_returns</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="va">annual_returns</span><span class="op">)</span><span class="op">)</span></span>
 <span>  <span class="va">window_result_returns</span><span class="op">$</span><span class="va">Window</span> <span class="op">&lt;-</span> <span class="va">window_index</span></span>
 <span>  <span class="va">rolling_annual_expected_returns</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">rolling_annual_expected_returns</span>, <span class="va">window_result_returns</span><span class="op">)</span></span>
@@ -2130,14 +2158,6 @@ and Sharpe ratios.</p></li>
 <span>  <span class="va">window_result_vols</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="va">annual_vols</span><span class="op">)</span><span class="op">)</span></span>
 <span>  <span class="va">window_result_vols</span><span class="op">$</span><span class="va">Window</span> <span class="op">&lt;-</span> <span class="va">window_index</span></span>
 <span>  <span class="va">rolling_annual_volatilities</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">rolling_annual_volatilities</span>, <span class="va">window_result_vols</span><span class="op">)</span></span>
-<span>  </span>
-<span>  <span class="va">window_label</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"window_"</span>, <span class="va">window_index</span><span class="op">)</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/utils/write.table.html" class="external-link">write.csv</a></span><span class="op">(</span><span class="va">daily_values_mat</span>, </span>
-<span>            file <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"daily_portfolio_values_"</span>, <span class="va">window_label</span>, <span class="st">".csv"</span><span class="op">)</span>, </span>
-<span>            row.names <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/utils/write.table.html" class="external-link">write.csv</a></span><span class="op">(</span><span class="va">daily_returns_mat</span>, </span>
-<span>            file <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"daily_portfolio_returns_"</span>, <span class="va">window_label</span>, <span class="st">".csv"</span><span class="op">)</span>, </span>
-<span>            row.names <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span>  </span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"Completed window"</span>, <span class="va">window_index</span>,</span>
 <span>      <span class="st">": Training rows ["</span>, <span class="va">train_start</span>, <span class="st">"to"</span>, <span class="va">train_end</span>, </span>

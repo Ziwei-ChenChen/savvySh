@@ -252,7 +252,6 @@ kable(l2_table, digits = 4, caption = "L2 Distance Between Estimated and True Co
 
 # Coefficient comparison table
 coef_table <- data.frame(
-  Term = names(beta_ols),
   OLS = round(beta_ols, 3),
   St = round(beta_St, 3),
   DSh = round(beta_DSh, 3),
@@ -607,11 +606,14 @@ beta_true <- theta_func(p_val + 1)
 y <- rnorm(n_val,mean=as.vector(X_intercept%*%beta_true),sd=sigma_val)
 
 # Fit models
-glmnet_fit <- cv.glmnet(X, y, alpha = 0)
+OLS_results <- lm(y~X_noisy)
+beta_OLS <- coef(OLS_results)
+
+glmnet_fit <- cv.glmnet(X_noisy, y, alpha = 0)
 lambda_min_RR_glmnet <- glmnet_fit$lambda.min
 beta_RR <- as.vector(coef(glmnet_fit, s = "lambda.min"))
 
-SRR_results <- savvySh(X, y, model_class = "ShrinkageRR")
+SRR_results <- savvySh(X_noisy, y, model_class = "ShrinkageRR")
 beta_SRR <- coef(SRR_results, "SRR")
 ```
 
@@ -620,22 +622,22 @@ The tables below report the results of each estimator: the first table shows the
 ```{r}
 # L2 comparison
 l2_table <- data.frame(
-  Method = c("RR", "SRR"),
+  Method = c("OLS", "RR", "SRR"),
   L2_Distance = c(
+     sqrt(sum((beta_OLS - beta_true)^2)),
     sqrt(sum((beta_RR - beta_true)^2)),
     sqrt(sum((beta_SRR  - beta_true)^2))
   )
 )
-
 kable(l2_table, digits = 4, caption = "L2 Distance Between Estimated and True Coefficients")
 
 # Coefficient comparison table
 coef_table <- data.frame(
-  OLS = round(beta_RR, 3),
-  LSh = round(beta_SRR, 3),
+  OLS = round(beta_OLS, 3),
+  RR = round(beta_RR, 3),
+  SRR = round(beta_SRR, 3),
   True = round(beta_true, 3)
 )
-
 kable(coef_table, caption = "Estimated Coefficients by Method (rounded)")
 ```
 
@@ -656,6 +658,8 @@ This section provides example code and references for applying the shrinkage est
 This example demonstrates how to apply Poisson GLMs and various shrinkage estimators to a dataset related to cybersickness severity scores. We use the `cybersickness_10lags` dataset, included in the package under `data/cybersickness_10lags.rda`. The response variable is ordinal and grouped into four categories. The goal is to predict this ordinal outcome using lagged predictors. Here we show how to preprocess, fit models, and evaluate prediction performance using metrics such as MSE, RMSE, and MAE.
 
 ```{r, eval=FALSE}
+remotes::install_github("Ziwei-ChenChen/savvyGLM")
+library(savvyGLM)
 library(savvySh)
 library(savvyGLM)
 library(MASS)
@@ -681,14 +685,13 @@ fit_and_return_coefficients <- function(x, y) {
   family_type <- poisson(link = "log")
   
   # Fitting models
-  opt_glm2_OLS <- glm.fit2(x, y, control = control_list, family = family_type)
-  opt_glm2_SR <- savvy_glm.fit2(x, y, model_class = "SR", control = control_list, family = family_type)
-  opt_glm2_GSR <- savvy_glm.fit2(x, y, model_class = "GSR", control = control_list, family = family_type)
-  opt_glm2_St <- savvy_glm.fit2(x, y, model_class = "St", control = control_list, family = family_type)
-  opt_glm2_DSh <- savvy_glm.fit2(x, y, model_class = "DSh", control = control_list, family = family_type)
-  opt_glm2_Sh <- savvy_glm.fit2(x, y, model_class = "Sh", control = control_list, family = family_type)
+  opt_glm2_OLS <- glm.fit2(x, y, family = family_type, control = control_list)
+  opt_glm2_SR <- savvy_glm.fit2(x, y, model_class = "SR", family = family_type, control = control_list)
+  opt_glm2_GSR <- savvy_glm.fit2(x, y, model_class = "GSR", family = family_type, control = control_list)
+  opt_glm2_St <- savvy_glm.fit2(x, y, model_class = "St", family = family_type, control = control_list)
+  opt_glm2_DSh <- savvy_glm.fit2(x, y, model_class = "DSh", family = family_type, control = control_list)
+  opt_glm2_Sh <- savvy_glm.fit2(x, y, model_class = "Sh", family = family_type, control = control_list)
   
-  # Return a list of coefficients
   return(list(
     glm2_OLS_result = opt_glm2_OLS$coefficients,
     glm2_SR_result = opt_glm2_SR$coefficients,
@@ -700,7 +703,6 @@ fit_and_return_coefficients <- function(x, y) {
 }
 
 test_model <- function(glm_coefficients, data_X, data_Y) {
-  
   upper_limit <- 3  # =3 for 4 classes; =9 for 10 classes
   
   ### Model 1 ---> OLS ###
@@ -715,11 +717,11 @@ test_model <- function(glm_coefficients, data_X, data_Y) {
   predicted_glm2_GSR <- floor(exp(data_X %*% as.matrix(glm_coefficients$glm2_GSR_result)))
   predicted_glm2_GSR <- ifelse(predicted_glm2_GSR <= upper_limit, predicted_glm2_GSR, upper_limit)
   
-  ### Model 4 ---> St ###
+  ### Model 4 ---> Stein ###
   predicted_glm2_St <- floor(exp(data_X %*% as.matrix(glm_coefficients$glm2_St_result)))
   predicted_glm2_St <- ifelse(predicted_glm2_St <= upper_limit, predicted_glm2_St, upper_limit)
   
-  ### Model 5 ---> DSh ###
+  ### Model 5 ---> Diagonal Shrinkage ###
   predicted_glm2_DSh <- floor(exp(data_X %*% as.matrix(glm_coefficients$glm2_DSh_result)))
   predicted_glm2_DSh <- ifelse(predicted_glm2_DSh <= upper_limit, predicted_glm2_DSh, upper_limit)
   
@@ -749,44 +751,51 @@ test_model <- function(glm_coefficients, data_X, data_Y) {
 ```
 
 ```{r, eval=FALSE}
-out_of_sample_performance <- function(percentage = 0.3, no_trials = 50, datain = cybersickness_10lags, fileout = "results10.csv") {
+out_of_sample_performance <- function(percentage = 0.3, no_trials = 50, filein = "data_for_regression10.csv", fileout = "results10.csv") {
   
-  data <- datain
+  data <- read.csv(filein)
   agregated_results<-rep(0,4*3)
-  data<-set_classes(data)   
+  
+  data<-set_classes(data)   # for 4 classes
+  #data[,ncol(data)]<-floor(data[,ncol(data)])  # for 10 classes -- the scores 2.5 and 3.5 are floored
+  
   data<-standardize_features(data)
   
   for (r in 1:no_trials){
-    bound <- floor(nrow(data)*(1-percentage)) 
-    data <- data[sample(nrow(data)), ]      
+    #for train-test split with percentage e.g. 70-30
+    bound <- floor(nrow(data)*(1-percentage)) #define % of training
+    data <- data[sample(nrow(data)), ]           #sample rows 
     train <- data[1:bound, ]            
     test <- data[(bound+1):nrow(data), ]
     
+    #training
     X.tilde <- train[,-ncol(train)]
     X <-  X.tilde[,-1]
     train_X <- as.matrix(train[,-ncol(train)])
     train_Y <-  train[,ncol(train)]
     glm_coefficients<-fit_and_return_coefficients(train_X, train_Y)
     
+    #test
     test_X <- as.matrix(test[,-ncol(test)])
     test_Y <-  as.matrix(test[,ncol(test)])
     results<-test_model(glm_coefficients, test_X, test_Y)
     agregated_results<-agregated_results+unlist(results)
   }
   
+  # Average results over trials
+  aggregated_results <- aggregated_results / no_trials
   df <- data.frame(matrix(unlist(agregated_results), nrow=length(results), byrow=TRUE))
   colnames(df) <- c("MSE", "RMSE", "MAE")
   rownames(df) <- c("GLM2", "SR", "GSR", "St", "DSh", "Sh")
   write.csv(df, fileout)
 }
 
-datain <- cybersickness_10lags
+input_file_path <- "data_for_regression10.csv"
 output_file_path <- "results10.csv"
-
 run_performance_test <- out_of_sample_performance(
-  percentage = 0.3,         
+  percentage = 0.3,        
   no_trials = 50,            
-  datain = datain,  
+  filein = input_file_path,  
   fileout = output_file_path 
 )
 ```
@@ -795,7 +804,7 @@ run_performance_test <- out_of_sample_performance(
 
 This second example applies shrinkage methods to asset return data for constructing optimal portfolios. We use the `returns_441` dataset, included in the package under `data/returns_441.rda`. The dataset consists of daily returns for 441 stocks including the index, with `Date` formatted as `YYYYMMDD`. For each rolling window, we:
 
--   Fit multiple regression-based models (OLS, RR, St, DSh, Sh, SR, GSR, SRR).
+-   Fit multiple regression-based models (OLS, RR, POET_99%, St, DSh, Sh, SR, GSR, SRR).
 
 -   Extract the estimated coefficients and compute portfolio weights.
 
@@ -811,6 +820,7 @@ library(PerformanceAnalytics)
 library(lubridate)
 library(quadprog)
 library(xts)
+library(POET)
 
 data <- returns_441
 data$Date <- as.Date(as.character(data$Date), format = "%Y%m%d")
@@ -818,7 +828,7 @@ colnames(data)[2:442] <- paste0("Company", 1:441)
 
 training_size <- 5 * 252  
 testing_size  <- 3 * 21  
-step_size     <- 3 * 21   
+step_size <- 3 * 21   
 n_total <- nrow(data)
 max_windows <- floor((n_total - training_size - testing_size) / step_size) + 1
 cat("Total rows:", n_total, "\n")
@@ -832,40 +842,69 @@ get_full_weights <- function(est_vector) {
 ```
 
 ```{r, eval=FALSE}
+poet_est_99 <- function(x, y) {
+  x <- as.matrix(x)
+  y <- as.numeric(y)
+  n <- nrow(x)
+  p <- ncol(x)
+  
+  x_mean <- colMeans(x)
+  y_mean <- mean(y)
+  x_c <- x - matrix(rep(x_mean, each = n), n, p)
+  y_c <- y - y_mean
+  Y=t(x_c)
+  
+  # Choose K to explain 99% variance
+  eigvals <- eigen(cov(x_c), symmetric = TRUE, only.values = TRUE)$values
+  eigvals_sorted <- sort(eigvals, decreasing = TRUE)
+  cumsum_vals <- cumsum(eigvals_sorted) / sum(eigvals_sorted)
+  K <- which(cumsum_vals >= 0.99)[1]
+  poet_result <- POET::POET(Y, K = K)
+  Sigma_hat <- poet_result$SigmaY
+  
+  xcyc <- crossprod(x_c, y_c) / n
+  beta_1p <- as.numeric(solve(Sigma_hat, xcyc))
+  beta_0 <- y_mean - sum(x_mean * beta_1p)
+  beta_full <- c(beta_0, beta_1p)
+  
+  return(as.vector(beta_full))
+}
+```
+
+```{r, eval=FALSE}
 rolling_annual_expected_returns <- data.frame()
 rolling_annual_sharpe_ratios <- data.frame()
 rolling_annual_volatilities <- data.frame()
+
 for (window_index in seq_len(max_windows)) {
   start_index <- 1 + (window_index - 1) * step_size
   train_start <- start_index
-  train_end   <- start_index + training_size - 1
-  test_start  <- train_end + 1
-  test_end    <- train_end + testing_size
-  
+  train_end <- start_index + training_size - 1
+  test_start <- train_end + 1
+  test_end <- train_end + testing_size
+
   train_data <- data[train_start:train_end, ]
-  test_data  <- data[test_start:test_end, ]
+  test_data <- data[test_start:test_end, ]
   train_returns <- as.matrix(train_data[, -1])  
-  test_returns  <- as.matrix(test_data[, -1]) 
+  test_returns <- as.matrix(test_data[, -1])  
+  
+  # Create X_train and Y_train
+  # Y_train is last column (Company441)
+  # X_train is (Y_train - first 440 columns)
   Y_train <- train_returns[, 441]
   X_train <- matrix(Y_train, nrow = nrow(train_returns), ncol = 440) - train_returns[, 1:440]
   
-  beta_ols <- coef(lm(Y_train ~ X_train))
-  glmnet_fit <- cv.glmnet(X_train, Y_train, alpha = 0)
-  lambda_min_RR_glmnet <- glmnet_fit$lambda.min
-  beta_RR <- as.vector(coef(glmnet_fit, s = "lambda.min"))
-  multi_results <- savvySh(X_train, Y_train, model_class = "Multiplicative", include_Sh = TRUE)
-  slab_results <- savvySh(X_train, Y_train, model_class = "Slab")
-  srr_results <- savvySh(X_train, Y_train, model_class = "ShrinkageRR")
-  
+  # Fit all estimators
   est_results <- list(
-    OLS  = beta_ols,
-    RR   = beta_RR,
-    St   = coef(multi_results, "St"),
-    DSh  = coef(multi_results, "DSh"),
-    Sh   = coef(multi_results, "Sh"), 
-    SR   = coef(slab_results, "SR"),
-    GSR  = coef(slab_results, "GSR"),
-    SRR  = coef(srr_results, "SRR")
+    OLS = OLS_est(X_train, Y_train)$est,
+    RR = RR_est(X_train, Y_train)$est,
+    POET_99 = poet_est_99(X_train, Y_train),
+    St = St_ost(X_train, Y_train),
+    DSh = DSh_ost(X_train, Y_train),
+    Sh = Sh_ost(X_train, Y_train), 
+    SR = SR_ost(X_train, Y_train),
+    GSR = GSR_ost(X_train, Y_train),
+    SRR = SRR_shrinkage_ost(X_train, Y_train)
   )
   weights_list <- lapply(est_results, get_full_weights)
   names(weights_list) <- names(est_results)
@@ -874,9 +913,8 @@ for (window_index in seq_len(max_windows)) {
   test_returns_xts <- xts(test_returns, order.by = test_dates)
   daily_returns_list <- lapply(weights_list, function(w) {
     rp <- Return.portfolio(R = test_returns_xts, weights = w)
-    return(as.numeric(rp))
+    return(as.numeric(rp)) 
   })
-  
   daily_values_list <- lapply(daily_returns_list, function(r) {
     cum_val <- cumprod(1 + r)
     return(cum_val)
@@ -888,20 +926,19 @@ for (window_index in seq_len(max_windows)) {
   daily_returns_mat <- matrix(0, nrow = length(model_names), ncol = n_test)
   rownames(daily_values_mat) <- model_names
   rownames(daily_returns_mat) <- model_names
-  
   for (i in seq_along(model_names)) {
     daily_values_mat[i, ]  <- daily_values_list[[i]]
     daily_returns_mat[i, ] <- daily_returns_list[[i]]
   }
   
-  T_val <- ncol(daily_returns_mat)
-  annual_returns <- apply(daily_returns_mat + 1, 1, function(x) {
-    prod(x)^(252 / T_val) - 1
-  })
-  daily_vols  <- apply(daily_returns_mat, 1, sd)
-  annual_vols <- daily_vols * sqrt(252)
-  annual_sharp <- annual_returns / annual_vols
-
+  returns_xts_mat <- xts(t(daily_returns_mat), order.by = test_dates)
+  annual_returns <- as.numeric(Return.annualized(R = returns_xts_mat, scale = 252))
+  names(annual_returns) <- colnames(returns_xts_mat)
+  annual_vols <- as.numeric(StdDev.annualized(x = returns_xts_mat, scale = 252))
+  names(annual_vols) <- colnames(returns_xts_mat)
+  annual_sharp <- as.numeric(SharpeRatio.annualized(R = returns_xts_mat, scale = 252))
+  names(annual_sharp) <- colnames(returns_xts_mat)
+  
   window_result_returns <- as.data.frame(t(annual_returns))
   window_result_returns$Window <- window_index
   rolling_annual_expected_returns <- rbind(rolling_annual_expected_returns, window_result_returns)
@@ -913,14 +950,6 @@ for (window_index in seq_len(max_windows)) {
   window_result_vols <- as.data.frame(t(annual_vols))
   window_result_vols$Window <- window_index
   rolling_annual_volatilities <- rbind(rolling_annual_volatilities, window_result_vols)
-  
-  window_label <- paste0("window_", window_index)
-  write.csv(daily_values_mat, 
-            file = paste0("daily_portfolio_values_", window_label, ".csv"), 
-            row.names = TRUE)
-  write.csv(daily_returns_mat, 
-            file = paste0("daily_portfolio_returns_", window_label, ".csv"), 
-            row.names = TRUE)
   
   cat("Completed window", window_index,
       ": Training rows [", train_start, "to", train_end, 
