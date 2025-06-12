@@ -128,7 +128,12 @@ savvySh <- function(x, y, model_class = c("Multiplicative", "Slab", "Linear", "S
 
   x <- as.matrix(x)
   y <- as.vector(y)
-
+  if (nrow(x) != length(y)) {
+    stop("The number of rows in x must match the length of y.")
+  }
+  if (anyNA(x) || anyNA(y)) {
+    stop("x or y contains missing values. Please impute or handle missing data before proceeding.")
+  }
   valid_models <- c("Multiplicative", "Slab", "Linear", "ShrinkageRR")
   if (length(model_class) > 1) {
     warning("model_class should be a single option. Using the first element: ", model_class[1])
@@ -136,16 +141,12 @@ savvySh <- function(x, y, model_class = c("Multiplicative", "Slab", "Linear", "S
   } else {
     model_class <- match.arg(model_class, choices = model_class)
   }
-
-  if (nrow(x) != length(y)) {
-    stop("The number of rows in x must match the length of y.")
-  }
-  if (anyNA(x) || anyNA(y)) {
-    stop("x or y contains missing values. Please impute or handle missing data before proceeding.")
-  }
-
   if (!model_class %in% valid_models) {
     stop(paste("Invalid model_class specified. Choose from:", paste(valid_models, collapse = ", ")))
+  }
+  if (include_Sh && model_class != "Multiplicative") {
+    warning("include_Sh is only applicable when model_class is 'Multiplicative'. Setting include_Sh to FALSE.")
+    include_Sh <- FALSE
   }
 
   model <- data.frame(y, x)
