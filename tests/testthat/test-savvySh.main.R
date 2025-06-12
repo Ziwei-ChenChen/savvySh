@@ -37,6 +37,8 @@ test_that("savvySh function validates model_class argument correctly", {
     savvySh(x, y, model_class = "InvalidModel"),
     "Invalid model_class specified. Choose from: Multiplicative, Slab, Linear, ShrinkageRR"
   )
+  expect_warning(savvySh(x, y, model_class = "Slab", include_Sh = TRUE),
+                 "include_Sh is only applicable when model_class is 'Multiplicative'. Setting include_Sh to FALSE.")
 })
 
 test_that("savvySh warns and uses the first model when multiple model_class values are provided", {
