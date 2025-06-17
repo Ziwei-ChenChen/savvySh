@@ -175,7 +175,7 @@ savvySh <- function(x, y, model_class = c("Multiplicative", "Slab", "Linear", "S
   nvars <- ncol(x)
   x_tilde <- cbind(1, x)
   if (nvars >= nobs) {
-    stop("Number of features in x must be less than the number of observations.")
+    warning("Number of features in x must be less than the number of observations.")
   }
   full_rank <- Matrix::rankMatrix(x)[1] == nvars
   if (!full_rank && model_class != "ShrinkageRR") {

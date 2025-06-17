@@ -1068,6 +1068,7 @@ This simulates discrete predictor variables.</p>
 <span><span class="va">p_val</span> <span class="op">&lt;-</span> <span class="fl">10</span></span>
 <span><span class="va">rho_val</span> <span class="op">&lt;-</span> <span class="fl">0.75</span></span>
 <span><span class="va">q_0</span> <span class="op">&lt;-</span> <span class="fl">0.01</span></span>
+<span><span class="va">sigma_val</span> <span class="op">&lt;-</span> <span class="fl">5</span></span>
 <span></span>
 <span><span class="co"># Correlation matrix</span></span>
 <span><span class="va">sigma.rho</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">rho_val</span>, <span class="va">p_val</span><span class="op">)</span> <span class="op">{</span></span>
@@ -1312,7 +1313,7 @@ additive Gaussian noise with variance
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://yihui.org/knitr/" class="external-link">knitr</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Parameters</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
 <span><span class="va">n_val</span> <span class="op">&lt;-</span> <span class="fl">1000</span></span>
 <span><span class="va">p_val</span> <span class="op">&lt;-</span> <span class="fl">10</span></span>
 <span><span class="va">rho_val</span> <span class="op">&lt;-</span> <span class="fl">0.75</span></span>
@@ -1372,11 +1373,11 @@ while the second table displays the actual estimated coefficients
 <tbody>
 <tr class="odd">
 <td align="left">OLS</td>
-<td align="right">0.9697</td>
+<td align="right">0.7403</td>
 </tr>
 <tr class="even">
 <td align="left">LSh</td>
-<td align="right">1.0187</td>
+<td align="right">0.7274</td>
 </tr>
 </tbody>
 </table>
@@ -1401,62 +1402,62 @@ while the second table displays the actual estimated coefficients
 <tbody>
 <tr class="odd">
 <td align="left">X_centred1</td>
-<td align="right">0.852</td>
-<td align="right">0.854</td>
+<td align="right">1.238</td>
+<td align="right">1.238</td>
 <td align="right">1</td>
 </tr>
 <tr class="even">
 <td align="left">X_centred2</td>
-<td align="right">-0.652</td>
-<td align="right">-0.638</td>
+<td align="right">-1.518</td>
+<td align="right">-1.503</td>
 <td align="right">-1</td>
 </tr>
 <tr class="odd">
 <td align="left">X_centred3</td>
-<td align="right">1.921</td>
-<td align="right">1.915</td>
+<td align="right">2.340</td>
+<td align="right">2.334</td>
 <td align="right">2</td>
 </tr>
 <tr class="even">
 <td align="left">X_centred4</td>
-<td align="right">-1.880</td>
-<td align="right">-1.859</td>
+<td align="right">-2.089</td>
+<td align="right">-2.072</td>
 <td align="right">-2</td>
 </tr>
 <tr class="odd">
 <td align="left">X_centred5</td>
-<td align="right">3.077</td>
-<td align="right">3.062</td>
+<td align="right">2.867</td>
+<td align="right">2.855</td>
 <td align="right">3</td>
 </tr>
 <tr class="even">
 <td align="left">X_centred6</td>
-<td align="right">-2.714</td>
-<td align="right">-2.690</td>
+<td align="right">-3.075</td>
+<td align="right">-3.053</td>
 <td align="right">-3</td>
 </tr>
 <tr class="odd">
 <td align="left">X_centred7</td>
-<td align="right">3.241</td>
-<td align="right">3.218</td>
+<td align="right">4.204</td>
+<td align="right">4.183</td>
 <td align="right">4</td>
 </tr>
 <tr class="even">
 <td align="left">X_centred8</td>
-<td align="right">-3.804</td>
-<td align="right">-3.779</td>
+<td align="right">-4.059</td>
+<td align="right">-4.037</td>
 <td align="right">-4</td>
 </tr>
 <tr class="odd">
 <td align="left">X_centred9</td>
-<td align="right">4.880</td>
-<td align="right">4.838</td>
+<td align="right">4.897</td>
+<td align="right">4.867</td>
 <td align="right">5</td>
 </tr>
 <tr class="even">
 <td align="left">X_centred10</td>
-<td align="right">-4.755</td>
-<td align="right">-4.732</td>
+<td align="right">-4.858</td>
+<td align="right">-4.839</td>
 <td align="right">-5</td>
 </tr>
 </tbody>

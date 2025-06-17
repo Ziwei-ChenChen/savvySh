@@ -14,7 +14,13 @@ test_that("savvySh function handles input validation correctly", {
   y_with_na <- y
   y_with_na[1] <- NA
   expect_error(savvySh(x, y_with_na, model_class = "Multiplicative"), "x or y contains missing values. Please impute or handle missing data before proceeding.")
-  expect_error(savvySh(x[1:5, ], y[1:5], model_class = "Multiplicative"), "Number of features in x must be less than the number of observations.")
+  warnings_out <- capture_warnings(
+    savvySh(x[1:5, ], y[1:5], model_class = "Multiplicative")
+  )
+
+  expect_match(warnings_out[1], "Number of features in x must be less than the number of observations.")
+  expect_match(warnings_out[2], "Multicollinearity detected: switched to RR instead of unbiased OLS estimation.")
+  expect_match(warnings_out[3], "Option grouped=FALSE enforced in cv.glmnet, since < 3 observations per fold")
 })
 
 test_that("savvySh function handles exclusion parameter validation correctly", {

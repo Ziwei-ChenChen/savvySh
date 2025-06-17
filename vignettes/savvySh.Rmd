@@ -363,6 +363,7 @@ n_val <- 1000
 p_val <- 10
 rho_val <- 0.75
 q_0 <- 0.01
+sigma_val <- 5
 
 # Correlation matrix
 sigma.rho <- function(rho_val, p_val) {
@@ -437,7 +438,7 @@ library(MASS)
 library(knitr)
 
 # Parameters
-set.seed(123)
+set.seed(1)
 n_val <- 1000
 p_val <- 10
 rho_val <- 0.75
