@@ -106,6 +106,27 @@
 #'  }
 #' }
 #'
+#' @examples
+#' # 1. Simple Multiplicative Shrinkage example
+#' set.seed(123)
+#' x <- matrix(rnorm(100 * 5), 100, 5)
+#' y <- rnorm(100)
+#' fit_mult <- savvySh(x, y, model_class = "Multiplicative", include_Sh = TRUE)
+#' print(fit_mult)
+#'
+#' # 2. Slab Regression example
+#' fit_slab <- savvySh(x, y, model_class = "Slab", v = 2)
+#' coef(fit_slab, estimator = "GSR")
+#'
+#' # 3. Linear Shrinkage (standardized data recommended)
+#' x_centered <- scale(x, center = TRUE, scale = FALSE)
+#' y_centered <- scale(y, center = TRUE, scale = FALSE)
+#' fit_linear <- savvySh(x_centered, y_centered, model_class = "Linear")
+#'
+#' # 4. Shrinkage Ridge Regression
+#' fit_srr <- savvySh(x, y, model_class = "ShrinkageRR")
+#' predict(fit_srr, newx = matrix(rnorm(10 * 5), 10, 5), type = "response")
+#'
 #' @author
 #' Ziwei Chen, Vali Asimit, Marina Anca Cidota, Jennifer Asimit\cr
 #' Maintainer: Ziwei Chen <ziwei.chen.3@citystgeorges.ac.uk>
@@ -149,7 +170,6 @@ savvySh <- function(x, y, model_class = c("Multiplicative", "Slab", "Linear", "S
     include_Sh <- FALSE
   }
 
-  model <- data.frame(y, x)
   if (is.null(colnames(x))) {
     colnames(x) <- paste("V", seq_len(ncol(x)), sep = "")
   }
@@ -213,6 +233,7 @@ savvySh <- function(x, y, model_class = c("Multiplicative", "Slab", "Linear", "S
       optimal_lambda <- 0
     }
     Sigma_lambda <- t(x_tilde) %*% x_tilde + optimal_lambda * diag(ncol(x_tilde))
+    Sigma_lambda <- (Sigma_lambda + t(Sigma_lambda)) / 2
     Sigma_lambda_inv <- pd.solve(Sigma_lambda)
 
     if (model_class == "Multiplicative") {
@@ -272,6 +293,7 @@ savvySh <- function(x, y, model_class = c("Multiplicative", "Slab", "Linear", "S
       optimal_lambda <- 0
     }
     Sigma_lambda <- t(centered_x) %*% centered_x + optimal_lambda * diag(ncol(centered_x))
+    Sigma_lambda <- (Sigma_lambda + t(Sigma_lambda)) / 2
     Sigma_lambda_inv <- pd.solve(Sigma_lambda)
     Sigma_tilde <- diag(diag(Sigma_lambda))
 

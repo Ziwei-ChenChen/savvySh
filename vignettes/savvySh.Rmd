@@ -1,16 +1,19 @@
 ---
-title: "savvySh: Shrinkage Methods for Linear Regression Estimation"
+title: "`savvySh`: Shrinkage Methods for Linear Regression Estimation"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteEncoding{UTF-8}
-  %\VignetteIndexEntry{savvySh: Shrinkage Methods for Linear Regression Estimation}
+  %\VignetteIndexEntry{`savvySh`: Shrinkage Methods for Linear Regression Estimation}
   %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE, 
-  comment = "#>")
+  comment = "#>",
+  fig.width = 7,
+  fig.height = 5
+)
 ```
 
 # Introduction
@@ -139,7 +142,7 @@ $$
 \widehat{\boldsymbol{\beta}}^{SRR}(\rho)=\big(\Sigma^*(\rho)\big)^{-1}\textbf{X}^T\textbf{y} \quad \text{with} \quad \Sigma^*(\rho)=(1-\rho)\Sigma+\rho v \textbf{I}_{p+1}.
 $$
 
-Unlike the approach in [Ledoit and Wolf (2004)](https://www.sciencedirect.com/science/article/pii/S0047259X03000964), which minimizes the MSE of the covariance matrix, SRR chooses the optimal $\rho^*$ by directly minimizing the MSE of the coefficient estimator. Although $\rho^*$ does not have a closed form, it can be selected numerically. This approach is especially useful when the design matrix has a low-rank or unstable covariance structure, as often encountered in high-dimensional or collinear settings.
+Unlike the approach in [Ledoit and Wolf (2004)](https://doi.org/10.1016/S0047-259X(03)00096-4), which minimizes the MSE of the covariance matrix, SRR chooses the optimal $\rho^*$ by directly minimizing the MSE of the coefficient estimator. Although $\rho^*$ does not have a closed form, it can be selected numerically. This approach is especially useful when the design matrix has a low-rank or unstable covariance structure, as often encountered in high-dimensional or collinear settings.
 
 ## Summary of Shrinkage Estimators
 
@@ -656,7 +659,7 @@ This section provides example code and references for applying the shrinkage est
 
 ## Cybersickness data
 
-This example demonstrates how to apply Poisson GLMs and various shrinkage estimators to a dataset related to cybersickness severity scores. We use the `cybersickness_10lags` dataset, included in the package under `data/cybersickness_10lags.rda`. The response variable is ordinal and grouped into four categories. The goal is to predict this ordinal outcome using lagged predictors. Here we show how to preprocess, fit models, and evaluate prediction performance using metrics such as MSE, RMSE, and MAE.
+This example demonstrates how to apply Poisson GLMs and various shrinkage estimators to a dataset related to cybersickness severity scores. The response variable is ordinal and grouped into four categories. The goal is to predict this ordinal outcome using lagged predictors. Here we show how to preprocess, fit models, and evaluate prediction performance using metrics such as MSE, RMSE, and MAE.
 
 ```{r, eval=FALSE}
 remotes::install_github("Ziwei-ChenChen/savvyGLM")
@@ -803,7 +806,7 @@ run_performance_test <- out_of_sample_performance(
 
 ## Portfolio Investment
 
-This second example applies shrinkage methods to asset return data for constructing optimal portfolios. We use the `returns_441` dataset, included in the package under `data/returns_441.rda`. The dataset consists of daily returns for 441 stocks including the index, with `Date` formatted as `YYYYMMDD`. For each rolling window, we:
+This second example applies shrinkage methods to asset return data for constructing optimal portfolios. We use the `returns_441` dataset. The dataset consists of daily returns for 441 stocks including the index, with `Date` formatted as `YYYYMMDD`. For each rolling window, we:
 
 -   Fit multiple regression-based models (OLS, RR, POET_99%, St, DSh, Sh, SR, GSR, SRR).
 

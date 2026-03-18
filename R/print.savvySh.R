@@ -38,6 +38,21 @@
 #'   \code{\link{coef.savvySh_model}} and \code{\link{predict.savvySh_model}} for extracting coefficients
 #'   and generating predictions.
 #'
+#' @examples
+#' # Generate simulated data for demonstration
+#' set.seed(123)
+#' x <- matrix(rnorm(100 * 5), 100, 5)
+#' y <- rnorm(100)
+#'
+#' # Fit a Multiplicative shrinkage model
+#' fit <- savvySh(x, y, model_class = "Multiplicative", include_Sh = TRUE)
+#'
+#' # Default print: shows summary metrics and coefficients for all estimators
+#' print(fit)
+#'
+#' # Print with specific digits and only for one estimator
+#' print(fit, digits = 4, estimator = "St")
+#'
 #' @author
 #' Ziwei Chen, Vali Asimit, Marina Anca Cidota, Jennifer Asimit\cr
 #' Maintainer: Ziwei Chen <ziwei.chen.3@citystgeorges.ac.uk>

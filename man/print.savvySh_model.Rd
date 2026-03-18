@@ -43,6 +43,22 @@ only those are printed, after verifying that they exist in \code{x$coefficients}
 
 The method invisibly returns a summary \code{data.frame} containing key metrics for each estimator.
 }
+\examples{
+# Generate simulated data for demonstration
+set.seed(123)
+x <- matrix(rnorm(100 * 5), 100, 5)
+y <- rnorm(100)
+
+# Fit a Multiplicative shrinkage model
+fit <- savvySh(x, y, model_class = "Multiplicative", include_Sh = TRUE)
+
+# Default print: shows summary metrics and coefficients for all estimators
+print(fit)
+
+# Print with specific digits and only for one estimator
+print(fit, digits = 4, estimator = "St")
+
+}
 \seealso{
 \code{\link{savvySh}} for fitting slab and shrinkage linear models,
   \code{\link{coef.savvySh_model}} and \code{\link{predict.savvySh_model}} for extracting coefficients

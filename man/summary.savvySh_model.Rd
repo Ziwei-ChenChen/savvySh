@@ -37,6 +37,22 @@ For each estimator present in the \code{savvySh_model} object (or for the user-s
 These results are printed in sequence for the selected estimator(s). If no estimator is specified,
 summaries for all available estimators are printed.
 }
+\examples{
+# Generate simulated data for demonstration
+set.seed(123)
+x <- matrix(rnorm(100 * 5), 100, 5)
+y <- rnorm(100)
+
+# Fit a Slab Regression model
+fit <- savvySh(x, y, model_class = "Slab")
+
+# Print a detailed summary for all estimators (SR and GSR)
+summary(fit)
+
+# Summarize only a specific estimator
+summary(fit, estimator = "GSR")
+
+}
 \seealso{
 \code{\link{savvySh}} for fitting slab and shrinkage linear models,
   \code{\link{predict.savvySh_model}} for generating predictions,

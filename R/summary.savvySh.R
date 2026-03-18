@@ -33,6 +33,21 @@
 #'   \code{\link{predict.savvySh_model}} for generating predictions,
 #'   \code{\link{coef.savvySh_model}} for extracting coefficients directly.
 #'
+#' @examples
+#' # Generate simulated data for demonstration
+#' set.seed(123)
+#' x <- matrix(rnorm(100 * 5), 100, 5)
+#' y <- rnorm(100)
+#'
+#' # Fit a Slab Regression model
+#' fit <- savvySh(x, y, model_class = "Slab")
+#'
+#' # Print a detailed summary for all estimators (SR and GSR)
+#' summary(fit)
+#'
+#' # Summarize only a specific estimator
+#' summary(fit, estimator = "GSR")
+#'
 #' @author
 #' Ziwei Chen, Vali Asimit, Marina Anca Cidota, Jennifer Asimit\cr
 #' Maintainer: Ziwei Chen <ziwei.chen.3@citystgeorges.ac.uk>

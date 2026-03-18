@@ -47,6 +47,22 @@
 #'   \code{\link{savvySh}} for fitting slab and shrinkage linear models,
 #'   \code{\link{coef.savvySh_model}} for direct coefficient extraction.
 #'
+#' @examples
+#' # Generate simulated data
+#' set.seed(123)
+#' x <- matrix(rnorm(100 * 5), 100, 5)
+#' y <- rnorm(100)
+#'
+#' # Fit a Multiplicative shrinkage model
+#' fit <- savvySh(x, y, model_class = "Multiplicative")
+#'
+#' # Generate predictions for new data
+#' new_x <- matrix(rnorm(10 * 5), 10, 5)
+#' preds <- predict(fit, newx = new_x, type = "response")
+#'
+#' # Extract coefficients for specific estimators
+#' coefs_st <- predict(fit, type = "coefficients", estimator = "St")
+#'
 #' @author
 #' Ziwei Chen, Vali Asimit, Marina Anca Cidota, Jennifer Asimit\cr
 #' Maintainer: Ziwei Chen <ziwei.chen.3@citystgeorges.ac.uk>

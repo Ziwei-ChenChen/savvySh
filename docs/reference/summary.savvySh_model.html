@@ -13,7 +13,7 @@ for each specified estimator."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">savvySh</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -25,6 +25,7 @@ for each specified estimator."></head><body>
 <li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/Ziwei-ChenChen/savvySh/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
       </ul></div>
 
 
@@ -34,7 +35,7 @@ for each specified estimator."></head><body>
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Summarize a Slab and Shrinkage Linear Regression Model</h1>
-
+      <small class="dont-index">Source: <a href="https://github.com/Ziwei-ChenChen/savvySh/blob/HEAD/R/summary.savvySh.R" class="external-link"><code>R/summary.savvySh.R</code></a></small>
       <div class="d-none name"><code>summary.savvySh_model.Rd</code></div>
     </div>
 
@@ -96,6 +97,99 @@ summaries for all available estimators are printed.</p>
 Maintainer: Ziwei Chen &lt;ziwei.chen.3@citystgeorges.ac.uk&gt;</p>
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Generate simulated data for demonstration</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">100</span> <span class="op">*</span> <span class="fl">5</span><span class="op">)</span>, <span class="fl">100</span>, <span class="fl">5</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Fit a Slab Regression model</span></span></span>
+<span class="r-in"><span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="savvySh.html">savvySh</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, model_class <span class="op">=</span> <span class="st">"Slab"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Print a detailed summary for all estimators (SR and GSR)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">fit</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Summary of savvySh Model</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ===================================================================</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Call:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> savvySh(x = x, y = y, model_class = "Slab")</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Estimator: SR </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Residuals:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          0%         25%         50%         75%        100% </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> -2.73899446 -0.55639889  0.01915612  0.68404744  2.55646699 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Coefficients:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             Estimate Std. Error t value Pr(&gt;|t|)   2.5 % 97.5 % Signif.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)  -0.0723     0.0957 -0.7552   0.4520 -0.2624 0.1178        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> V1           -0.0531     0.1059 -0.5018   0.6170 -0.2634 0.1571        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> V2            0.1063     0.0980  1.0853   0.2806 -0.0882 0.3009        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> V3           -0.0186     0.0996 -0.1863   0.8526 -0.2164 0.1793        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> V4           -0.1106     0.0904 -1.2231   0.2244 -0.2901 0.0689        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> V5            0.1734     0.0975  1.7777   0.0787 -0.0203 0.3671       .</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Residual standard error: 0.9311 on 94 degrees of freedom</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Multiple R-squared: 0.0659 , Adjusted R-squared: 0.0162 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> F-statistic: 1.3263 on 5 and 94 DF, p-value: 0.2598 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> AIC: -8.4678 , BIC: 7.1632 , Deviance: 81.491 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ===================================================================</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Estimator: GSR </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Residuals:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          0%         25%         50%         75%        100% </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> -2.83711278 -0.61385498 -0.01386121  0.60248424  2.40472034 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Coefficients:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             Estimate Std. Error t value Pr(&gt;|t|)   2.5 % 97.5 % Signif.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)  -0.0354     0.0960 -0.3686   0.7132 -0.2261 0.1553        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> V1           -0.0151     0.1062 -0.1418   0.8876 -0.2260 0.1959        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> V2            0.1162     0.0983  1.1821   0.2401 -0.0790 0.3114        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> V3            0.0185     0.1000  0.1847   0.8538 -0.1800 0.2169        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> V4           -0.0660     0.0907 -0.7281   0.4683 -0.2461 0.1140        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> V5            0.1089     0.0979  1.1126   0.2687 -0.0854 0.3032        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Residual standard error: 0.9341 on 94 degrees of freedom</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Multiple R-squared: 0.0599 , Adjusted R-squared: 0.0099 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> F-statistic: 1.1976 on 5 and 94 DF, p-value: 0.3164 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> AIC: -7.8264 , BIC: 7.8046 , Deviance: 82.0153 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ===================================================================</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Summarize only a specific estimator</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">fit</span>, estimator <span class="op">=</span> <span class="st">"GSR"</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Summary of savvySh Model</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ===================================================================</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Call:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> savvySh(x = x, y = y, model_class = "Slab")</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Estimator: GSR </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Residuals:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          0%         25%         50%         75%        100% </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> -2.83711278 -0.61385498 -0.01386121  0.60248424  2.40472034 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Coefficients:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             Estimate Std. Error t value Pr(&gt;|t|)   2.5 % 97.5 % Signif.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> (Intercept)  -0.0354     0.0960 -0.3686   0.7132 -0.2261 0.1553        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> V1           -0.0151     0.1062 -0.1418   0.8876 -0.2260 0.1959        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> V2            0.1162     0.0983  1.1821   0.2401 -0.0790 0.3114        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> V3            0.0185     0.1000  0.1847   0.8538 -0.1800 0.2169        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> V4           -0.0660     0.0907 -0.7281   0.4683 -0.2461 0.1140        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> V5            0.1089     0.0979  1.1126   0.2687 -0.0854 0.3032        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Residual standard error: 0.9341 on 94 degrees of freedom</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Multiple R-squared: 0.0599 , Adjusted R-squared: 0.0099 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> F-statistic: 1.1976 on 5 and 94 DF, p-value: 0.3164 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> AIC: -7.8264 , BIC: 7.8046 , Deviance: 82.0153 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ===================================================================</span>
+<span class="r-in"><span></span></span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
 

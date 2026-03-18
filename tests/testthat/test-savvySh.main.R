@@ -18,7 +18,7 @@ test_that("savvySh function handles input validation correctly", {
     savvySh(x[1:5, ], y[1:5], model_class = "Multiplicative")
   )
 
-  expect_match(warnings_out[1], "Number of features in x must be less than the number of observations.")
+  expect_match(warnings_out[1], "Number of features in x is less than the number of observations.")
   expect_match(warnings_out[2], "Multicollinearity detected: switched to RR instead of unbiased OLS estimation.")
   expect_match(warnings_out[3], "Option grouped=FALSE enforced in cv.glmnet, since < 3 observations per fold")
 })

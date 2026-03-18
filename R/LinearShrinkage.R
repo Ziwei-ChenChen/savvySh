@@ -15,6 +15,7 @@
 #   A vector representing the LSh estimator.
 LSh_ost <- function(est, sigma_square, Sigma_lambda, Sigma_lambda_inv, Sigma_tilde) {
   I_p <- diag(length(est))
+  Sigma_tilde <- (Sigma_tilde + t(Sigma_tilde)) / 2
   Sigma_tilde_inv <- pd.solve(Sigma_tilde)
   t1 <- sigma_square * sum(diag(Sigma_tilde_inv))
   t2 <- sigma_square * sum(diag(Sigma_lambda_inv))

@@ -60,6 +60,23 @@ If no \code{estimator} is specified, the function returns results for all availa
 as a named list. If a single estimator is specified (or only one is provided in the vector), the result
 is returned as a numeric vector (for coefficients) or a numeric vector of predictions (for response).
 }
+\examples{
+# Generate simulated data
+set.seed(123)
+x <- matrix(rnorm(100 * 5), 100, 5)
+y <- rnorm(100)
+
+# Fit a Multiplicative shrinkage model
+fit <- savvySh(x, y, model_class = "Multiplicative")
+
+# Generate predictions for new data
+new_x <- matrix(rnorm(10 * 5), 10, 5)
+preds <- predict(fit, newx = new_x, type = "response")
+
+# Extract coefficients for specific estimators
+coefs_st <- predict(fit, type = "coefficients", estimator = "St")
+
+}
 \seealso{
 \code{\link{savvySh}} for fitting slab and shrinkage linear models,
   \code{\link{coef.savvySh_model}} for direct coefficient extraction.

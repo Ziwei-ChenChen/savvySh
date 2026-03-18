@@ -121,6 +121,28 @@ and a warning is issued.
   }
 }
 }
+\examples{
+# 1. Simple Multiplicative Shrinkage example
+set.seed(123)
+x <- matrix(rnorm(100 * 5), 100, 5)
+y <- rnorm(100)
+fit_mult <- savvySh(x, y, model_class = "Multiplicative", include_Sh = TRUE)
+print(fit_mult)
+
+# 2. Slab Regression example
+fit_slab <- savvySh(x, y, model_class = "Slab", v = 2)
+coef(fit_slab, estimator = "GSR")
+
+# 3. Linear Shrinkage (standardized data recommended)
+x_centered <- scale(x, center = TRUE, scale = FALSE)
+y_centered <- scale(y, center = TRUE, scale = FALSE)
+fit_linear <- savvySh(x_centered, y_centered, model_class = "Linear")
+
+# 4. Shrinkage Ridge Regression
+fit_srr <- savvySh(x, y, model_class = "ShrinkageRR")
+predict(fit_srr, newx = matrix(rnorm(10 * 5), 10, 5), type = "response")
+
+}
 \references{
 Asimit, V., Cidota, M. A., Chen, Z., & Asimit, J. (2025).
 \emph{Slab and Shrinkage Linear Regression Estimation}.

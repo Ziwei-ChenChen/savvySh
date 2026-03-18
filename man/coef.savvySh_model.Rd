@@ -31,7 +31,28 @@ in which case all are returned), the output is a named list in which each elemen
 The coefficient vectors are named according to whether an intercept is present (for Linear shrinkage, no intercept).
 If a single estimator is specified, a single named numeric vector is returned.
 }
+\examples{
+# Generate simulated data for example
+set.seed(123)
+x <- matrix(rnorm(100 * 5), 100, 5)
+y <- rnorm(100)
+
+# Fit a Multiplicative shrinkage model
+fit <- savvySh(x, y, model_class = "Multiplicative", include_Sh = TRUE)
+
+# Extract coefficients for all available estimators (St and DSh by default)
+all_coefs <- coef(fit)
+
+# Extract coefficients for a specific estimator
+st_coefs <- coef(fit, estimator = "St")
+print(st_coefs)
+
+}
 \seealso{
 \code{\link{predict.savvySh_model}} for generating predictions,
   \code{\link{savvySh}} for fitting slab and shrinkage linear models.
+}
+\author{
+Ziwei Chen, Vali Asimit, Marina Anca Cidota, Jennifer Asimit\cr
+Maintainer: Ziwei Chen <ziwei.chen.3@citystgeorges.ac.uk>
 }

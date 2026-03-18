@@ -1,26 +1,25 @@
-# savvySh: Shrinkage Methods for Linear Regression Estimation
+# `savvySh`: Shrinkage Methods for Linear Regression Estimation
 
-The `savvySh` package provides a unified interface for fitting shrinkage estimators in linear regression, particularly useful in the presence of multicollinearity or high-dimensional covariates. It supports four shrinkage classes: *Multiplicative Shrinkage*, *Slab Regression*, *Linear Shrinkage*, and *Shrinkage Ridge Regression*. These methods improve on the classical *ordinary least squares (OLS)* estimator by trading a small amount of bias for a significant reduction in variance.
+The `savvySh` package provides a unified interface for fitting shrinkage estimators in linear regression, which is particularly useful in the presence of multicollinearity or high-dimensional covariates. It supports four shrinkage classes: Multiplicative Shrinkage, Slab Regression, Linear Shrinkage, and Shrinkage Ridge Regression. These methods improve on the classical Ordinary Least Squares (OLS) estimator by trading a small amount of bias for a significant reduction in variance.
 
-This package builds on theoretical work discussed in:
+This package implements the theoretical framework discussed in:
 
-Asimit, V., Cidota, M. A., Chen, Z., & Asimit, J. (2025). [*Slab and Shrinkage Linear Regression Estimation*](https://openaccess.city.ac.uk/id/eprint/35005/).
+Asimit, V., Cidota, M. A., Chen, Z., & Asimit, J. (2025). [Slab and Shrinkage Linear Regression Estimation](https://openaccess.city.ac.uk/id/eprint/35005/).
 
-The official documentation site is available at: <https://Ziwei-ChenChen.github.io/savvySh>
+## Related Projects
 
-If you are interested in applying shrinkage methods within generalized linear models (GLMs), please refer to the companion package [`savvyGLM`](https://github.com/Ziwei-ChenChen/savvyGLM). You can install it directly from GitHub:
-
-``` r
-remotes::install_github("Ziwei-ChenChen/savvyGLM")
-```
-
-This will enable you to explore real-data GLM examples shown in the vignette section of the documentation website.
-
-In addition, shrinkage-based methods have also been applied in genetic fine-mapping. For code and examples in that context, please see: [`flashfm-savvySh`](https://github.com/jennasimit/flashfm-savvySh) – A dedicated repository demonstrating statistical fine-mapping using shrinkage estimators.
+-   **`savvyGLM`**: For applying these shrinkage methods within Generalized Linear Models (GLMs), please refer to the companion package [`savvyGLM`](https://github.com/Ziwei-ChenChen/savvyGLM).
+-   **`flashfm-savvySh`**: For applications in genetic fine-mapping, see the [`flashfm-savvySh`](https://github.com/jennasimit/flashfm-savvySh) repository.
 
 ## Installation Guide
 
-Install the development version of `savvySh` from GitHub using:
+You can install the released version of `savvySh` from [CRAN](https://CRAN.R-project.org) with:
+
+``` r
+install.packages("savvySh")
+```
+
+Alternatively, you can install the development version from GitHub with:
 
 ``` r
 # install.packages("devtools")
@@ -35,9 +34,9 @@ library(savvySh)
 
 ## Features
 
-`savvySh` provides several shrinkage estimators designed to improve regression accuracy by reducing MSE:
+`savvySh` provides several shrinkage estimators designed to improve regression accuracy by reducing Mean Squared Error (MSE):
 
--   **Multiplicative Shrinkage:** Applies shrinkage by multiplying the OLS estimates with data-driven factors:
+-   **Multiplicative Shrinkage:** Applies shrinkage by multiplying the OLS estimates with data-driven factors.
 
     -   **Stein (St):** Applies a single global shrinkage factor to all coefficients.
 
@@ -45,7 +44,7 @@ library(savvySh)
 
     -   **Shrinkage (Sh):** Uses a full matrix shrinkage operator estimated by solving a *Sylvester equation*.
 
--   **Slab Regression:** Adds structured shrinkage based on penalty terms:
+-   **Slab Regression:** Adds structured shrinkage based on penalty terms.
 
     -   **Slab Regression (SR):** Shrinks toward a fixed target direction (e.g., a vector of ones).
 
@@ -78,14 +77,11 @@ coef(fit, estimator = "Sh")
 
 ## Authors
 
--   Ziwei Chen – [ziwei.chen.3\@citystgeorges.ac.uk](ziwei.chen.3@citystgeorges.ac.uk)
-
--   Vali Asimit – [asimit\@citystgeorges.ac.uk](asimit@citystgeorges.ac.uk)
-
--   Marina Anca Cidota – [cidota\@fmi.unibuc.ro](cidota@fmi.unibuc.ro)
-
--   Jennifer Asimit – [jennifer.asimit\@mrc-bsu.cam.ac.uk](jennifer.asimit@mrc-bsu.cam.ac.uk)
+-   Ziwei Chen – [ziwei.chen.3\@citystgeorges.ac.uk](mailto:ziwei.chen.3@citystgeorges.ac.uk)
+-   Vali Asimit – [asimit\@citystgeorges.ac.uk](mailto:asimit@citystgeorges.ac.uk)
+-   Marina Anca Cidota – [cidota\@fmi.unibuc.ro](mailto:cidota@fmi.unibuc.ro)
+-   Jennifer Asimit – [jennifer.asimit\@mrc-bsu.cam.ac.uk](mailto:jennifer.asimit@mrc-bsu.cam.ac.uk)
 
 ## License
 
-This package is licensed under the MIT License.
+This package is licensed under the GPL (\>= 3) License.
