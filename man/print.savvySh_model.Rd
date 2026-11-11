@@ -50,7 +50,7 @@ x <- matrix(rnorm(100 * 5), 100, 5)
 y <- rnorm(100)
 
 # Fit a Multiplicative shrinkage model
-fit <- savvySh(x, y, model_class = "Multiplicative", include_Sh = TRUE)
+fit <- savvySh(x, y, model_class = "Multiplicative")
 
 # Default print: shows summary metrics and coefficients for all estimators
 print(fit)

@@ -30,7 +30,7 @@ Asimit, V., Cidota, M. A., Chen, Z., & Asimit, J. (2025). [Slab and Shrinkage Li
 
 **Main features**: `savvySh` provides four classes of shrinkage estimators for linear regression:
 
--   [Multiplicative Shrinkage:](#multiplicative-shrinkage) Modifies OLS estimates by applying data-driven multiplicative factors. This includes the *Stein estimator (St)*, *Diagonal Shrinkage (DSh)*, and the more general *Shrinkage estimator (Sh)* that solves a *Sylvester equation*.
+-   [Multiplicative Shrinkage:](#multiplicative-shrinkage) Modifies OLS estimates by applying data-driven multiplicative factors. This includes the *Stein estimator (St)*, *Diagonal Shrinkage (DSh)*, and the more general *Shrinkage estimator (Sh)* that uses a full shrinkage matrix.
 
 -   [Slab Regression:](#slab-regression) Adds a quadratic penalty to shrink the coefficients in specific directions. The *Simple Slab Regression (SR)* penalizes along a fixed direction, and the *Generalized Slab Regression (GSR)* allows penalties along multiple directions, typically aligned with the data structure.
 
@@ -88,20 +88,21 @@ This corresponds to $\mathbf{D} = a \mathbf{I}_{p+1}$. It reduces variance by sc
 2.  **Diagonal Shrinkage Estimator (DSh):** Extending the St estimator, DSh applies a separate shrinkage factor $\widehat{b_k^*}$ to each coefficient:
 
 $$
-\widehat{\boldsymbol{\beta}}^{\text{DSh}} = \text{diag}\left(\widehat{\mathbf{b^*}}\right), \quad 
+\widehat{\boldsymbol{\beta}}^{\text{DSh}} = \text{diag}\left(\widehat{\mathbf{b^*}}\right) \widehat{\boldsymbol{\beta}}^{\text{OLS}}, \quad
 \text{where} \quad
 \widehat{b_k^*} = \frac{\left(\widehat{\beta}_k^{\text{OLS}}\right)^2}{\left(\widehat{\beta}_k^{\text{OLS}}\right)^2 + \widehat{\sigma^2} \sigma_k}.
 $$
 
 This corresponds to $\mathbf{D} = \text{diag}\left(\mathbf{b}\right)$ and $\sigma_k$ is the $k^{\text{th}}$ diagonal entry of $\Sigma^{-1}$ and $\widehat{\sigma^2}$ is the estimated residual variance.
 
-3.  **Shrinkage Estimator (Sh):** The Sh estimator is the most general form in the multiplicative shrinkage family. It applies a full (non-diagonal) matrix $\widehat{\mathbf{C}^*}$ to the OLS estimate and requires solving a *Sylvester equation*:
+3.  **Shrinkage Estimator (Sh):** The Sh estimator is the most general form in the multiplicative shrinkage family. It applies a full (non-diagonal) matrix $\widehat{\mathbf{C}^*}$ to the OLS estimate:
 
 $$
-\widehat{\boldsymbol{\beta}}^{\text{Sh}} = \widehat{\mathbf{C}^*} \widehat{\boldsymbol{\beta}}^{\text{OLS}}, \quad \text{where } \widehat{\mathbf{C}^*} \text{ solves the Sylvester equation:} \ \Sigma^{-1} \mathbf{C} + \mathbf{C} \widehat{\boldsymbol{\beta}}^{\text{OLS}} \left(\widehat{\boldsymbol{\beta}}^{\text{OLS}}\right)^T = \widehat{\boldsymbol{\beta}}^{\text{OLS}} \left(\widehat{\boldsymbol{\beta}}^{\text{OLS}}\right)^T.
+\widehat{\boldsymbol{\beta}}^{\text{Sh}} = \widehat{\mathbf{C}^*} \widehat{\boldsymbol{\beta}}^{\text{OLS}}, \quad \text{where} \quad
+\widehat{\mathbf{C}^*} = \frac{\widehat{\boldsymbol{\beta}}^{\text{OLS}} \left(\widehat{\boldsymbol{\beta}}^{\text{OLS}}\right)^T \Sigma}{\widehat{\sigma^2} + \left(\widehat{\boldsymbol{\beta}}^{\text{OLS}}\right)^T \Sigma \widehat{\boldsymbol{\beta}}^{\text{OLS}}}.
 $$
 
-This corresponds to $\mathbf{D} = \text{diag}\left(\mathbf{C}\right)$. Unlike St and DSh, the Sh estimator allows interactions across coefficients through off-diagonal entries in $\widehat{\mathbf{C}^*}$, capturing richer shrinkage structures.
+This corresponds to $\mathbf{D} = \widehat{\mathbf{C}^*}$. Unlike St and DSh, the Sh estimator allows interactions across coefficients through off-diagonal entries in $\widehat{\mathbf{C}^*}$, capturing richer shrinkage structures.
 
 ## Slab Regression {#slab-regression}
 
@@ -113,7 +114,7 @@ $$
 \widehat{\boldsymbol{\beta}}^{SR}\left(\mu;\textbf{u}\right) := \arg\min_{\boldsymbol{\beta}\in\Re^{p+1}} \left( \sum_{i=1}^n \big(y_i - \mathbf{x}_i^\top \boldsymbol{\beta}\big)^2 + \mu \big(\mathbf{u}^\top \boldsymbol{\beta}\big)^2 \right),
 $$
 
-where $\mu \geq 0$ is the penalty parameter controls the amount of shrinkage along $\mathbf{u}$ and has a closed-form, chosen analytically to minimize MSE under the slab constraint $(\boldsymbol{\beta}^\top \mathbf{u})^2$.
+where $\mu \geq 0$ is the penalty parameter that controls the amount of shrinkage along $\mathbf{u}$. Its MSE-optimal value has the closed form $\mu^{**}(\mathbf{u}) = \sigma^2 / (\mathbf{u}^\top \boldsymbol{\beta})^2$, and `savvySh` plugs in $\widehat{\sigma^2}$ and $\widehat{\boldsymbol{\beta}}^{\text{OLS}}$. Every choice $\mathbf{u} = v\mathbf{1}$ with $v > 0$ gives the same estimator.
 
 2.  **Generalized Slab Regression (GSR):** The GSR estimator extends SR by allowing shrinkage in multiple directions. These directions are typically chosen as eigenvectors of $\Sigma$. The estimator is:
 
@@ -122,7 +123,7 @@ $$
 \left(\sum_{i=1}^n \big(y_i - \mathbf{x}_i^\top \boldsymbol{\beta}\big)^2 + \sum_{l \in \mathcal{L}} \mu_l \big(\mathbf{u}_l^\top \boldsymbol{\beta}\big)^2 \right),
 $$
 
-where each $\mu_l \geq 0$ controls the strength of shrinkage along $\mathbf{u}_l$, and the set $\mathcal{L}$ indexes the selected directions. A special case arises when the $\mathbf{u}_l$ form the standard basis vectors, recovering the classical *Generalized RR* of [Hoerl and Kennard (1970)](https://www.jstor.org/stable/1271436).
+where each $\mu_l \geq 0$ controls the strength of shrinkage along $\mathbf{u}_l$, and the set $\mathcal{L}$ indexes the selected directions. `savvySh` uses all eigenvectors of $\Sigma$ with $\mu_l = \widehat{\sigma^2} / (\mathbf{u}_l^\top \widehat{\boldsymbol{\beta}}^{\text{OLS}})^2$. A special case arises when the $\mathbf{u}_l$ form the standard basis vectors, recovering the classical *Generalized RR* of [Hoerl and Kennard (1970)](https://www.jstor.org/stable/1271436).
 
 ## Linear Shrinkage {#linear-shrinkage}
 
@@ -225,7 +226,7 @@ y <- rnorm(n_val, mean = X_intercept %*% beta_true, sd = sigma_val)
 ols_fit <- lm(y ~ X)
 beta_ols <- coef(ols_fit)
 
-multi_results <- savvySh(X, y, model_class = "Multiplicative", include_Sh = TRUE)
+multi_results <- savvySh(X, y, model_class = "Multiplicative")
 beta_St  <- coef(multi_results, "St")
 beta_DSh <- coef(multi_results, "DSh")
 beta_Sh  <- coef(multi_results, "Sh")
@@ -308,7 +309,7 @@ y <- as.vector(X_intercept %*% beta_true) + rt(n = n_val, df = df_val)
 ols_fit <- lm(y ~ X)
 beta_ols <- coef(ols_fit)
 
-multi_results <- savvySh(X, y, model_class = "Multiplicative", include_Sh = TRUE)
+multi_results <- savvySh(X, y, model_class = "Multiplicative")
 beta_St  <- coef(multi_results, "St")
 beta_DSh <- coef(multi_results, "DSh")
 beta_Sh  <- coef(multi_results, "Sh")
@@ -384,7 +385,7 @@ y <- rnorm(n_val, mean = as.vector(X_intercept %*% beta_true), sd = sigma_val)
 ols_fit <- lm(y ~ X)
 beta_ols <- coef(ols_fit)
 
-multi_results <- savvySh(X, y, model_class = "Multiplicative", include_Sh = TRUE)
+multi_results <- savvySh(X, y, model_class = "Multiplicative")
 beta_St  <- coef(multi_results, "St")
 beta_DSh <- coef(multi_results, "DSh")
 beta_Sh  <- coef(multi_results, "Sh")

@@ -18,11 +18,11 @@
 H_function <- function(rho, nobs, p_plus_1, yty, lambda, V_k, V_star) {
   denom  <- (1 - rho) * lambda + rho * V_star
   denom2 <- denom^2
-  denom3 <- denom^3
+  denom4 <- denom^4
   term1 <- sum(lambda / denom2)
   term2 <- sum(V_k / denom)
   term3 <- sum(lambda * V_k / denom2)
-  term4 <- sum(V_k * rho^2 * (lambda - V_star)^2 / denom3)
+  term4 <- sum(V_k * rho^2 * (lambda - V_star)^2 / denom4)
   H_rho <- (1 / (nobs - p_plus_1)) * (yty - 2 * term2 + term3) * term1 + term4
   H_rho
 }
@@ -39,7 +39,7 @@ H_function <- function(rho, nobs, p_plus_1, yty, lambda, V_k, V_star) {
 #   A numeric value representing the optimal rho that minimizes H(rho).
 find_rho_star <- function(nobs, p_plus_1, yty, lambda, V_k, V_star) {
   c_function <- function(rho) H_function(rho, nobs, p_plus_1, yty, lambda, V_k, V_star)
-  rho_opt <- optimize(c_function, interval = c(0, 1))
+  rho_opt <- optimize(c_function, interval = c(0, 1), tol = sqrt(.Machine$double.eps))
   rho_opt$minimum
 }
 

@@ -32,7 +32,7 @@ test_that("Coef method works correctly for savvySh_model", {
   coef_DSh <- coef(fit, estimator = "DSh")
   expect_type(coef_St, "double")
   expect_type(coef_DSh, "double")
-  expect_warning(coef(fit), "No estimator specified. Returning results for all available estimators: St, DSh")
+  expect_warning(coef(fit), "No estimator specified. Returning results for all available estimators: St, DSh, Sh")
   expect_equal(length(coef_St), ncol(x) + 1)
   expect_equal(length(coef_DSh), ncol(x) + 1)
 })

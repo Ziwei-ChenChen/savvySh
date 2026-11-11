@@ -9,15 +9,15 @@
 #'
 #' @usage savvySh(x, y, model_class = c("Multiplicative", "Slab", "Linear", "ShrinkageRR"),
 #'                v = 1, lambda_vals = NULL, nlambda = 100, folds = 10,
-#'                foldid = FALSE, include_Sh = FALSE, exclude = NULL)
+#'                foldid = FALSE, include_Sh = TRUE, exclude = NULL)
 #'
 #' @param x A matrix of predictor variables.
 #' @param y A vector of response variable.
 #' @param model_class A character string specifying the shrinkage model to use. Options can choose from \code{"Multiplicative"},
 #' \code{"Slab"}, \code{"Linear"}, and \code{"ShrinkageRR"}. The default is \code{"Multiplicative"}.
 #'  If the user supplies more than one model, a warning is issued and only the first option is used.
-#' @param v A numeric value controlling the strength of shrinkage for the \code{SR} estimator in the \code{"Slab"} model.
-#' Must be a positive number. Default is 1.
+#' @param v A positive number that sets the slab direction \eqn{u = v\mathbf{1}}{u = v * 1} of the \code{SR} estimator
+#' in the \code{"Slab"} model. The \code{SR} estimate is the same for every \code{v > 0}, so the default of 1 is enough.
 #' @param lambda_vals A vector of \code{lambda} values for \code{RR}. This is used only when
 #' multicollinearity (rank deficiency) is detected and \code{"ShrinkageRR"} is not selected.
 #' If \code{NULL}, a default sequence is used.
@@ -27,7 +27,7 @@
 #' and \code{"ShrinkageRR"} is not chosen. The default is \code{10} and must be an integer \code{>= 3}.
 #' @param foldid Logical. If \code{TRUE}, saves the fold assignments in the output when multicollinearity is detected
 #' and \code{"ShrinkageRR"} is not used. The default is \code{FALSE}.
-#' @param include_Sh Logical. If \code{TRUE}, includes the Sh estimator in the \code{"Multiplicative"} model. The default is \code{FALSE}.
+#' @param include_Sh Logical. If \code{FALSE}, leaves the Sh estimator out of the \code{"Multiplicative"} model. The default is \code{TRUE}.
 #' @param exclude A vector specifying columns to exclude from the predictors. The default is \code{NULL}.
 #'
 #' @details
@@ -50,8 +50,9 @@
 #'         This aims to reduce MSE while keeping the overall bias fairly uniform across coefficients.}
 #'       \item{\code{DSh - }}{\emph{Diagonal Shrinkage}, assigning an individual factor to each coefficient based on its
 #'         variance. This yields more targeted shrinkage than the global approach and often achieves a lower MSE.}
-#'       \item{\code{Sh - }}{\emph{Shrinkage estimator} that solves a Sylvester equation for a full (non-diagonal) shrinkage matrix.
-#'         It is more flexible but also more computationally demanding. Included only if \code{include_Sh = TRUE}.}
+#'       \item{\code{Sh - }}{\emph{Shrinkage estimator} with a full (non-diagonal) shrinkage matrix
+#'         \eqn{C^* = \beta\beta^\top\Sigma / (\sigma^2 + \beta^\top\Sigma\beta)}{C* = beta beta' Sigma / (sigma^2 + beta' Sigma beta)},
+#'         which has a closed form. Left out if \code{include_Sh = FALSE}.}
 #'     }
 #'   }
 #'
@@ -60,8 +61,8 @@
 #'
 #'     \describe{
 #'       \item{\code{SR - }}{\emph{Simple Slab Regression}, which modifies the \code{OLS} objective by
-#'         adding a penalty in a fixed direction (often the constant vector). This penalty is controlled by \code{v}
-#'         and does not require cross-validation. It can be viewed as a special case of the \code{generalized lasso}
+#'         adding a penalty in a fixed direction (the constant vector). The penalty has the closed form
+#'         \eqn{\mu^{**} = \sigma^2 / (\mathbf{1}^\top\beta)^2}{mu** = sigma^2 / (1' beta)^2} and does not require cross-validation. It can be viewed as a special case of the \code{generalized lasso}
 #'         but focuses on smooth (quadratic) rather than \eqn{\ell_1}{L1} regularization.}
 #'       \item{\code{GSR - }}{\emph{Generalized Slab Regression}, extending SR by allowing shrinkage along multiple directions.
 #'         Typically, these directions correspond to the eigenvectors of the design covariance matrix, effectively shrinking
@@ -111,7 +112,7 @@
 #' set.seed(123)
 #' x <- matrix(rnorm(100 * 5), 100, 5)
 #' y <- rnorm(100)
-#' fit_mult <- savvySh(x, y, model_class = "Multiplicative", include_Sh = TRUE)
+#' fit_mult <- savvySh(x, y, model_class = "Multiplicative")
 #' print(fit_mult)
 #'
 #' # 2. Slab Regression example
@@ -136,16 +137,14 @@
 #' \emph{Slab and Shrinkage Linear Regression Estimation}.
 #' Retrieved from \url{https://openaccess.city.ac.uk/id/eprint/35005/}
 #'
-#' @importFrom Matrix rankMatrix Schur
+#' @importFrom Matrix rankMatrix
 #' @importFrom mnormt pd.solve
 #' @importFrom glmnet glmnet cv.glmnet
-#' @importFrom MASS mvrnorm ginv
-#' @importFrom expm "%^%"
 #' @importFrom stats coef lm predict optimize
 #' @export
 savvySh <- function(x, y, model_class = c("Multiplicative", "Slab", "Linear", "ShrinkageRR"),
                     v = 1, lambda_vals = NULL, nlambda = 100, folds = 10, foldid = FALSE,
-                    include_Sh = FALSE, exclude = NULL) {
+                    include_Sh = TRUE, exclude = NULL) {
 
   x <- as.matrix(x)
   y <- as.vector(y)
@@ -165,8 +164,9 @@ savvySh <- function(x, y, model_class = c("Multiplicative", "Slab", "Linear", "S
   if (!model_class %in% valid_models) {
     stop(paste("Invalid model_class specified. Choose from:", paste(valid_models, collapse = ", ")))
   }
-  if (include_Sh && model_class != "Multiplicative") {
-    warning("include_Sh is only applicable when model_class is 'Multiplicative'. Setting include_Sh to FALSE.")
+  if (model_class != "Multiplicative") {
+    if (!missing(include_Sh) && isTRUE(include_Sh))
+      warning("include_Sh is only applicable when model_class is 'Multiplicative'. Setting include_Sh to FALSE.")
     include_Sh <- FALSE
   }
 
@@ -195,7 +195,7 @@ savvySh <- function(x, y, model_class = c("Multiplicative", "Slab", "Linear", "S
   nvars <- ncol(x)
   x_tilde <- cbind(1, x)
   if (nvars >= nobs) {
-    warning("Number of features in x is less than the number of observations.")
+    warning("Number of features in x is not less than the number of observations.")
   }
   full_rank <- Matrix::rankMatrix(x)[1] == nvars
   if (!full_rank && model_class != "ShrinkageRR") {
@@ -211,15 +211,16 @@ savvySh <- function(x, y, model_class = c("Multiplicative", "Slab", "Linear", "S
   }
 
   if (model_class %in% c("Multiplicative", "Slab")) {
+    XtX <- crossprod(x_tilde)
     if (!full_rank) {
       warning("Multicollinearity detected: switched to RR instead of unbiased OLS estimation.")
-      glmnet_fit <- cv.glmnet(x, y, alpha = 0, lambda = lambda_vals, nfolds = folds)
+      glmnet_fit <- cv.glmnet(x, y, alpha = 0, lambda = lambda_vals, foldid = fold_ids)
       optimal_lambda <- glmnet_fit$lambda.min
       est <- as.vector(coef(glmnet_fit, s = "lambda.min"))
-      fitted_values <- as.vector(predict(glmnet_fit, newx = x, s = optimal_lambda))
-      df_eff <- sum((svd(x)$d)^2 / ((svd(x)$d)^2 + optimal_lambda))
-      RSS <- sum((y - fitted_values)^2)
-      sigma_square <- (RSS / (nobs - df_eff))^2
+      # the ridge estimate of glmnet solves (X'X + P) b = X'y, so Sigma_lambda = X'X + P
+      Sigma_lambda <- XtX + diag(c(0, ridge_penalty(x, y, optimal_lambda)))
+      df_eff <- sum(diag(solve(Sigma_lambda, XtX)))
+      sigma_square <- sum((y - x_tilde %*% est)^2) / (nobs - df_eff)
       ridge_results <- list(
         lambda_range = glmnet_fit$lambda,
         cvm = glmnet_fit$cvm,
@@ -231,8 +232,8 @@ savvySh <- function(x, y, model_class = c("Multiplicative", "Slab", "Linear", "S
       est <- as.vector(lm_fit$coefficients)
       sigma_square <- (summary(lm_fit)$sigma)^2
       optimal_lambda <- 0
+      Sigma_lambda <- XtX
     }
-    Sigma_lambda <- t(x_tilde) %*% x_tilde + optimal_lambda * diag(ncol(x_tilde))
     Sigma_lambda <- (Sigma_lambda + t(Sigma_lambda)) / 2
     Sigma_lambda_inv <- pd.solve(Sigma_lambda)
 
@@ -246,7 +247,7 @@ savvySh <- function(x, y, model_class = c("Multiplicative", "Slab", "Linear", "S
       pred_MSE_DSh <- mean((y - DSh_fitted_values)^2)
 
       if (include_Sh) {
-        est_Sh <- Sh_ost(est, sigma_square, Sigma_lambda_inv)
+        est_Sh <- Sh_ost(est, sigma_square, Sigma_lambda)
         Sh_fitted_values <- as.vector(x_tilde %*% est_Sh)
         pred_MSE_Sh <- mean((y - Sh_fitted_values)^2)
       }
@@ -271,15 +272,16 @@ savvySh <- function(x, y, model_class = c("Multiplicative", "Slab", "Linear", "S
     centered_x <- scale(x, center = TRUE, scale = FALSE)
     centered_y <- scale(y, center = TRUE, scale = FALSE)
 
+    XtX <- crossprod(centered_x)
     if (!full_rank) {
       warning("Multicollinearity detected: switched to RR on centered data instead of unbiased OLS estimation.")
-      glmnet_fit <- cv.glmnet(centered_x, centered_y, alpha = 0, lambda = lambda_vals, nfolds = folds)
+      glmnet_fit <- cv.glmnet(centered_x, centered_y, alpha = 0, lambda = lambda_vals, foldid = fold_ids)
       optimal_lambda <- glmnet_fit$lambda.min
       est <- as.vector(coef(glmnet_fit, s = "lambda.min"))[-1]
-      fitted_values <- as.vector(predict(glmnet_fit, newx = centered_x, s = optimal_lambda))
-      df_eff <- sum((svd(centered_x)$d)^2 / ((svd(centered_x)$d)^2 + optimal_lambda))
-      RSS <- sum((centered_y - fitted_values)^2)
-      sigma_square <- (RSS / (nobs - df_eff))^2
+      Sigma_lambda <- XtX + diag(ridge_penalty(centered_x, centered_y, optimal_lambda))
+      # one more degree of freedom is used by the centering
+      df_eff <- sum(diag(solve(Sigma_lambda, XtX))) + 1
+      sigma_square <- sum((centered_y - centered_x %*% est)^2) / (nobs - df_eff)
       ridge_results <- list(
         lambda_range = glmnet_fit$lambda,
         cvm = glmnet_fit$cvm,
@@ -289,10 +291,11 @@ savvySh <- function(x, y, model_class = c("Multiplicative", "Slab", "Linear", "S
     } else {
       lm_fit <- lm(centered_y ~ centered_x - 1)
       est <- as.vector(lm_fit$coefficients)
-      sigma_square <- (summary(lm_fit)$sigma)^2
+      # the centering uses one degree of freedom, so sigma^2 = RSS / (n - p - 1)
+      sigma_square <- sum(lm_fit$residuals^2) / (nobs - nvars - 1)
       optimal_lambda <- 0
+      Sigma_lambda <- XtX
     }
-    Sigma_lambda <- t(centered_x) %*% centered_x + optimal_lambda * diag(ncol(centered_x))
     Sigma_lambda <- (Sigma_lambda + t(Sigma_lambda)) / 2
     Sigma_lambda_inv <- pd.solve(Sigma_lambda)
     Sigma_tilde <- diag(diag(Sigma_lambda))
@@ -352,6 +355,15 @@ savvySh <- function(x, y, model_class = c("Multiplicative", "Slab", "Linear", "S
 
   class(results) <- "savvySh_model"
   return(results)
+}
+
+# Penalty that the ridge fit of glmnet (alpha = 0, standardize = TRUE) puts on
+# each slope. glmnet leaves the intercept unpenalized and standardizes x and y
+# with divisor n, so the penalty on slope j is n * lambda * s_j^2 / s_y.
+ridge_penalty <- function(x, y, lambda) {
+  n <- nrow(x)
+  sd_n <- function(a) sqrt(sum((a - mean(a))^2) / n)
+  n * lambda * apply(x, 2, sd_n)^2 / sd_n(y)
 }
 
 

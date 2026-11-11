@@ -38,9 +38,9 @@ x <- matrix(rnorm(100 * 5), 100, 5)
 y <- rnorm(100)
 
 # Fit a Multiplicative shrinkage model
-fit <- savvySh(x, y, model_class = "Multiplicative", include_Sh = TRUE)
+fit <- savvySh(x, y, model_class = "Multiplicative")
 
-# Extract coefficients for all available estimators (St and DSh by default)
+# Extract coefficients for all available estimators (St, DSh and Sh)
 all_coefs <- coef(fit)
 
 # Extract coefficients for a specific estimator

@@ -31,78 +31,18 @@ DSh_ost <- function(est, sigma_square, Sigma_lambda_inv) {
   as.vector(b_star * est)
 }
 
-# Sylvester equation solver.
-# Solves the Sylvester equation A * X + X * B = C using a Schur decomposition method.
-# This code for solving the Sylvester equation was adapted from the biADMM R code,
-# available at: https://github.com/sakuramomo1005/biADMM/blob/master/R/sylvester.R
-# Original Author: sakuramomo1005
-# Parameters:
-#   A      - Numeric matrix.
-#   B      - Numeric matrix.
-#   C      - Numeric matrix.
-#   tol    - Tolerance level for small off-diagonal entries (default = 1e-4).
-# Returns:
-#   A matrix representing the solution X.
-sylvester <- function(A, B, C, tol = 1e-4) {
-  A1 <- Schur(A)
-  Q1 <- A1$Q
-  R1 <- A1$T
-
-  A2 <- Schur(B)
-  Q2 <- A2$Q
-  R2 <- A2$T
-
-  C_trans <- t(Q1) %*% C %*% Q2
-  n <- nrow(R2)
-  p <- ncol(R1)
-  X <- matrix(0, p, n)
-  I <- diag(p)
-  k <- 1
-
-  while (k <= n) {
-    if (k < n && abs(R2[k+1, k]) >= tol) {
-      # Process 2x2 block.
-      r11 <- R2[k, k]
-      r12 <- R2[k, k+1]
-      r21 <- R2[k+1, k]
-      r22 <- R2[k+1, k+1]
-      if (k == 1) {
-        temp <- matrix(0, p, 2)
-      } else {
-        temp <- X[, 1:(k-1), drop = FALSE] %*% R2[1:(k-1), k:(k+1), drop = FALSE]
-      }
-      b_block <- C_trans[, k:(k+1), drop = FALSE] - temp
-      A_mat <- R1 %*% R1 + (r11 + r22) * R1 + (r11 * r22 - r12 * r21) * I
-      X[, k:(k+1)] <- ginv(A_mat) %*% b_block
-      k <- k + 2
-    } else {
-      # Process single column.
-      if (k == 1) {
-        temp <- matrix(0, p, 1)
-      } else {
-        temp <- X[, 1:(k-1), drop = FALSE] %*% R2[1:(k-1), k, drop = FALSE]
-      }
-      b_col <- C_trans[, k, drop = FALSE] - temp
-      X[, k] <- ginv(R1 + R2[k, k] * I) %*% b_col
-      k <- k + 1
-    }
-  }
-  Q1 %*% X %*% t(Q2)
-}
-
 # Main Sh function.
-# Computes the Shrinkage (Sh) estimator by solving a Sylvester equation to obtain
-# a targeted shrinkage solution.
+# Computes the Shrinkage (Sh) estimator C* est, where
+# C* = est est^T Sigma / (sigma^2 + est^T Sigma est). With q = est^T Sigma est
+# this is est * q / (sigma^2 + q).
 # Parameters:
 #   est              - Initial coefficient estimate vector.
 #   sigma_square     - Variance of noise.
-#   Sigma_lambda_inv - Inverse of the regularized covariance matrix.
+#   Sigma_lambda     - Regularized covariance matrix.
 # Returns:
 #   A vector representing the Sh estimator.
-Sh_ost <- function(est, sigma_square, Sigma_lambda_inv) {
-  B <- est %*% t(est)
-  C_star <- sylvester(Sigma_lambda_inv, B, B)
-  as.vector(C_star %*% est)
+Sh_ost <- function(est, sigma_square, Sigma_lambda) {
+  q <- as.numeric(crossprod(est, Sigma_lambda %*% est))
+  as.vector(q / (sigma_square + q) * est)
 }
-
 

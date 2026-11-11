@@ -6,7 +6,7 @@
 \usage{
 savvySh(x, y, model_class = c("Multiplicative", "Slab", "Linear", "ShrinkageRR"),
                v = 1, lambda_vals = NULL, nlambda = 100, folds = 10,
-               foldid = FALSE, include_Sh = FALSE, exclude = NULL)
+               foldid = FALSE, include_Sh = TRUE, exclude = NULL)
 }
 \arguments{
 \item{x}{A matrix of predictor variables.}
@@ -17,8 +17,8 @@ savvySh(x, y, model_class = c("Multiplicative", "Slab", "Linear", "ShrinkageRR")
 \code{"Slab"}, \code{"Linear"}, and \code{"ShrinkageRR"}. The default is \code{"Multiplicative"}.
  If the user supplies more than one model, a warning is issued and only the first option is used.}
 
-\item{v}{A numeric value controlling the strength of shrinkage for the \code{SR} estimator in the \code{"Slab"} model.
-Must be a positive number. Default is 1.}
+\item{v}{A positive number that sets the slab direction \eqn{u = v\mathbf{1}}{u = v * 1} of the \code{SR} estimator
+in the \code{"Slab"} model. The \code{SR} estimate is the same for every \code{v > 0}, so the default of 1 is enough.}
 
 \item{lambda_vals}{A vector of \code{lambda} values for \code{RR}. This is used only when
 multicollinearity (rank deficiency) is detected and \code{"ShrinkageRR"} is not selected.
@@ -33,7 +33,7 @@ and \code{"ShrinkageRR"} is not chosen. The default is \code{10} and must be an 
 \item{foldid}{Logical. If \code{TRUE}, saves the fold assignments in the output when multicollinearity is detected
 and \code{"ShrinkageRR"} is not used. The default is \code{FALSE}.}
 
-\item{include_Sh}{Logical. If \code{TRUE}, includes the Sh estimator in the \code{"Multiplicative"} model. The default is \code{FALSE}.}
+\item{include_Sh}{Logical. If \code{FALSE}, leaves the Sh estimator out of the \code{"Multiplicative"} model. The default is \code{TRUE}.}
 
 \item{exclude}{A vector specifying columns to exclude from the predictors. The default is \code{NULL}.}
 }
@@ -87,8 +87,9 @@ and a warning is issued.
         This aims to reduce MSE while keeping the overall bias fairly uniform across coefficients.}
       \item{\code{DSh - }}{\emph{Diagonal Shrinkage}, assigning an individual factor to each coefficient based on its
         variance. This yields more targeted shrinkage than the global approach and often achieves a lower MSE.}
-      \item{\code{Sh - }}{\emph{Shrinkage estimator} that solves a Sylvester equation for a full (non-diagonal) shrinkage matrix.
-        It is more flexible but also more computationally demanding. Included only if \code{include_Sh = TRUE}.}
+      \item{\code{Sh - }}{\emph{Shrinkage estimator} with a full (non-diagonal) shrinkage matrix
+        \eqn{C^* = \beta\beta^\top\Sigma / (\sigma^2 + \beta^\top\Sigma\beta)}{C* = beta beta' Sigma / (sigma^2 + beta' Sigma beta)},
+        which has a closed form. Left out if \code{include_Sh = FALSE}.}
     }
   }
 
@@ -97,8 +98,8 @@ and a warning is issued.
 
     \describe{
       \item{\code{SR - }}{\emph{Simple Slab Regression}, which modifies the \code{OLS} objective by
-        adding a penalty in a fixed direction (often the constant vector). This penalty is controlled by \code{v}
-        and does not require cross-validation. It can be viewed as a special case of the \code{generalized lasso}
+        adding a penalty in a fixed direction (the constant vector). The penalty has the closed form
+        \eqn{\mu^{**} = \sigma^2 / (\mathbf{1}^\top\beta)^2}{mu** = sigma^2 / (1' beta)^2} and does not require cross-validation. It can be viewed as a special case of the \code{generalized lasso}
         but focuses on smooth (quadratic) rather than \eqn{\ell_1}{L1} regularization.}
       \item{\code{GSR - }}{\emph{Generalized Slab Regression}, extending SR by allowing shrinkage along multiple directions.
         Typically, these directions correspond to the eigenvectors of the design covariance matrix, effectively shrinking
@@ -126,7 +127,7 @@ and a warning is issued.
 set.seed(123)
 x <- matrix(rnorm(100 * 5), 100, 5)
 y <- rnorm(100)
-fit_mult <- savvySh(x, y, model_class = "Multiplicative", include_Sh = TRUE)
+fit_mult <- savvySh(x, y, model_class = "Multiplicative")
 print(fit_mult)
 
 # 2. Slab Regression example

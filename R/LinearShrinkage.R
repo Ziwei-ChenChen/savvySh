@@ -15,12 +15,12 @@
 #   A vector representing the LSh estimator.
 LSh_ost <- function(est, sigma_square, Sigma_lambda, Sigma_lambda_inv, Sigma_tilde) {
   I_p <- diag(length(est))
-  Sigma_tilde <- (Sigma_tilde + t(Sigma_tilde)) / 2
   Sigma_tilde_inv <- pd.solve(Sigma_tilde)
   t1 <- sigma_square * sum(diag(Sigma_tilde_inv))
   t2 <- sigma_square * sum(diag(Sigma_lambda_inv))
   diff_matrix <- Sigma_tilde_inv %*% Sigma_lambda - I_p
-  t3 <- as.numeric(t(est) %*% (diff_matrix %*% diff_matrix) %*% est)
+  # t3 = est^T M^T M est with M = Sigma_tilde^{-1} Sigma - I
+  t3 <- sum((diff_matrix %*% est)^2)
   rho_star <- (t2 - t1) / (t2 - t1 + t3)
   Sigma_rho_star <- rho_star * Sigma_tilde_inv %*% Sigma_lambda + (1 - rho_star) * I_p
   as.vector(Sigma_rho_star %*% est)

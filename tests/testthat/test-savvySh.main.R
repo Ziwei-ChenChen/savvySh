@@ -18,7 +18,7 @@ test_that("savvySh function handles input validation correctly", {
     savvySh(x[1:5, ], y[1:5], model_class = "Multiplicative")
   )
 
-  expect_match(warnings_out[1], "Number of features in x is less than the number of observations.")
+  expect_match(warnings_out[1], "Number of features in x is not less than the number of observations.")
   expect_match(warnings_out[2], "Multicollinearity detected: switched to RR instead of unbiased OLS estimation.")
   expect_match(warnings_out[3], "Option grouped=FALSE enforced in cv.glmnet, since < 3 observations per fold")
 })
@@ -83,6 +83,9 @@ test_that("savvySh function works correctly for Multiplicative model with and wi
   expect_named(result_mult_with_sh$coefficients, c("St", "DSh", "Sh"))
   expect_named(result_mult_with_sh$fitted_values, c("St", "DSh", "Sh"))
   expect_named(result_mult_with_sh$pred_MSE, c("St", "DSh", "Sh"))
+
+  result_mult_default <- savvySh(x, y, model_class = "Multiplicative")
+  expect_named(result_mult_default$coefficients, c("St", "DSh", "Sh"))
 })
 
 test_that("savvySh function works correctly for Slab model with valid v parameter", {
