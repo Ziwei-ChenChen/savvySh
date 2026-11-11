@@ -1,7 +1,7 @@
 Package: savvySh
 Type: Package
 Title: Slab and Shrinkage Linear Regression Estimation
-Version: 0.1.1
+Version: 0.1.2
 Authors@R: 
     c(person(given = "Ziwei", family = "Chen", role = c("aut", "cre"),
              email = "Ziwei.Chen.3@citystgeorges.ac.uk", 
@@ -17,32 +17,21 @@ Authors@R:
              comment = c(ORCID = "0000-0002-4857-2249")))
 Description: Implements a suite of shrinkage estimators for multivariate linear 
     regression to improve estimation stability and predictive accuracy. 
-    Provides methods including the Stein estimator, Diagonal Shrinkage, 
-    the general Shrinkage estimator (solving a Sylvester equation), and 
-    Slab Regression (Simple and Generalized). These methods address Stein's 
+    Provides methods including the Stein estimator, Diagonal Shrinkage,
+    the general Shrinkage estimator, and Slab Regression (Simple and
+    Generalized). These methods address Stein's
     paradox by introducing structured bias to reduce variance without requiring 
     cross-validation, except for 'ShrinkageRR' where the intensity 
     is chosen by minimizing an explicit Mean Squared Error (MSE) criterion. 
-    Methods are based on Asimit, V., Cidota, M. A., Chen, Z., and Asimit, J. 
-    (2025) <https://openaccess.city.ac.uk/id/eprint/35005/>.
+    Methods are based on Asimit, V., Cidota, M. A., Chen, Z., and Asimit, J. (2025) 
+    <https://openaccess.city.ac.uk/id/eprint/35005/>.
 License: GPL (>= 3)
 Encoding: UTF-8
-URL: https://Ziwei-ChenChen.github.io/savvySh, https://github.com/Ziwei-ChenChen/savvySh
-BugReports: https://github.com/Ziwei-ChenChen/savvySh/issues
+URL: https://ziwei-chenchen.github.io/savvySh/
+BugReports: https://github.com/ziwei-chenchen/savvySh/issues
 RoxygenNote: 7.3.2
-Depends:
-    R (>= 3.6.0)
-Imports:
-    Matrix,
-    glmnet,
-    MASS,
-    expm,
-    mnormt,
-    stats
-Suggests: 
-    knitr,
-    rmarkdown,
-    testthat (>= 3.0.0)
+Depends: R (>= 3.6.0)
+Imports: Matrix, glmnet, mnormt, stats
+Suggests: knitr, MASS, rmarkdown, testthat (>= 3.0.0)
 VignetteBuilder: knitr
 Config/testthat/edition: 3
-

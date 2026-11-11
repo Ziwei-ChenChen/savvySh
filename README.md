@@ -5,7 +5,6 @@ The `savvySh` package provides a unified interface for fitting shrinkage estimat
 This package implements the theoretical framework discussed in:
 
 Asimit, V., Cidota, M. A., Chen, Z., & Asimit, J. (2025). [Slab and Shrinkage Linear Regression Estimation](https://openaccess.city.ac.uk/id/eprint/35005/).
-The official documentation site is available at: <https://Ziwei-ChenChen.github.io/savvySh/>
 
 ## Related Projects
 
@@ -43,7 +42,7 @@ library(savvySh)
 
     -   **Diagonal Shrinkage (DSh):** Applies a separate factor to each coefficient.
 
-    -   **Shrinkage (Sh):** Uses a full matrix shrinkage operator estimated by solving a *Sylvester equation*.
+    -   **Shrinkage (Sh):** Uses a full (non-diagonal) matrix shrinkage operator, which has a closed form.
 
 -   **Slab Regression:** Adds structured shrinkage based on penalty terms.
 
@@ -68,7 +67,7 @@ x <- matrix(rnorm(100 * 10), 100, 10)
 y <- rnorm(100)
 
 # Fit shrinkage estimators
-fit <- savvySh(x, y, model_class = "Multiplicative", include_Sh = TRUE)
+fit <- savvySh(x, y, model_class = "Multiplicative")
 
 # Extract coefficients
 coef(fit, estimator = "St")
