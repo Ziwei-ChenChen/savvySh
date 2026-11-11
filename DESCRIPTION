@@ -27,8 +27,10 @@ Description: Implements a suite of shrinkage estimators for multivariate linear
     <https://openaccess.city.ac.uk/id/eprint/35005/>.
 License: GPL (>= 3)
 Encoding: UTF-8
-URL: https://ziwei-chenchen.github.io/savvySh/
-BugReports: https://github.com/ziwei-chenchen/savvySh/issues
+LazyData: true
+LazyDataCompression: xz
+URL: https://ziwei-chenchen.github.io/savvySh/, https://github.com/Ziwei-ChenChen/savvySh
+BugReports: https://github.com/Ziwei-ChenChen/savvySh/issues
 RoxygenNote: 7.3.2
 Depends: R (>= 3.6.0)
 Imports: Matrix, glmnet, mnormt, stats
